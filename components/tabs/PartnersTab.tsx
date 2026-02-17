@@ -210,9 +210,8 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
       partner.area.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
-  if (isInternalLoading) {
-    return <PartnersTabSkeleton />;
-  }
+  // Removed static loading check - components render immediately
+  // Only show skeletons for dynamic data sections
 
   return (
     <div className="min-h-screen pb-6 dark:bg-neutral-900 dark:text-gray-100">
@@ -325,80 +324,108 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
       <div className="mt-4 px-6">
         {viewMode === "list" ? (
           <div className="space-y-4">
-            {filteredPartners.map((partner) => (
-              <div
-                key={partner.id}
-                onClick={() => setSelectedPartner(partner)}
-                className="cursor-pointer rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
-              >
-                <div className="mb-3 flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className="mb-1 text-black dark:text-white">
-                      {partner.name}
-                    </h3>
-                    <div className="mb-2 flex items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">
-                      <MapPin className="h-4 w-4" />
-                      <span>
-                        {partner.area}, {partner.city} • {partner.distance} km
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1 rounded bg-[#F3F1F7] px-2 py-1 dark:bg-neutral-700">
-                        <Star className="h-3 w-3 fill-current text-[#8B7FA8] dark:text-[#8B7FA8]" />
-                        <span className="text-xs text-[#3D3066] dark:text-white">
-                          {partner.rating}
-                        </span>
+            {isInternalLoading ? (
+              // Show skeleton loaders while loading
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800 animate-pulse">
+                  <div className="mb-3 flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="mb-2 h-5 w-48 rounded bg-gray-200 dark:bg-neutral-700" />
+                      <div className="mb-2 flex items-center gap-1">
+                        <div className="h-4 w-4 rounded bg-gray-200 dark:bg-neutral-700" />
+                        <div className="h-3 w-32 rounded bg-gray-200 dark:bg-neutral-700" />
                       </div>
-                      <span className="text-xs text-gray-500 dark:text-neutral-500">
-                        ({partner.reviews} reviews)
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <div className="h-6 w-12 rounded bg-gray-100 dark:bg-neutral-700" />
+                        <div className="h-3 w-20 rounded bg-gray-100 dark:bg-neutral-700" />
+                      </div>
                     </div>
                   </div>
+                  <div className="mb-3 flex gap-2">
+                    <div className="h-6 w-16 rounded bg-gray-100 dark:bg-neutral-700" />
+                    <div className="h-6 w-20 rounded bg-gray-100 dark:bg-neutral-700" />
+                  </div>
+                  <div className="h-10 w-full rounded-lg bg-gray-100 dark:bg-neutral-700" />
                 </div>
+              ))
+            ) : (
+              <>
+                {filteredPartners.map((partner) => (
+                  <div
+                    key={partner.id}
+                    onClick={() => setSelectedPartner(partner)}
+                    className="cursor-pointer rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
+                  >
+                    <div className="mb-3 flex items-start justify-between">
+                      <div className="flex-1">
+                        <h3 className="mb-1 text-black dark:text-white">
+                          {partner.name}
+                        </h3>
+                        <div className="mb-2 flex items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">
+                          <MapPin className="h-4 w-4" />
+                          <span>
+                            {partner.area}, {partner.city} • {partner.distance} km
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 rounded bg-[#F3F1F7] px-2 py-1 dark:bg-neutral-700">
+                            <Star className="h-3 w-3 fill-current text-[#8B7FA8] dark:text-[#8B7FA8]" />
+                            <span className="text-xs text-[#3D3066] dark:text-white">
+                              {partner.rating}
+                            </span>
+                          </div>
+                          <span className="text-xs text-gray-500 dark:text-neutral-500">
+                            ({partner.reviews} reviews)
+                          </span>
+                        </div>
+                      </div>
+                    </div>
 
-                {/* Services */}
-                <div className="mb-3 flex flex-wrap gap-2">
-                  {partner.services.includes("pickup") && (
-                    <span className="flex items-center gap-1 rounded bg-green-50 px-2 py-1 text-xs text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                      <Truck className="h-3 w-3" />
-                      Pickup
-                    </span>
-                  )}
-                  {partner.services.includes("jewellery") && (
-                    <span className="flex items-center gap-1 rounded bg-blue-50 px-2 py-1 text-xs text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
-                      <ShoppingBag className="h-3 w-3" />
-                      Jewellery
-                    </span>
-                  )}
-                  {partner.services.includes("loan") && (
-                    <span className="flex items-center gap-1 rounded bg-purple-50 px-2 py-1 text-xs text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
-                      <Repeat className="h-3 w-3" />
-                      Loan
-                    </span>
-                  )}
-                </div>
+                    {/* Services */}
+                    <div className="mb-3 flex flex-wrap gap-2">
+                      {partner.services.includes("pickup") && (
+                        <span className="flex items-center gap-1 rounded bg-green-50 px-2 py-1 text-xs text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                          <Truck className="h-3 w-3" />
+                          Pickup
+                        </span>
+                      )}
+                      {partner.services.includes("jewellery") && (
+                        <span className="flex items-center gap-1 rounded bg-blue-50 px-2 py-1 text-xs text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                          <ShoppingBag className="h-3 w-3" />
+                          Jewellery
+                        </span>
+                      )}
+                      {partner.services.includes("loan") && (
+                        <span className="flex items-center gap-1 rounded bg-purple-50 px-2 py-1 text-xs text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                          <Repeat className="h-3 w-3" />
+                          Loan
+                        </span>
+                      )}
+                    </div>
 
-                {/* Offers */}
-                {partner.offers.length > 0 && (
-                  <div className="mb-3 rounded-lg border border-orange-200 bg-orange-50 p-2 dark:border-orange-800 dark:bg-orange-900/20">
-                    <p className="text-xs text-orange-800 dark:text-orange-300">
-                      {partner.offers[0]}
-                    </p>
+                    {/* Offers */}
+                    {partner.offers.length > 0 && (
+                      <div className="mb-3 rounded-lg border border-orange-200 bg-orange-50 p-2 dark:border-orange-800 dark:bg-orange-900/20">
+                        <p className="text-xs text-orange-800 dark:text-orange-300">
+                          {partner.offers[0]}
+                        </p>
+                      </div>
+                    )}
+
+                    <button className="w-full rounded-lg bg-[#3D3066] py-2 text-white transition-colors hover:bg-[#5C4E7F] dark:bg-[#4D3F7F] dark:hover:bg-[#5C4E9F]">
+                      View Details
+                    </button>
+                  </div>
+                ))}
+
+                {filteredPartners.length === 0 && (
+                  <div className="py-12 text-center text-gray-500 dark:text-neutral-500">
+                    <MapPin className="mx-auto mb-2 h-12 w-12 text-gray-300 dark:text-neutral-700" />
+                    <p>No partners found</p>
+                    <p className="mt-1 text-sm">Try adjusting your search</p>
                   </div>
                 )}
-
-                <button className="w-full rounded-lg bg-[#3D3066] py-2 text-white transition-colors hover:bg-[#5C4E7F] dark:bg-[#4D3F7F] dark:hover:bg-[#5C4E9F]">
-                  View Details
-                </button>
-              </div>
-            ))}
-
-            {filteredPartners.length === 0 && (
-              <div className="py-12 text-center text-gray-500 dark:text-neutral-500">
-                <MapPin className="mx-auto mb-2 h-12 w-12 text-gray-300 dark:text-neutral-700" />
-                <p>No partners found</p>
-                <p className="mt-1 text-sm">Try adjusting your search</p>
-              </div>
+              </>
             )}
           </div>
         ) : (
@@ -409,9 +436,13 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
             />
 
             <div className="p-4 border border-t-0 border-gray-200 dark:border-neutral-700 rounded-b-xl">
-              <p className="text-center text-sm text-gray-600 dark:text-neutral-400">
-                Showing {filteredPartners.length} partners nearby
-              </p>
+              {isInternalLoading ? (
+                <div className="mx-auto h-4 w-48 animate-pulse rounded bg-gray-100 dark:bg-neutral-700" />
+              ) : (
+                <p className="text-center text-sm text-gray-600 dark:text-neutral-400">
+                  Showing {filteredPartners.length} partners nearby
+                </p>
+              )}
             </div>
           </div>
         )}

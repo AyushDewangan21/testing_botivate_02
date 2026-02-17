@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import { io, Socket } from "socket.io-client";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3005/api";
 
 interface BuyGoldFlowProps {
   onClose: () => void;
@@ -52,6 +52,8 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
   const [amountInr, setAmountInr] = useState("");
   const [amountGm, setAmountGm] = useState("");
   const [activeInput, setActiveInput] = useState<"inr" | "gm">("inr");
+  const enteredAmount = parseFloat(amountInr || "0");
+  const isInsufficientBalance = enteredAmount > testWalletBalance;
 
 
 
@@ -192,7 +194,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
 
     const socket: Socket = io(
       process.env.NEXT_PUBLIC_API_URL?.replace("/api", "") ||
-      "http://localhost:5001",
+      "http://localhost:3005",
       {
         transports: ["websocket", "polling"],
         reconnection: true,
@@ -329,191 +331,68 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
         )}
 
         {step === "amount" && (
-          <div className="lg:grid lg:grid-cols-2 lg:gap-6">
-            {/* Left Column - Rate & Input */}
-            <div>
-              {/* Live Rate Card - Responsive */}
-              <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-5 dark:border-neutral-700 dark:bg-neutral-800">
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
-                  <div>
-                    <div className="mb-1.5 flex items-center gap-2 sm:mb-2">
-                      <div className="h-2 w-2 animate-pulse rounded-full bg-green-500 sm:h-2.5 sm:w-2.5"></div>
-                      <p className="text-xs font-medium text-gray-600 sm:text-sm dark:text-neutral-400">
-                        Live Gold Rate (24K)
-                      </p>
-                    </div>
-                    <p className="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-white">
-                      ₹{goldBuyPrice.toFixed(2)}
-                      <span className="text-sm font-normal text-gray-500 sm:text-base">
-                        /gram
-                      </span>
+          <div>
+
+            {/* Live Rate Card */}
+            <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-5 dark:border-neutral-700 dark:bg-neutral-800">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
+                <div>
+                  <div className="mb-1.5 flex items-center gap-2 sm:mb-2">
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-green-500 sm:h-2.5 sm:w-2.5"></div>
+                    <p className="text-xs font-medium text-gray-600 sm:text-sm dark:text-neutral-400">
+                      Live Gold Rate (24K)
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 sm:flex-col sm:items-end sm:gap-0">
-                    <div className="flex items-center gap-1.5 text-green-600 sm:mb-1 dark:text-green-400">
-                      <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      <span className="text-sm font-semibold">+1.2%</span>
-                    </div>
-                    <div className="flex items-center gap-1.5 rounded-lg bg-orange-50 px-2 py-1 text-[10px] text-orange-700 sm:px-3 sm:py-1.5 sm:text-xs dark:bg-orange-900/30 dark:text-orange-400">
-                      <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                      <span>Valid for {formatTime(timeLeft)}</span>
-                    </div>
+                  <p className="text-2xl font-bold text-gray-900 sm:text-3xl dark:text-white">
+                    ₹{goldBuyPrice.toFixed(2)}
+                    <span className="text-sm font-normal text-gray-500 sm:text-base">
+                      /gram
+                    </span>
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 sm:flex-col sm:items-end sm:gap-0">
+                  <div className="flex items-center gap-1.5 text-green-600 sm:mb-1 dark:text-green-400">
+                    <TrendingUp className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    <span className="text-sm font-semibold">+1.2%</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 rounded-lg bg-orange-50 px-2 py-1 text-[10px] text-orange-700 sm:px-3 sm:py-1.5 sm:text-xs dark:bg-orange-900/30 dark:text-orange-400">
+                    <Clock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
+                    <span>Valid for {formatTime(timeLeft)}</span>
                   </div>
                 </div>
               </div>
-
-              {/* Input Mode Toggle - Responsive */}
-              <div className="mb-4 grid grid-cols-2 gap-1.5 sm:mb-6 sm:gap-2">
-                <button
-                  onClick={() => {
-                    setInputMode("rupees");
-                    setAmount("");
-                  }}
-                  className={`rounded-lg py-2.5 text-xs font-semibold transition-all sm:rounded-xl sm:py-3 sm:text-sm ${inputMode === "rupees"
-                    ? "bg-[#FCDE5B] text-[#1a1a2e] shadow-md"
-                    : "border border-gray-200 bg-white text-gray-700 hover:border-[#FCDE5B] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
-                    }`}
-                >
-                  Buy in ₹
-                </button>
-                <button
-                  onClick={() => {
-                    setInputMode("grams");
-                    setAmount("");
-                  }}
-                  className={`rounded-lg py-2.5 text-xs font-semibold transition-all sm:rounded-xl sm:py-3 sm:text-sm ${inputMode === "grams"
-                    ? "bg-[#FCDE5B] text-[#1a1a2e] shadow-md"
-                    : "border border-gray-200 bg-white text-gray-700 hover:border-[#FCDE5B] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
-                    }`}
-                >
-                  Buy in Grams
-                </button>
-              </div>
-
-              {/* Buy Coins CTA - Navigate to separate page */}
-              <button
-                onClick={() => router.push("/buy-coins")}
-                className="mb-4 flex w-full lg:w-[205%] items-center justify-between rounded-xl border-2 border-[#D4AF37]/30 bg-linear-to-r from-[#fafafa] to-[#fef9e6] p-4 transition-all hover:border-[#D4AF37] hover:shadow-md active:scale-[0.99] sm:mb-6 sm:rounded-2xl sm:p-5 dark:from-[#1a1a1a] dark:to-[#2a2415] dark:border-[#D4AF37]/50"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-[#f5e6a3] to-[#d4af37] sm:h-12 sm:w-12">
-                    <Coins className="h-5 w-5 text-[#5a4a1a] sm:h-6 sm:w-6" />
-                  </div>
-                  <div className="text-left">
-                    <p className="text-sm font-bold text-[#1a1a1a] sm:text-base dark:text-white">
-                      Buy Gold Coins
-                    </p>
-                    <p className="text-[10px] text-[#888] sm:text-xs">
-                      Physical coins • 1g, 2g, 5g, 10g
-                    </p>
-                  </div>
-                </div>
-                <ChevronRight className="h-5 w-5 text-[#D4AF37]" />
-              </button>
-
-
-
-              <div>
-                {/* Info Box - Responsive */}
-                <div className="mb-4 rounded-lg lg:w-[205%]  border border-blue-200 bg-blue-50 p-3 sm:mb-6 sm:rounded-xl sm:p-4 dark:border-blue-800 dark:bg-blue-900/20">
-                  <div className="flex items-start gap-2 sm:gap-3">
-                    <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-600 sm:h-5 sm:w-5 dark:text-blue-400" />
-                    <div className="text-xs sm:text-sm">
-                      <p className="mb-0.5 font-medium text-blue-900 sm:mb-1 dark:text-blue-300">
-                        Purity: 24K / 999
-                      </p>
-                      <p className="text-blue-700 dark:text-blue-400">
-                        Stored securely in Zold Vault with AT Plus Jewellers
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Price Breakdown - Digital Gold (Responsive) */}
-                {amount && (
-                  <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
-                    <h3 className="mb-3 text-sm font-bold text-gray-900 sm:mb-4 sm:text-base dark:text-white">
-                      Price Breakdown
-                    </h3>
-                    <div className="space-y-2 sm:space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-xs text-gray-600 sm:text-sm dark:text-neutral-400">
-                          Gold Value ({grams.toFixed(4)}g)
-                        </span>
-                        <span className="text-xs font-medium text-gray-900 sm:text-sm dark:text-white">
-                          ₹{rupees.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-xs text-gray-600 sm:text-sm dark:text-neutral-400">
-                          GST ({gstRate}%)
-                        </span>
-                        <span className="text-xs font-medium text-gray-900 sm:text-sm dark:text-white">
-                          ₹{gst.toFixed(2)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between border-t border-gray-200 pt-2 sm:pt-3 dark:border-neutral-700">
-                        <span className="text-sm font-bold text-gray-900 dark:text-white">
-                          Total Amount
-                        </span>
-                        <span className="text-lg font-bold text-[#1a1a2e] sm:text-xl dark:text-[#FCDE5B]">
-                          ₹{totalAmount.toFixed(2)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Error Message */}
-                {error && (
-                  <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 sm:mb-6 sm:rounded-xl sm:p-4 dark:border-red-800 dark:bg-red-900/20">
-                    <p className="text-xs font-medium text-red-800 sm:text-sm dark:text-red-400">
-                      {error}
-                    </p>
-                  </div>
-                )}
-
-                {/* Buy Button - Responsive */}
-                <button
-                  onClick={() => handleBuyGold()}
-                  disabled={
-                    !amount || rupees < 100 || totalAmount > testWalletBalance || loading
-                  }
-                  className="w-full rounded-lg bg-[#FCDE5B] py-3.5 text-base font-bold text-[#1a1a2e] shadow-lg transition-all hover:bg-[#f5d347] hover:shadow-xl active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500 sm:rounded-xl sm:py-4 sm:text-lg dark:disabled:bg-neutral-700"
-                >
-                  {loading
-                    ? "Processing..."
-                    : totalAmount > testWalletBalance
-                      ? "Insufficient Balance"
-                      : `Buy Gold • ₹${totalAmount.toFixed(0)}`}
-                </button>
-              </div>
-
-              {/* Quick Amount Buttons - Responsive */}
-              {inputMode === "rupees" && (
-                <div className="mb-4 grid grid-cols-4 gap-1.5 sm:mb-6 sm:gap-3 mt-5">
-                  {[500, 1000, 5000, 10000].map((amt) => (
-                    <button
-                      key={amt}
-                      onClick={() => setAmount(amt.toString())}
-                      className={`rounded-lg py-2.5 text-xs font-semibold transition-all sm:rounded-xl sm:py-3 sm:text-sm ${amount === amt.toString()
-                        ? "bg-[#FCDE5B] text-[#1a1a2e] shadow-md"
-                        : "border border-gray-200 bg-white text-gray-700 hover:border-[#FCDE5B] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
-                        }`}
-                    >
-                      ₹{amt >= 1000 ? `${amt / 1000}K` : amt}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
 
-            {/* Right Column - Info & Breakdown */}
-            {/* Amount Input - Digital Gold (Responsive) */}
-            <div className="mb-4 h-[20vh] rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
+
+            {/* Buy Coins CTA */}
+            <button
+              onClick={() => router.push("/buy-coins")}
+              className="mb-4 flex w-full items-center justify-between rounded-xl border-2 border-[#D4AF37]/30 bg-linear-to-r from-[#fafafa] to-[#fef9e6] p-4 transition-all hover:border-[#D4AF37] hover:shadow-md active:scale-[0.99] sm:mb-6 sm:rounded-2xl sm:p-5 dark:from-[#1a1a1a] dark:to-[#2a2415] dark:border-[#D4AF37]/50"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-linear-to-br from-[#f5e6a3] to-[#d4af37] sm:h-12 sm:w-12">
+                  <Coins className="h-5 w-5 text-[#5a4a1a] sm:h-6 sm:w-6" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-bold text-[#1a1a1a] sm:text-base dark:text-white">
+                    Buy Gold Coins
+                  </p>
+                  <p className="text-[10px] text-[#888] sm:text-xs">
+                    Physical coins • 1g, 2g, 5g, 10g
+                  </p>
+                </div>
+              </div>
+              <ChevronRight className="h-5 w-5 text-[#D4AF37]" />
+            </button>
 
 
-              <label className="mb-4 block text-sm font-medium text-gray-700 dark:text-neutral-300">
+
+
+            {/* ENTER AMOUNT (Now placed here) */}
+            <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
+
+              <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-3">
                 Enter Amount
               </label>
 
@@ -530,7 +409,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
                     value={amountInr}
                     onChange={(e) => onInrChange(e.target.value)}
                     placeholder="100"
-                    className="w-full rounded-xl border px-8 py-3 font-semibold text-gray-700"
+                    className="w-full rounded-xl border px-8 py-3 font-semibold text-gray-700 dark:bg-neutral-900 dark:text-white"
                   />
                 </div>
 
@@ -554,15 +433,94 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
                     onChange={(e) => onGmChange(e.target.value)}
                     placeholder="0.00"
                     step="0.0001"
-                    className="w-full rounded-xl border px-4 py-3 pr-12 font-semibold text-gray-700"
+                    className="w-full rounded-xl border px-4 py-3 pr-12 font-semibold text-gray-700 dark:bg-neutral-900 dark:text-white"
                   />
                 </div>
 
               </div>
             </div>
 
+            {/* Insufficient Amount CHecker  */}
+            {isInsufficientBalance && (
+              <div className="mb-6 mt-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+                Insufficient wallet balance. Available: ₹{testWalletBalance.toFixed(2)}
+              </div>
+            )}
+
+
+
+            {/* Info Box */}
+            <div className="mb-4 rounded-lg border border-blue-200 bg-blue-50 p-3 sm:mb-6 sm:rounded-xl sm:p-4 dark:border-blue-800 dark:bg-blue-900/20">
+              <div className="flex items-start gap-2 sm:gap-3">
+                <Info className="mt-0.5 h-4 w-4 shrink-0 text-blue-600 sm:h-5 sm:w-5 dark:text-blue-400" />
+                <div className="text-xs sm:text-sm">
+                  <p className="mb-0.5 font-medium text-blue-900 sm:mb-1 dark:text-blue-300">
+                    Purity: 24K / 999
+                  </p>
+                  <p className="text-blue-700 dark:text-blue-400">
+                    Stored securely in Zold Vault with AT Plus Jewellers
+                  </p>
+                </div>
+              </div>
+            </div>
+
+
+            {/* Price Breakdown */}
+            {amount && (
+              <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
+                <h3 className="mb-3 text-sm font-bold text-gray-900 sm:mb-4 sm:text-base dark:text-white">
+                  Price Breakdown
+                </h3>
+
+                <div className="space-y-3">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600 dark:text-neutral-400">
+                      Gold Value ({grams.toFixed(4)}g)
+                    </span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      ₹{rupees.toFixed(2)}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <span className="text-sm text-gray-600 dark:text-neutral-400">
+                      GST ({gstRate}%)
+                    </span>
+                    <span className="font-medium text-gray-900 dark:text-white">
+                      ₹{gst.toFixed(2)}
+                    </span>
+                  </div>
+
+                  <div className="flex justify-between border-t border-gray-200 pt-3 dark:border-neutral-700">
+                    <span className="font-bold text-gray-900 dark:text-white">
+                      Total Amount
+                    </span>
+                    <span className="text-xl font-bold text-[#1a1a2e] dark:text-[#FCDE5B]">
+                      ₹{totalAmount.toFixed(2)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
+
+            {/* Buy Button */}
+            <button
+              onClick={() => handleBuyGold()}
+              disabled={
+                !amount || rupees < 100 || totalAmount > testWalletBalance || loading
+              }
+              className="w-full rounded-lg bg-[#FCDE5B] py-4 text-lg font-bold text-[#1a1a2e] shadow-lg transition-all hover:bg-[#f5d347] hover:shadow-xl active:scale-[0.99] disabled:cursor-not-allowed disabled:bg-gray-300 disabled:text-gray-500"
+            >
+              {loading
+                ? "Processing..."
+                : totalAmount > testWalletBalance
+                  ? "Insufficient Balance"
+                  : `Buy Gold • ₹${totalAmount.toFixed(0)}`}
+            </button>
 
           </div>
+
         )}
 
         {step === "success" && (

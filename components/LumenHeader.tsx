@@ -91,6 +91,7 @@ export default function LumenHeader() {
       height: 32px;
       border-radius: 10px;
     }
+      
 
     .badge {
       width: 16px;

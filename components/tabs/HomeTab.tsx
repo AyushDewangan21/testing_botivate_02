@@ -37,6 +37,9 @@ import { GoldGoals } from "../GoldGoals";
 import { GiftGold } from "../GiftGold";
 import { ReferralProgram } from "../ReferralProgram";
 import JewelleryPage from "@/components/JewelleryPage";
+import zoldImage from "@/components/images/Zold.jpg";
+import BuyGoldImage from "@/components/images/buyGoldImage.png"
+import SellGoldImage from "@/components/images/sellGoldImage.jpg"
 
 interface HomeTabProps {
   isLoading: boolean;
@@ -249,9 +252,8 @@ export function HomeTab({
     };
   }, [showNotifications]);
 
-  if (isLoading || isInternalLoading) {
-    return <HomeTabSkeleton />;
-  }
+  // Removed static loading check - components render immediately
+  // Only show skeletons for dynamic data sections
 
   // Calculate total portfolio value
   const totalPortfolioValue = userGoldValue + totalCoinValue;
@@ -301,9 +303,7 @@ export function HomeTab({
           </button>
         </div>
 
-        {/* ═══════════════════════════════════════════════════════════════
-            LIVE GOLD RATE - Clean Two-Column
-            ═══════════════════════════════════════════════════════════════ */}
+        {/* ═══════════════════════  LIVE GOLD RATE - Clean Two-Column  ══════════════════════════════════ */}
         <div className="mb-4 rounded-2xl bg-white p-4 shadow-sm dark:bg-[#141414]">
           <div className="mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -331,200 +331,138 @@ export function HomeTab({
             </span>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-xl 
-  bg-emerald-50
-  border border-emerald-400
-  p-3
-  shadow-[0_6px_18px_rgba(20,184,166,0.25)]">
-
-
-
+            <div
+              className="rounded-xl bg-emerald-100 border-2 border-emerald-500/30 p-3 shadow-[0_6px_18px_rgba(20,184,166,0.25)]">
               <p className="mb-0.5 text-[10px] font-medium text-emerald-900 uppercase">
-                Buy
-              </p>
-              <p className="text-lg font-bold text-emerald-900">
-                ₹{goldBuyPrice.toFixed(2)}
-                <span className="text-xs font-normal opacity-60">/g</span>
-              </p>
+                Buy </p>
+              {isInternalLoading ?
+                (<div className="h-7 w-24 animate-pulse rounded bg-emerald-200/50" />)
+                : (<p className="text-lg font-bold text-emerald-900"> ₹{goldBuyPrice.toFixed(2)}
+                  <span className="text-xs font-normal opacity-60">/g</span> </p>)}
             </div>
-
-            <div className="rounded-xl 
-  bg-rose-50
-  border border-rose-500/70
-  p-3
-  shadow-[0_6px_18px_rgba(244,63,94,0.25)]">
-              <p className="mb-0.5 text-[10px] font-medium text-rose-800 uppercase">
-                Sell
-              </p>
-              <p className="text-lg font-bold text-red-900">
-                ₹{goldSellPrice.toFixed(2)}
-                <span className="text-xs font-normal opacity-60">/g</span>
-              </p>
+            <div className="rounded-xl bg-rose-100 border-2 border-rose-300/90 p-3 shadow-[0_6px_18px_rgba(244,63,94,0.25)]">
+              <p className="mb-0.5 text-[10px] font-medium text-rose-800 uppercase"> Sell </p>
+              {isInternalLoading ? (<div className="h-7 w-24 animate-pulse rounded bg-rose-200/50" />)
+                : (<p className="text-lg font-bold text-red-900"> ₹{goldSellPrice.toFixed(2)}
+                  <span className="text-xs font-normal opacity-60">/g</span> </p>)}
             </div>
-
           </div>
         </div>
 
-        {/* Premium Gold Portfolio Card */}
-        <div className="gold-card relative overflow-hidden rounded-2xl p-5">
-          {/* Decorative shine */}
-          <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-white/20 blur-3xl" />
-          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
 
-          <div className="relative">
-            {/* Total Value Section */}
-            <div className="mb-4 flex items-start justify-between">
-              <div>
-                <p className="mb-1 text-xs font-medium tracking-wider text-[#5a4a1a]/60 uppercase">
-                  Total Portfolio
-                </p>
-                <p className="text-3xl font-bold text-[#2d2510]">
-                  ₹{totalPortfolioValue.toLocaleString()}
-                </p>
-                <div className="mt-1.5 flex items-center gap-2">
-                  <span className="text-sm text-[#5a4a1a]/70">
-                    {totalGoldGrams.toFixed(3)}g gold
-                  </span>
-                  <span
-                    className={`flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-semibold ${profitToday >= 0
-                      ? "bg-emerald-600/20 text-emerald-800"
-                      : "bg-red-600/20 text-red-800"
-                      }`}
-                  >
-                    {profitToday >= 0 ? (
-                      <TrendingUp className="h-3 w-3" />
-                    ) : (
-                      <TrendingDown className="h-3 w-3" />
-                    )}
-                    {profitToday >= 0 ? "+" : ""}₹
-                    {Math.abs(profitToday).toFixed(0)}
-                  </span>
-                </div>
-              </div>
-
-              {/* Gold Bar Visual */}
-              <div className="relative flex h-20 w-14 flex-col items-center justify-center rounded-lg bg-linear-to-b from-[#f5e6a3] via-[#e8c84a] to-[#c9a432] shadow-lg ring-1 ring-[#b8960c]/30">
-                <div className="absolute inset-0.5 rounded-md bg-linear-to-br from-white/40 to-transparent" />
-                <span className="relative text-[7px] font-semibold text-[#5a4a1a]/60">
-                  FINE GOLD
-                </span>
-                <span className="relative text-[9px] font-medium text-[#5a4a1a]/50">
-                  999.0
-                </span>
-                <span className="relative mt-0.5 text-sm font-bold text-[#3d3015]">
-                  24K
-                </span>
-                <span className="relative text-[7px] font-semibold text-[#5a4a1a]/60">
-                  ZOLD
-                </span>
-              </div>
-            </div>
-
-            {/* Balance Breakdown - Compact */}
-            <div className="flex gap-3">
-              {/* Digital Gold */}
-              <div className="flex-1 rounded-xl bg-[#2d2510]/10 p-3">
-                <div className="mb-1 flex items-center gap-1.5">
-                  <Wallet className="h-3.5 w-3.5 text-[#5a4a1a]/70" />
-                  <span className="text-[10px] font-medium text-[#5a4a1a]/70">
-                    Digital Gold
-                  </span>
-                </div>
-                <p className="text-base font-bold text-[#2d2510]">
-                  {userGoldGrams.toFixed(3)}g
-                </p>
-              </div>
-
-              {/* Gold Coins */}
-              <div className="flex-1 rounded-xl bg-[#2d2510]/10 p-3">
-                <div className="mb-1 flex items-center gap-1.5">
-                  <Coins className="h-3.5 w-3.5 text-[#5a4a1a]/70" />
-                  <span className="text-[10px] font-medium text-[#5a4a1a]/70">
-                    Gold Coins
-                  </span>
-                </div>
-                <p className="text-base font-bold text-[#2d2510]">
-                  {totalCoins} coins
-                </p>
-              </div>
-            </div>
-
-            {/* Coin Pills (if coins exist) */}
-            {coinInventory.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {coinInventory.map((coin, idx) => (
-                  <span
-                    key={idx}
-                    className="rounded-full bg-[#2d2510]/15 px-2.5 py-1 text-[10px] font-semibold text-[#2d2510]"
-                  >
-                    {coin.coinGrams}g × {coin.quantity}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
       </div>
-
       {/* Main Content */}
       <div className="px-4 pt-4">
         {/* ═══════════════════════════════════════════════════════════════
             BUY & SELL ACTIONS - Professional Design
             ═══════════════════════════════════════════════════════════════ */}
-        <div className="mb-4 flex gap-3 mt-4">
+        <div className="mb-4 flex gap-2 sm:gap-10 mt-4 px-1">
+
+
           {/* Buy Gold */}
-          <button
-            onClick={onBuyGold}
-            className="group relative flex-1 overflow-hidden rounded-2xl bg-[#1a1a1a] p-4 transition-all hover:shadow-lg active:scale-[0.98] dark:bg-[#0a0a0a]"
-          >
-            <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
-            <div className="relative flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg sm:rounded-xl bg-[#D4AF37]">
-                <ArrowUpRight className="h-3.5 w-3.5 sm:h-5 sm:w-5 md:h-6 md:w-6 text-[#1a1a1a]" />
+          <div className="flex-1">
+            <button onClick={onBuyGold} className="sm:hidden w-full">
+              <Image
+                src={BuyGoldImage}
+                alt="gold"
+                className="min-h-20 mb-2 w-full h-20 max-w-[90px] mx-auto object-contain rounded-xl shadow-sm transition-all hover:shadow-md active:scale-[0.97] bg-black border-1 border-yellow-500"
+              />
+              <div className="text-center mt-1">
+                <p className="text-xs font-bold  text-[#1a1a1a]">Buy Gold</p>
+                <p className="text-[10px] text-gray-500">Digital gold</p>
+              </div>
+            </button>
+
+            {/* Desktop unchanged */}
+            <button
+              onClick={onBuyGold}
+              className="hidden sm:flex group relative w-full overflow-hidden rounded-2xl bg-[#1a1a1a] p-4 items-center gap-3"
+            >
+              <div className="h-10 w-10 flex items-center justify-center rounded-lg bg-[#D4AF37]">
+                <ArrowUpRight className="h-5 w-5 text-[#1a1a1a]" />
               </div>
               <div className="text-left">
                 <p className="text-sm font-bold text-white">Buy Gold</p>
                 <p className="text-xs text-white/50">Digital gold</p>
               </div>
-            </div>
-          </button>
+            </button>
+          </div>
+
 
           {/* Sell Gold */}
-          <button
-            onClick={onSellGold}
-            className="group relative flex-1 overflow-hidden rounded-2xl border-2 border-[#e8e8e8] bg-white p-4 transition-all hover:border-[#D4AF37] hover:shadow-lg active:scale-[0.98] dark:border-[#2a2a2a] dark:bg-[#141414] dark:hover:border-[#D4AF37]"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f5f5f5] transition-colors group-hover:bg-[#D4AF37]/10 dark:bg-[#222]">
-                <TrendingDown className="h-5 w-5 text-[#666] transition-colors group-hover:text-[#B8960C] dark:text-[#888]" />
+          <div className="flex-1">
+            <button onClick={onSellGold} className="sm:hidden w-full">
+              <div className="w-full h-20 max-w-[90px] mx-auto rounded-xl overflow-hidden shadow-sm hover:shadow-md bg-white">
+                <div className="flex justify-center items-center w-full">
+                  <Image
+                    src={SellGoldImage}
+                    alt="gold"
+                    className="w-16 h-16 object-contain transition-transform duration-300 mt-2"
+                  />
+                </div>
+
+              </div>
+
+              <div className="text-center mt-1">
+                <p className="text-xs font-bold text-[#1a1a1a]">Sell Gold</p>
+                <p className="text-[10px] text-gray-500">Withdraw</p>
+              </div>
+            </button>
+
+            {/* Desktop unchanged */}
+            <button
+              onClick={onSellGold}
+              className="hidden sm:flex group relative w-full overflow-hidden rounded-2xl border-2 border-[#e8e8e8] bg-white p-4 items-center gap-3"
+            >
+              <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-[#f5f5f5]">
+                <TrendingDown className="h-5 w-5 text-[#666]" />
               </div>
               <div className="text-left">
-                <p className="text-sm font-bold text-[#1a1a1a] dark:text-white">
-                  Sell Gold
-                </p>
+                <p className="text-sm font-bold text-[#1a1a1a]">Sell Gold</p>
                 <p className="text-xs text-[#888]">Withdraw</p>
               </div>
-            </div>
-          </button>
+            </button>
+          </div>
+
 
           {/* Buy Coins */}
-          <button
-            onClick={() => router.push("/buy-coins")}
-            className="group relative flex-1 overflow-hidden rounded-2xl border-2 border-[#D4AF37]/40 bg-white p-4 transition-all hover:border-[#D4AF37] hover:shadow-lg active:scale-[0.98] dark:border-[#3a3a3a] dark:bg-[#141414]"
-          >
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D4AF37]/10 transition-colors group-hover:bg-[#D4AF37]/20">
+          <div className="flex-1">
+            <button onClick={() => router.push("/buy-coins")} className="sm:hidden w-full">
+              <Image
+                src={zoldImage}
+                alt="coins"
+                className=" mb-2  w-full h-20 max-w-[90px] mx-auto object-contain rounded-xl  bg-white shadow-sm transition-all hover:shadow-md active:scale-[0.97]"
+              />
+              <div className="text-center mt-1">
+                <p className="text-xs font-bold text-[#1a1a1a]">Buy Coins</p>
+                <p className="text-[10px] text-gray-500">Gold coins</p>
+              </div>
+            </button>
+
+            {/* Desktop unchanged */}
+            <button
+              onClick={() => router.push("/buy-coins")}
+              className="hidden sm:flex group relative w-full overflow-hidden rounded-2xl border-2 border-[#D4AF37]/40 bg-white p-4 items-center gap-3"
+            >
+              <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-[#D4AF37]/10">
                 <Coins className="h-5 w-5 text-[#B8960C]" />
               </div>
               <div className="text-left">
-                <p className="text-sm font-bold text-[#1a1a1a] dark:text-white">
-                  Buy Coins
-                </p>
+                <p className="text-sm font-bold text-[#1a1a1a]">Buy Coins</p>
                 <p className="text-xs text-[#888]">Gold coins</p>
               </div>
-            </div>
-          </button>
+            </button>
+          </div>
+
         </div>
+
+
+
+
+
+
+
+
 
         {/* ═══════════════════════════════════════════════════════════════
             BUY GOLD COINS - Premium Section
@@ -637,7 +575,7 @@ export function HomeTab({
               {
                 icon: ShoppingBag,
                 label: "Shop",
-                onClick: () => setShowShop(true),
+                onClick: () => router.push("/jewellery"),
                 color: "#8B5CF6",
               },
 

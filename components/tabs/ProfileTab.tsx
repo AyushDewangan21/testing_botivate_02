@@ -78,12 +78,7 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
     }
   }, [searchParams]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInternalLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
-  }, []);
+  // ProfileTab has no dynamic data loading - render immediately
 
   const handleCallSupport = () => {
     window.location.href = "tel:+911234567890";
@@ -156,10 +151,6 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
     showRiskDisclosure,
     showPrivacySecurity,
   ]);
-
-  if (isInternalLoading) {
-    return <ProfileTabSkeleton />;
-  }
 
   return (
     <>

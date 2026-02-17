@@ -106,9 +106,8 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
     fetchWalletData();
   }, []);
 
-  if (isInternalLoading) {
-    return <WalletTabSkeleton />;
-  }
+  // Removed static loading check - components render immediately
+  // Only show skeletons for dynamic data sections
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -203,11 +202,12 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
       {/* Header */}
       <div className="rounded-b-3xl 
   bg-gradient-to-br
-  from-[#D4AF37] 
-  via-[#B8960C] 
-  to-[#7A5A00]
+  from-[#E5C34B]
+  via-[#D4AF37]
+  to-[#9E7B07]
   px-6 pt-6 pb-6
-  shadow-[0_10px_40px_rgba(122,90,0,0.35)]">
+  shadow-[0_14px_38px_rgba(212,175,55,0.40)]">
+
 
 
         <div className="mb-6 flex items-center gap-4">
@@ -223,17 +223,26 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
         </div>
 
         {/* Wallet Overview */}
-        <div className="rounded-2xl bg-white/10 p-6 backdrop-blur-md dark:bg-white/5">
+        <div className="rounded-2xl bg-yellow-200/20 p-6 backdrop-blur-md dark:bg-white/5  bg-gradient-to-br   from-[#D4AF37]   via-[#D4AF37]   to-[#D4AF37]  ">
           <div className="mb-6">
             <p className="mb-1 text-sm text-white/80 dark:text-white/70">
               Total Gold Holdings
             </p>
-            <p className="mb-1 text-white dark:text-white/95">
-              {totalGold.toFixed(3)} grams
-            </p>
-            <p className="text-sm text-white/90 dark:text-white/80">
-              ₹{currentValue.toLocaleString()}
-            </p>
+            {isInternalLoading ? (
+              <>
+                <div className="mb-1 h-6 w-32 animate-pulse rounded bg-white/20" />
+                <div className="h-5 w-24 animate-pulse rounded bg-white/20" />
+              </>
+            ) : (
+              <>
+                <p className="mb-1 text-white dark:text-white/95">
+                  {totalGold.toFixed(3)} grams
+                </p>
+                <p className="text-sm text-white/90 dark:text-white/80">
+                  ₹{currentValue.toLocaleString()}
+                </p>
+              </>
+            )}
           </div>
 
           <div className="mb-4 grid grid-cols-2 gap-4">
@@ -241,20 +250,28 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
               <p className="text-sm text-white/70 dark:text-white/60">
                 Avg Buy Price
               </p>
-              <p className="text-sm text-white dark:text-white/95">
-                ₹{avgBuyPrice.toFixed(2)}/gm
-              </p>
+              {isInternalLoading ? (
+                <div className="h-5 w-20 animate-pulse rounded bg-white/20" />
+              ) : (
+                <p className="text-sm text-white dark:text-white/95">
+                  ₹{avgBuyPrice.toFixed(2)}/gm
+                </p>
+              )}
             </div>
             <div>
               <p className="text-sm text-white/70 dark:text-white/60">
                 Profit/Loss
               </p>
-              <div className="flex items-center gap-1">
-                <TrendingUp className="h-4 w-4 text-green-300 dark:text-green-400" />
-                <p className="text-sm text-green-300 dark:text-green-400">
-                  ₹{profitLoss} ({profitLossPercent}%)
-                </p>
-              </div>
+              {isInternalLoading ? (
+                <div className="h-5 w-24 animate-pulse rounded bg-white/20" />
+              ) : (
+                <div className="flex items-center gap-1">
+                  <TrendingUp className="h-4 w-4 text-green-300 dark:text-green-400" />
+                  <p className="text-sm text-green-300 dark:text-green-400">
+                    ₹{profitLoss} ({profitLossPercent}%)
+                  </p>
+                </div>
+              )}
             </div>
           </div>
 
@@ -492,54 +509,76 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
 
           {/* Transaction List */}
           <div className="space-y-3">
-            {filteredTransactions.map((transaction) => (
-              <div
-                key={transaction.id}
-                className="flex cursor-pointer items-center justify-between rounded-lg p-3 transition-colors hover:bg-gray-50 dark:hover:bg-neutral-700/50"
-              >
-                <div className="flex items-center gap-3">
-                  <div
-                    className={`rounded-lg p-2 ${getTypeBg(transaction.type)}`}
-                  >
-                    {getTypeIcon(transaction.type)}
+            {isInternalLoading ? (
+              // Show skeleton loaders while loading
+              Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between rounded-lg p-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="h-10 w-10 animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-700" />
+                    <div>
+                      <div className="mb-1 h-4 w-24 animate-pulse rounded bg-gray-200 dark:bg-neutral-700" />
+                      <div className="h-3 w-32 animate-pulse rounded bg-gray-200 dark:bg-neutral-700" />
+                    </div>
                   </div>
-                  <div>
+                  <div className="text-right">
+                    <div className="mb-1 h-4 w-20 animate-pulse rounded bg-gray-200 dark:bg-neutral-700" />
+                    <div className="h-3 w-16 animate-pulse rounded bg-gray-200 dark:bg-neutral-700" />
+                  </div>
+                </div>
+              ))
+            ) : (
+              filteredTransactions.map((transaction) => (
+                <div
+                  key={transaction.id}
+                  className="flex cursor-pointer items-center justify-between rounded-lg p-3 transition-colors hover:bg-gray-50 dark:hover:bg-neutral-700/50"
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`rounded-lg p-2 ${getTypeBg(transaction.type)}`}
+                    >
+                      {getTypeIcon(transaction.type)}
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-900 dark:text-white">
+                        {transaction.type === "BUY" ? "Bought Gold" : "Sold Gold"}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-neutral-500">
+                        {new Date(transaction.createdAt).toLocaleDateString()} •{" "}
+                        {new Date(transaction.createdAt).toLocaleTimeString()}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="text-right">
                     <p className="text-sm text-gray-900 dark:text-white">
-                      {transaction.type === "BUY" ? "Bought Gold" : "Sold Gold"}
+                      {transaction.type === "SELL" ? "-" : "+"}
+                      {parseFloat(transaction.goldGrams).toFixed(3)} gm
                     </p>
                     <p className="text-xs text-gray-500 dark:text-neutral-500">
-                      {new Date(transaction.createdAt).toLocaleDateString()} •{" "}
-                      {new Date(transaction.createdAt).toLocaleTimeString()}
+                      ₹{parseFloat(transaction.finalAmount).toLocaleString()}
                     </p>
+                    {(transaction.type === "BUY" ||
+                      transaction.type === "SELL") && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDownloadInvoice(transaction.id);
+                          }}
+                          className="mt-1 ml-auto flex items-center gap-1 text-[10px] text-[#3D3066] hover:underline dark:text-[#8B7FA8]"
+                        >
+                          <FileText className="h-3 w-3" />
+                          Invoice
+                        </button>
+                      )}
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm text-gray-900 dark:text-white">
-                    {transaction.type === "SELL" ? "-" : "+"}
-                    {parseFloat(transaction.goldGrams).toFixed(3)} gm
-                  </p>
-                  <p className="text-xs text-gray-500 dark:text-neutral-500">
-                    ₹{parseFloat(transaction.finalAmount).toLocaleString()}
-                  </p>
-                  {(transaction.type === "BUY" ||
-                    transaction.type === "SELL") && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDownloadInvoice(transaction.id);
-                        }}
-                        className="mt-1 ml-auto flex items-center gap-1 text-[10px] text-[#3D3066] hover:underline dark:text-[#8B7FA8]"
-                      >
-                        <FileText className="h-3 w-3" />
-                        Invoice
-                      </button>
-                    )}
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
-          {filteredTransactions.length === 0 && (
+          {!isInternalLoading && filteredTransactions.length === 0 && (
             <div className="py-8 text-center text-gray-500 dark:text-neutral-500">
               <Filter className="mx-auto mb-2 h-12 w-12 text-gray-300 dark:text-neutral-700" />
               <p>No transactions found</p>

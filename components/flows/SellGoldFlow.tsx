@@ -57,6 +57,21 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
   const shippingFee = 150;
   const [gramsValue, setGramsValue] = useState("");
   const [rupeesValue, setRupeesValue] = useState("");
+  const enteredGrams = parseFloat(gramsValue || "0");
+  const isGoldAmountSufficient = enteredGrams > userGoldBalance;
+
+  const handleInputGramChange = (val: string) => {
+    const g = parseFloat(val || "0");
+
+    // stop if insufficient
+    if (g > userGoldBalance) {
+      setGramsValue(val); // still show typed value
+      return;
+    }
+
+    setGramsValue(val);
+    setRupeesValue((g * goldSellPrice).toFixed(2));
+  };
 
 
 
@@ -475,6 +490,12 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
 
 
               </div>
+              {isGoldAmountSufficient && (
+                <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-400">
+                  Insufficient amount of gold. Available: {userGoldBalance.toFixed(2)} g
+                </div>
+
+              )}
             </div>
 
 

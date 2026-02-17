@@ -79,7 +79,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             </div>
           </div>
         )}
-      </div>
+      </div>  
 
       {/* Navigation Items */}
       {navItems.map((item) => {
@@ -100,18 +100,29 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
           <Link
             key={item.path}
             href={item.path}
-            className={`flex w-full items-center gap-3 rounded-lg p-3 transition-colors ${isActive(item.path)
-              ? "bg-[#F4C430]/60 text-[#A67C00] dark:bg-[#F4C430]/20 dark:text-[#FFD54F]"
-              : "text-gray-700 hover:bg-gray-50 dark:text-neutral-400 dark:hover:bg-neutral-700/50"
+            className={`group flex w-full items-center gap-3 rounded-lg px-4 py-3 
+transition-all duration-200 ease-in-out
+  ${isActive(item.path)
+                ? "bg-gradient-to-r from-[#FCDE5B] to-[#E6B800]/90 text-gray-900 shadow-md scale-[1.02] dark:from-[#F4C430]/30 dark:to-[#E6B800]/20 dark:text-[#FFD54F]"
+                : "text-gray-700 hover:bg-gray-100 hover:shadow-sm dark:text-neutral-400 dark:hover:bg-neutral-800"
               }`}
-
           >
             <item.icon
-              className={`h-5 w-5 shrink-0 ${isActive(item.path) ? "text-[#B8860B]" : ""
+              className={`h-5 w-5 shrink-0 transition-all duration-200 ${isActive(item.path)
+                ? "text-[#8B6B00] dark:text-[#FFD54F]"
+                : "group-hover:text-gray-900 dark:group-hover:text-white"
                 }`}
             />
+
             {!collapsed && (
-              <span className="font-medium">{item.label}</span>
+              <span
+                className={`transition-all duration-200 ${isActive(item.path)
+                  ? "font-semibold tracking-wide"
+                  : "font-medium"
+                  }`}
+              >
+                {item.label}
+              </span>
             )}
           </Link>
         );

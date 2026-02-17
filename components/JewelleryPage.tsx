@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from 'react';
@@ -8,6 +9,13 @@ import {
   Truck, Shield, RefreshCw, Calendar,
   Users, Package, Award, Tag
 } from 'lucide-react';
+import Image from "next/image";
+import ring from "@/components/images/ring.webp";
+import necklace from "@/components/images/necklace.webp";
+import necklace2 from "@/components/images/necklace2.webp";
+import earring from "@/components/images/earring2.jpg";
+import bangle from "@/components/images/bangle.webp";
+import chain from "@/components/images/chain.webp";
 
 interface JewelleryFlowProps {
   onClose: () => void;
@@ -26,7 +34,7 @@ interface JewelleryProduct {
   diamonds?: number;
   price: number;
   discountPrice?: number;
-  image: string;
+  image: any;
   rating: number;
   reviews: number;
   deliveryTime: string;
@@ -49,6 +57,15 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
   const userGoldBalance = 12.547; // grams
   const currentGoldPrice = 6245.50; // per gram
 
+  const categoryImages: Record<string, any> = {
+    rings: ring,
+    necklaces: necklace,
+    earrings: earring,
+    bangles: bangle,
+    chains: chain,
+    necklace2: necklace2,
+  };
+
   const categories = [
     { id: 'all', name: 'All Jewellery', icon: Gem },
     { id: 'rings', name: 'Rings', icon: Gem },
@@ -69,7 +86,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
       diamonds: 0.5,
       price: 125000,
       discountPrice: 118000,
-      image: '💍',
+      image: ring,
       rating: 4.8,
       reviews: 342,
       deliveryTime: '7-10 days',
@@ -83,7 +100,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
       goldWeight: 25.7,
       makingCharges: 18500,
       price: 345000,
-      image: '📿',
+      image: necklace,
       rating: 4.9,
       reviews: 218,
       deliveryTime: '15-20 days',
@@ -98,7 +115,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
       makingCharges: 3200,
       price: 78500,
       discountPrice: 69800,
-      image: '💎',
+      image: earring,
       rating: 4.7,
       reviews: 156,
       deliveryTime: '5-7 days'
@@ -112,7 +129,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
       makingCharges: 5200,
       diamonds: 0.25,
       price: 124500,
-      image: '🔶',
+      image: bangle,
       rating: 4.6,
       reviews: 89,
       deliveryTime: '10-12 days'
@@ -126,7 +143,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
       makingCharges: 3800,
       price: 98500,
       discountPrice: 89900,
-      image: '⛓️',
+      image: chain,
       rating: 4.5,
       reviews: 203,
       deliveryTime: '3-5 days',
@@ -141,12 +158,13 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
       makingCharges: 25000,
       diamonds: 2.5,
       price: 625000,
-      image: '👑',
+      image: necklace2,
       rating: 4.9,
       reviews: 127,
       deliveryTime: '25-30 days'
     }
   ];
+
 
   const stores = [
     { id: 1, name: 'AT Plus Connaught Place', address: 'Connaught Place, Delhi', distance: '2.3 km' },
@@ -192,58 +210,151 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
   const goldValuePerGram = currentGoldPrice;
 
   return (
-    <div className="fixed inset-0 bg-gray-50 dark:bg-neutral-900 z-50 overflow-y-auto">
+    <div
+      className="
+    fixed inset-0
+    bg-gradient-to-br
+    from-white
+    via-white
+    to-[#E6E0FA]
+    dark:from-neutral-900
+    dark:via-[#2A2440]
+    dark:to-[#1F1B2E]
+    z-50
+    overflow-y-auto
+  "
+    >
+
       {/* Header */}
-      <div className="bg-gradient-to-br from-[#3D3066] via-[#5C4E7F] to-[#8B7FA8] px-6 py-4 sticky top-0 z-10">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
-            >
-              <X className="w-6 h-6 text-white" />
-            </button>
-            <h2 className="text-white">Gold Jewellery</h2>
+      <div
+        className="
+    sticky top-0 z-20
+    bg-gradient-to-r from-[#2c1f52] via-[#4b3a79] to-purple-900
+    backdrop-blur-xl
+    border-b border-white/10
+    shadow-[0_10px_20px_rgba(0,0,0,0.20)]
+  "
+      >
+        <div className="w-full h-[10vh] max-w-7xl mx-auto px-4 py-3">
+
+          {/* Top Row */}
+          <div className="flex items-center justify-between">
+
+            {/* Left : Close + Title */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-white" />
+              </button>
+
+              <h2 className="text-white text-lg md:text-xl font-semibold whitespace-nowrap">
+                Gold Jewellery
+              </h2>
+            </div>
+
+            {/* Center Search (Desktop only) */}
+            {step === "browse" && (
+              <div className="hidden md:flex justify-center flex-1 px-6">
+                <div className="relative w-full max-w-xl">
+                  <Image
+                    src="/icons/search.svg"
+                    alt="search"
+                    width={18}
+                    height={18}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 opacity-90"
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Search jewellery..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="
+                w-full pl-10 pr-3 py-2.5
+                rounded-xl
+                bg-white/15
+                border border-white/20
+                backdrop-blur-lg
+                text-white text-sm
+                placeholder-white/60
+                focus:outline-none
+                focus:ring-2 focus:ring-white/30
+              "
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Right Step Indicator */}
+            {step !== "browse" && (
+              <div className="bg-white/20 rounded-full px-3 py-1">
+                <span className="text-white text-xs">
+                  Step {step === "product" ? 1 : step === "customize" ? 2 : step === "delivery" ? 3 : 4} of 4
+                </span>
+              </div>
+            )}
           </div>
-          {step !== 'browse' && (
-            <div className="bg-white/20 dark:bg-white/10 rounded-full px-3 py-1">
-              <span className="text-white text-sm">
-                Step {step === 'product' ? 1 : step === 'customize' ? 2 : step === 'delivery' ? 3 : 4} of 4
-              </span>
+
+          {/* Mobile Search */}
+          {step === "browse" && (
+            <div className="mt-3 md:hidden">
+              <div className="relative w-full">
+                <Image
+                  src="/icons/search.svg"
+                  alt="search"
+                  width={18}
+                  height={18}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 opacity-90"
+                />
+
+                <input
+                  type="text"
+                  placeholder="Search jewellery..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="
+              w-full pl-10 pr-3 py-2.5
+              rounded-xl
+              bg-white/15
+              border border-white/20
+              backdrop-blur-lg
+              text-white text-sm
+              placeholder-white/60
+              focus:outline-none
+              focus:ring-2 focus:ring-white/30
+            "
+                />
+              </div>
             </div>
           )}
         </div>
-
-        {/* Search Bar - Only in browse step */}
-        {step === 'browse' && (
-          <div className="mt-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search jewellery..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-lg bg-white/20 backdrop-blur-sm text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/30"
-              />
-            </div>
-          </div>
-        )}
       </div>
+
+
+
+
+
+
 
       <div className="max-w-4xl mx-auto p-6 pb-24">
         {step === 'browse' && (
           <div>
             {/* Categories */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-gray-900 dark:text-white">Categories</h3>
-                <button className="flex items-center gap-1 text-sm text-[#3D3066] dark:text-[#8B7FA8]">
+            <div className="mb-10">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-gray-900 dark:text-white text-lg font-semibold tracking-wide">
+                  Categories
+                </h3>
+
+                <button className="flex items-center gap-2 text-sm text-[#3D3066] dark:text-[#8B7FA8] bg-white dark:bg-neutral-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-neutral-700 shadow-sm">
                   <Filter className="w-4 h-4" />
                   Filter
                 </button>
               </div>
-              <div className="grid grid-cols-3 gap-3">
+
+              <div className="grid grid-cols-3 gap-5">
                 {categories.map((category) => {
                   const Icon = category.icon;
                   const isSelected = selectedCategory === category.id;
@@ -251,166 +362,146 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id as Category)}
-                      className={`flex flex-col items-center justify-center p-4 rounded-xl transition-all ${isSelected
-                        ? 'bg-gradient-to-br from-[#3D3066] to-[#5C4E7F] text-white shadow-lg'
-                        : 'bg-white dark:bg-neutral-800 text-gray-700 dark:text-neutral-300 border border-gray-200 dark:border-neutral-700 hover:border-gray-300 dark:hover:border-neutral-600'
-                        }`}
+                      className={`
+    relative
+    flex flex-col items-center justify-center
+    p-7 rounded-xl
+    border
+    backdrop-blur-xl
+    transform transition-all duration-300 ease-out
+    ${isSelected
+                          ? `
+        scale-105 
+        bg-gradient-to-br 
+        from-[#3D3066] 
+        via-[#4C3C7A] 
+        to-[#6E5FA3]
+        text-white
+        border-white/10
+        shadow-[0_8px_8px_rgba(61,48,102,0.2)]
+        ring-1 ring-white/20
+      `
+                          : `
+        scale-100
+        bg-white/70 dark:bg-neutral-800/70
+        border-gray-200/60 dark:border-neutral-700/60
+        text-gray-700 dark:text-neutral-300
+        shadow-[0_6px_12px_rgba(0,0,0,0.1)]
+        hover:scale-[1.02]
+      `
+                        }
+  `}
                     >
-                      <Icon className="w-6 h-6 mb-2" />
-                      <span className="text-xs font-medium">{category.name}</span>
+                      {isSelected && (
+                        <div className="absolute inset-0 rounded-2xl" />
+                      )}
+
+                      <Icon
+                        className={`
+      w-7 h-7 mb-3
+      transition-colors duration-300
+      ${isSelected ? "text-white" : "text-[#3D3066] dark:text-[#8B7FA8]"}
+    `}
+                      />
+
+                      <span
+                        className={`
+      text-xs font-semibold tracking-wide
+      ${isSelected ? "text-white" : "text-gray-800 dark:text-neutral-200"}
+    `}
+                      >
+                        {category.name}
+                      </span>
                     </button>
+
+
+
                   );
                 })}
               </div>
             </div>
 
             {/* Products Grid */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-gray-900 dark:text-white">
-                  {selectedCategory === 'all' ? 'All Jewellery' :
-                    selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)}
-                  <span className="text-gray-500 dark:text-neutral-400 text-sm font-normal ml-2">
-                    ({searchedProducts.length} items)
-                  </span>
-                </h3>
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-neutral-400">
-                  <span>Your Gold: {userGoldBalance.toFixed(2)}g</span>
-                  <Sparkles className="w-4 h-4 text-yellow-500" />
-                </div>
-              </div>
+            <div className="pt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 bg-transparent">
 
-              {searchedProducts.length === 0 ? (
-                <div className="text-center py-12">
-                  <Sparkles className="w-12 h-12 text-gray-300 dark:text-neutral-700 mx-auto mb-4" />
-                  <p className="text-gray-600 dark:text-neutral-400">No jewellery found</p>
-                  <p className="text-gray-500 dark:text-neutral-500 text-sm">Try a different search or category</p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-4">
-                  {searchedProducts.map((product) => (
-                    <button
-                      key={product.id}
-                      onClick={() => {
-                        setSelectedProduct(product);
-                        setStep('product');
-                      }}
-                      className="bg-white dark:bg-neutral-800 rounded-xl overflow-hidden border border-gray-200 dark:border-neutral-700 hover:border-[#3D3066] dark:hover:border-[#8B7FA8] transition-colors text-left group"
-                    >
-                      {/* Badges */}
-                      <div className="absolute top-2 left-2 z-10 flex gap-1">
-                        {product.isNew && (
-                          <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">NEW</span>
+              {searchedProducts.map((product) => (
+                <button
+                  key={product.id}
+                  onClick={() => {
+                    setSelectedProduct(product);
+                    setStep('product');
+                  }}
+                  className="relative rounded-3xl overflow-hidden text-left bg-white shadow-[0_6px_10px_rgba(0,0,0,0.10)] transition-all duration-300 hover:shadow-[0_12px_15px_rgba(0,0,0,0.20)] hover:-translate-y-1"
+                >
+
+                  {/* Product Image */}
+                  <div className="relative h-72 flex items-center justify-center bg-white overflow-hidden">
+
+                    <div className="absolute inset-0"></div>
+
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      className="object-contain pt-10"
+                      fill
+                    />
+
+                  </div>
+
+
+                  {/* Product Details */}
+                  <div className="pl-5 pr-5 pb-5 rounded-t-[50px] bg-white">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-xs text-yellow-700 capitalize tracking-wide font-medium">
+                        {product.category}
+                      </span>
+                      <Heart className="w-4 h-4 text-yellow-500" />
+                    </div>
+
+                    <h4 className="text-gray-900 text-sm font-semibold mb-2 line-clamp-1">
+                      {product.name}
+                    </h4>
+
+                    <p className="text-gray-600 text-xs mb-4 line-clamp-2">
+                      {product.description}
+                    </p>
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        {product.discountPrice ? (
+                          <>
+                            <span className="text-gray-900 font-bold text-[15px]">
+                              ₹{product.discountPrice.toLocaleString()}
+                            </span>
+                            <span className="text-gray-400 line-through text-xs ml-2">
+                              ₹{product.price.toLocaleString()}
+                            </span>
+                          </>
+                        ) : (
+                          <span className="text-gray-900 font-bold text-[15px]">
+                            ₹{product.price.toLocaleString()}
+                          </span>
                         )}
                       </div>
 
-                      {/* Product Image */}
-                      <div className="h-40 bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-yellow-900/20 dark:to-yellow-800/10 flex items-center justify-center">
-                        <span className="text-4xl">{product.image}</span>
+                      <div className="text-xs text-yellow-700 flex items-center font-semibold">
+                        View
+                        <ChevronRight className="w-4 h-4 ml-0.5" />
                       </div>
-
-                      {/* Product Details */}
-                      <div className="p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-xs text-gray-500 dark:text-neutral-400 capitalize">
-                            {product.category}
-                          </span>
-                          <Heart className="w-4 h-4 text-gray-400 hover:text-red-500 transition-colors" />
-                        </div>
-
-                        <h4 className="text-gray-900 dark:text-white text-sm font-medium mb-2 line-clamp-1">
-                          {product.name}
-                        </h4>
-
-                        <p className="text-gray-600 dark:text-neutral-400 text-xs mb-3 line-clamp-2">
-                          {product.description}
-                        </p>
-
-                        {/* Rating */}
-                        <div className="flex items-center gap-1 mb-3">
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`w-3 h-3 ${i < Math.floor(product.rating)
-                                  ? 'text-yellow-400 fill-yellow-400'
-                                  : 'text-gray-300 dark:text-neutral-600'
-                                  }`}
-                              />
-                            ))}
-                          </div>
-                          <span className="text-xs text-gray-500 dark:text-neutral-400">
-                            {product.rating} ({product.reviews})
-                          </span>
-                        </div>
-
-                        {/* Gold Info */}
-                        <div className="flex items-center justify-between mb-3">
-                          <div className="text-xs">
-                            <span className="text-gray-600 dark:text-neutral-400">Gold: </span>
-                            <span className="text-gray-900 dark:text-white">{product.goldWeight}g</span>
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-neutral-400">
-                            <Clock className="w-3 h-3" />
-                            {product.deliveryTime}
-                          </div>
-                        </div>
-
-                        {/* Price */}
-                        <div className="flex items-center justify-between">
-                          <div>
-                            {product.discountPrice ? (
-                              <>
-                                <span className="text-gray-900 dark:text-white font-semibold">
-                                  ₹{product.discountPrice.toLocaleString()}
-                                </span>
-                                <span className="text-gray-500 dark:text-neutral-500 line-through text-sm ml-2">
-                                  ₹{product.price.toLocaleString()}
-                                </span>
-                              </>
-                            ) : (
-                              <span className="text-gray-900 dark:text-white font-semibold">
-                                ₹{product.price.toLocaleString()}
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-xs text-[#3D3066] dark:text-[#8B7FA8] flex items-center">
-                            View Details
-                            <ChevronRight className="w-4 h-4" />
-                          </div>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Info Section */}
-            <div className="bg-gradient-to-r from-[#3D3066] to-[#5C4E7F] rounded-xl p-6 text-white">
-              <div className="flex items-start gap-4">
-                <div className="bg-white/20 rounded-full p-3">
-                  <Gem className="w-6 h-6" />
-                </div>
-                <div>
-                  <h4 className="mb-2">Use Your Gold to Save Money</h4>
-                  <p className="text-white/80 text-sm mb-3">
-                    Convert your digital gold to beautiful jewellery and save up to 90% on making charges
-                  </p>
-                  <div className="flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-1">
-                      <Shield className="w-4 h-4" />
-                      <span>100% Hallmark Certified</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Truck className="w-4 h-4" />
-                      <span>Free Shipping</span>
                     </div>
                   </div>
-                </div>
-              </div>
+                </button>
+              ))}
+            </div>
+
+
+
+            {/* Info Section */}
+            <div className=" mt-15 bg-gradient-to-r from-[#3D3066] to-[#5C4E7F] rounded-2xl p-6 text-white shadow-[0_10px_35px_rgba(61,48,102,0.35)]">
+              More Info...
             </div>
           </div>
+
         )}
 
         {step === 'product' && selectedProduct && (
@@ -418,7 +509,8 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             {/* Back Button */}
             <button
               onClick={() => setStep('browse')}
-              className="flex items-center gap-2 text-[#3D3066] dark:text-[#8B7FA8] mb-6"
+              className="flex items-center gap-2 text-white mb-6 bg-[#3D3066] px-6 py-2 rounded-full transition-colors duration-200"
+
             >
               <ChevronRight className="w-4 h-4 rotate-180" />
               Back to Jewellery
@@ -427,34 +519,51 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             {/* Product Details */}
             <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 mb-6 shadow-lg dark:shadow-neutral-900/50">
               <div className="flex flex-col lg:flex-row gap-6">
+
+                {/* Product Image */}
                 {/* Product Image */}
                 <div className="lg:w-1/2">
-                  <div className="bg-gradient-to-br from-yellow-100 to-yellow-50 dark:from-yellow-900/20 dark:to-yellow-800/10 rounded-xl h-64 flex items-center justify-center">
-                    <span className="text-6xl">{selectedProduct.image}</span>
+                  <div
+                    className="
+      relative
+      w-full
+      aspect-square
+      rounded-xl
+      shadow-md
+    "
+                  >
+                    <Image
+                      src={selectedProduct.image}
+                      alt={selectedProduct.name}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      className="object-contain p-10"
+                      priority
+                    />
                   </div>
 
                   {/* Product Badges */}
                   <div className="flex gap-2 mt-4">
-                    {selectedProduct.isNew && (
-                      <span className="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs px-3 py-1 rounded-full">
-                        New Arrival
-                      </span>
-                    )}
-                    {selectedProduct.isBestSeller && (
-                      <span className="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 text-xs px-3 py-1 rounded-full">
-                        Best Seller
-                      </span>
-                    )}
-                    <span className="bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 text-xs px-3 py-1 rounded-full">
-                      {selectedProduct.category.charAt(0).toUpperCase() + selectedProduct.category.slice(1)}
-                    </span>
+                    ...
                   </div>
                 </div>
 
-                {/* Product Info */}
-                <div className="lg:w-1/2">
-                  <h2 className="text-gray-900 dark:text-white text-xl mb-3">{selectedProduct.name}</h2>
-                  <p className="text-gray-600 dark:text-neutral-400 mb-4">{selectedProduct.description}</p>
+
+                {/* Product Info (Purple Theme Panel) */}
+                <div
+                  className="
+          lg:w-1/2
+          rounded-2xl
+          p-6
+          text-white
+          bg-gradient-to-br from-[#3D3066] to-[#5C4E7F]
+                        transition-all duration-300
+          hover:shadow-[0_18px_40px_rgba(61,48,102,0.10)]
+          hover:scale-101
+        "
+                >
+                  <h2 className="text-2xl font-semibold mb-3">{selectedProduct.name}</h2>
+                  <p className="text-white/80 mb-4">{selectedProduct.description}</p>
 
                   {/* Rating */}
                   <div className="flex items-center gap-2 mb-4">
@@ -464,40 +573,44 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                           <Star
                             key={i}
                             className={`w-4 h-4 ${i < Math.floor(selectedProduct.rating)
-                              ? 'text-yellow-400 fill-yellow-400'
-                              : 'text-gray-300 dark:text-neutral-600'
+                              ? "text-yellow-400 fill-yellow-400"
+                              : "text-white/30"
                               }`}
                           />
                         ))}
                       </div>
-                      <span className="text-gray-900 dark:text-white">{selectedProduct.rating}</span>
+                      <span>{selectedProduct.rating}</span>
                     </div>
-                    <span className="text-gray-500 dark:text-neutral-400">•</span>
-                    <span className="text-gray-600 dark:text-neutral-400">{selectedProduct.reviews} reviews</span>
+                    <span className="text-white/40">•</span>
+                    <span className="text-white/70">
+                      {selectedProduct.reviews} reviews
+                    </span>
                   </div>
 
                   {/* Gold Details */}
                   <div className="space-y-4 mb-6">
-                    <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-neutral-700">
-                      <span className="text-gray-600 dark:text-neutral-400">Gold Weight</span>
-                      <span className="text-gray-900 dark:text-white">{selectedProduct.goldWeight} grams</span>
+                    <div className="flex justify-between border-b border-white/20 pb-2">
+                      <span className="text-white/70">Gold Weight</span>
+                      <span>{selectedProduct.goldWeight} grams</span>
                     </div>
 
-                    <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-neutral-700">
-                      <span className="text-gray-600 dark:text-neutral-400">Making Charges</span>
-                      <span className="text-gray-900 dark:text-white">₹{selectedProduct.makingCharges.toLocaleString()}</span>
+                    <div className="flex justify-between border-b border-white/20 pb-2">
+                      <span className="text-white/70">Making Charges</span>
+                      <span>
+                        ₹{selectedProduct.makingCharges.toLocaleString()}
+                      </span>
                     </div>
 
                     {selectedProduct.diamonds && (
-                      <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-neutral-700">
-                        <span className="text-gray-600 dark:text-neutral-400">Diamonds</span>
-                        <span className="text-gray-900 dark:text-white">{selectedProduct.diamonds} carats</span>
+                      <div className="flex justify-between border-b border-white/20 pb-2">
+                        <span className="text-white/70">Diamonds</span>
+                        <span>{selectedProduct.diamonds} carats</span>
                       </div>
                     )}
 
-                    <div className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-neutral-700">
-                      <span className="text-gray-600 dark:text-neutral-400">Delivery Time</span>
-                      <span className="text-gray-900 dark:text-white">{selectedProduct.deliveryTime}</span>
+                    <div className="flex justify-between border-b border-white/20 pb-2">
+                      <span className="text-white/70">Delivery Time</span>
+                      <span>{selectedProduct.deliveryTime}</span>
                     </div>
                   </div>
 
@@ -506,36 +619,34 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                     <div className="flex items-end gap-3 mb-2">
                       {selectedProduct.discountPrice ? (
                         <>
-                          <span className="text-gray-900 dark:text-white text-2xl font-bold">
+                          <span className="text-3xl font-bold">
                             ₹{selectedProduct.discountPrice.toLocaleString()}
                           </span>
-                          <span className="text-gray-500 dark:text-neutral-500 line-through">
+                          <span className="text-white/50 line-through">
                             ₹{selectedProduct.price.toLocaleString()}
-                          </span>
-                          <span className="bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300 text-sm px-2 py-1 rounded-full">
-                            Save ₹{(selectedProduct.price - selectedProduct.discountPrice).toLocaleString()}
                           </span>
                         </>
                       ) : (
-                        <span className="text-gray-900 dark:text-white text-2xl font-bold">
+                        <span className="text-3xl font-bold">
                           ₹{selectedProduct.price.toLocaleString()}
                         </span>
                       )}
                     </div>
-                    <p className="text-gray-600 dark:text-neutral-400 text-sm">
+                    <p className="text-white/70 text-sm">
                       Save more by using your gold from vault
                     </p>
                   </div>
 
                   {/* Action Buttons */}
                   <div className="flex gap-3">
-                    <button className="flex-1 bg-white dark:bg-neutral-800 border-2 border-[#3D3066] dark:border-[#8B7FA8] text-[#3D3066] dark:text-[#8B7FA8] py-3 rounded-lg font-medium hover:bg-[#F3F1F7] dark:hover:bg-neutral-700 transition-colors">
+                    <button className="flex-1 bg-white/10 border border-white/20 py-3 rounded-lg font-medium hover:bg-white/20 transition">
                       <Heart className="w-5 h-5 inline mr-2" />
                       Wishlist
                     </button>
+
                     <button
-                      onClick={() => setStep('customize')}
-                      className="flex-1 bg-gradient-to-r from-[#3D3066] to-[#5C4E7F] text-white py-3 rounded-lg font-medium hover:opacity-90 transition-opacity"
+                      onClick={() => setStep("customize")}
+                      className="flex-1 bg-white text-[#3D3066] py-3 rounded-lg font-semibold hover:opacity-90 transition"
                     >
                       Customize & Buy
                     </button>
@@ -544,6 +655,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
               </div>
             </div>
           </div>
+
         )}
 
         {step === 'customize' && selectedProduct && (
@@ -551,7 +663,8 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             {/* Back Button */}
             <button
               onClick={() => setStep('product')}
-              className="flex items-center gap-2 text-[#3D3066] dark:text-[#8B7FA8] mb-6"
+              className="flex items-center gap-2 text-white mb-6 bg-[#3D3066] px-6 py-2 rounded-full transition-colors duration-200"
+
             >
               <ChevronRight className="w-4 h-4 rotate-180" />
               Back to Product
@@ -707,7 +820,8 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             {/* Back Button */}
             <button
               onClick={() => setStep('customize')}
-              className="flex items-center gap-2 text-[#3D3066] dark:text-[#8B7FA8] mb-6"
+              className="flex items-center gap-2 text-white mb-6 bg-[#3D3066] px-6 py-2 rounded-full transition-colors duration-200"
+
             >
               <ChevronRight className="w-4 h-4 rotate-180" />
               Back to Customization
