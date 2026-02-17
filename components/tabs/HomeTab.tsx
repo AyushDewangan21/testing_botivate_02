@@ -349,6 +349,105 @@ export function HomeTab({
           </div>
         </div>
 
+        {/* Premium Gold Portfolio Card */}
+        <div className="gold-card relative overflow-hidden rounded-2xl p-5">
+          {/* Decorative shine */}
+          <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-white/20 blur-3xl" />
+          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+
+          <div className="relative">
+            {/* Total Value Section */}
+            <div className="mb-4 flex items-start justify-between">
+              <div>
+                <p className="mb-1 text-xs font-medium tracking-wider text-[#5a4a1a]/60 uppercase">
+                  Total Portfolio
+                </p>
+                <p className="text-3xl font-bold text-[#2d2510]">
+                  ₹{totalPortfolioValue.toLocaleString()}
+                </p>
+                <div className="mt-1.5 flex items-center gap-2">
+                  <span className="text-sm text-[#5a4a1a]/70">
+                    {totalGoldGrams.toFixed(3)}g gold
+                  </span>
+                  <span
+                    className={`flex items-center gap-0.5 rounded-full px-2 py-0.5 text-xs font-semibold ${profitToday >= 0
+                        ? "bg-emerald-600/20 text-emerald-800"
+                        : "bg-red-600/20 text-red-800"
+                      }`}
+                  >
+                    {profitToday >= 0 ? (
+                      <TrendingUp className="h-3 w-3" />
+                    ) : (
+                      <TrendingDown className="h-3 w-3" />
+                    )}
+                    {profitToday >= 0 ? "+" : ""}₹
+                    {Math.abs(profitToday).toFixed(0)}
+                  </span>
+                </div>
+              </div>
+
+              {/* Gold Bar Visual */}
+              <div className="relative flex h-20 w-14 flex-col items-center justify-center rounded-lg bg-linear-to-b from-[#f5e6a3] via-[#e8c84a] to-[#c9a432] shadow-lg ring-1 ring-[#b8960c]/30">
+                <div className="absolute inset-0.5 rounded-md bg-linear-to-br from-white/40 to-transparent" />
+                <span className="relative text-[7px] font-semibold text-[#5a4a1a]/60">
+                  FINE GOLD
+                </span>
+                <span className="relative text-[9px] font-medium text-[#5a4a1a]/50">
+                  999.0
+                </span>
+                <span className="relative mt-0.5 text-sm font-bold text-[#3d3015]">
+                  24K
+                </span>
+                <span className="relative text-[7px] font-semibold text-[#5a4a1a]/60">
+                  ZOLD
+                </span>
+              </div>
+            </div>
+
+            {/* Balance Breakdown - Compact */}
+            <div className="flex gap-3">
+              {/* Digital Gold */}
+              <div className="flex-1 rounded-xl bg-[#2d2510]/10 p-3">
+                <div className="mb-1 flex items-center gap-1.5">
+                  <Wallet className="h-3.5 w-3.5 text-[#5a4a1a]/70" />
+                  <span className="text-[10px] font-medium text-[#5a4a1a]/70">
+                    Digital Gold
+                  </span>
+                </div>
+                <p className="text-base font-bold text-[#2d2510]">
+                  {userGoldGrams.toFixed(3)}g
+                </p>
+              </div>
+
+              {/* Gold Coins */}
+              <div className="flex-1 rounded-xl bg-[#2d2510]/10 p-3">
+                <div className="mb-1 flex items-center gap-1.5">
+                  <Coins className="h-3.5 w-3.5 text-[#5a4a1a]/70" />
+                  <span className="text-[10px] font-medium text-[#5a4a1a]/70">
+                    Gold Coins
+                  </span>
+                </div>
+                <p className="text-base font-bold text-[#2d2510]">
+                  {totalCoins} coins
+                </p>
+              </div>
+            </div>
+
+            {/* Coin Pills (if coins exist) */}
+            {coinInventory.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {coinInventory.map((coin, idx) => (
+                  <span
+                    key={idx}
+                    className="rounded-full bg-[#2d2510]/15 px-2.5 py-1 text-[10px] font-semibold text-[#2d2510]"
+                  >
+                    {coin.coinGrams}g × {coin.quantity}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
       </div>
       {/* Main Content */}
