@@ -53,14 +53,14 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
 
   return (
     <div
-      className={`fixed top-0 left-0 hidden h-full min-h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 lg:flex dark:border-neutral-700 dark:bg-neutral-800 ${collapsed ? "w-20" : "w-64"
+      className={`fixed top-0 left-0 hidden h-full min-h-screen flex-col border-r border-gray-200  bg-gray-50 transition-all duration-300 lg:flex dark:border-neutral-700 dark:bg-neutral-800 ${collapsed ? "w-20" : "w-64"
         }`}
     >
       {/* Sidebar Header */}
       <div className="border-b border-gray-200 p-6 dark:border-neutral-700">
         {!collapsed ? (
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#EEC762]">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#F2EAD3]">
               <Coins className="h-6 w-6 text-[#1a1a2e]" />
             </div>
             <div>
@@ -149,7 +149,7 @@ transition-all duration-200 ease-in-out
           <Link
             href="/gold-goals"
             className={`flex w-full items-center ${!collapsed ? "gap-3" : "justify-center"
-              } rounded-lg border border-gray-200 bg-white p-3 transition-all hover:border-[#B8860B] hover:bg-[#FCDE5B]/5 dark:border-neutral-600 dark:bg-neutral-800 dark:hover:border-[#FCDE5B]`}
+              } rounded-lg border border-gray-200 bg-gray-50 p-3 transition-all hover:border-[#B8860B] hover:bg-[#FCDE5B]/5 dark:border-neutral-600 dark:bg-neutral-800 dark:hover:border-[#FCDE5B]`}
             title="Create Goal"
           >
             <Target className="h-5 w-5 text-gray-600 dark:text-neutral-300" />
@@ -162,7 +162,7 @@ transition-all duration-200 ease-in-out
           <Link
             href="/gift-gold"
             className={`flex w-full items-center ${!collapsed ? "gap-3" : "justify-center"
-              } rounded-lg border border-gray-200 bg-white p-3 transition-all hover:border-[#B8860B] hover:bg-[#FCDE5B]/5 dark:border-neutral-600 dark:bg-neutral-800 dark:hover:border-[#FCDE5B]`}
+              } rounded-lg border border-gray-200 bg-gray-50 p-3 transition-all hover:border-[#B8860B] hover:bg-[#FCDE5B]/5 dark:border-neutral-600 dark:bg-neutral-800 dark:hover:border-[#FCDE5B]`}
             title="Gift Gold"
           >
             <Gift className="h-5 w-5 text-gray-600 dark:text-neutral-300" />
@@ -176,10 +176,10 @@ transition-all duration-200 ease-in-out
       </div>
 
       {/* Sidebar Toggle */}
-      <div className="border-t border-gray-200 p-4 dark:border-neutral-700">
+      <div className="border-t border-gray-200 p-3 dark:border-neutral-700">
         <button
           onClick={onToggle}
-          className="flex w-full items-center justify-center gap-3 rounded-lg p-3 text-gray-900 transition-colors bg-transparent
+          className="flex w-full items-center justify-center gap-3 rounded-lg p-2 text-gray-900 transition-colors bg-transparent
   hover:bg-gradient-to-r
   hover:from-[#EEC762]
   hover:to-[#C89E3D]

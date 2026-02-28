@@ -181,7 +181,7 @@ export function MainApp({ user }: MainAppProps) {
 
   const renderDesktopSidebar = () => (
     <div
-      className={`fixed top-0 left-0 hidden h-full min-h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 lg:flex dark:border-neutral-700 dark:bg-neutral-800 ${sidebarCollapsed ? "w-20" : "w-64"
+      className={`fixed top-0 left-0 hidden h-full min-h-screen flex-col border-r border-gray-200 bg-gray-50 transition-all duration-300 lg:flex dark:border-neutral-700 dark:bg-neutral-800 ${sidebarCollapsed ? "w-20" : "w-64"
         }`}
     >
       {/* Sidebar Header */}
@@ -405,7 +405,7 @@ export function MainApp({ user }: MainAppProps) {
           onClick={() => setShowQuickMenu(false)}
         >
           <div
-            className="absolute right-6 bottom-24 w-64 rounded-2xl bg-white p-2 shadow-2xl dark:bg-neutral-800 dark:shadow-neutral-900/50"
+            className="absolute right-6 bottom-24 w-64 rounded-2xl bg-gray-50 p-2 shadow-2xl dark:bg-neutral-800 dark:shadow-neutral-900/50"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -486,7 +486,7 @@ export function MainApp({ user }: MainAppProps) {
       </button>
 
       {/* Bottom Navigation */}
-      <div className="fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800">
+      <div className="fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800">
         <div className="w-full px-2 py-2">
           <div className="flex items-center justify-around">
             <button

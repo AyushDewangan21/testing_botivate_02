@@ -107,7 +107,7 @@ export default function Page() {
   return (
     <Suspense
       fallback={
-        <div className="flex h-screen items-center justify-center bg-white dark:bg-[#141414]">
+        <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-[#141414]">
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#B8960C] border-t-transparent"></div>
         </div>
       }
@@ -394,7 +394,7 @@ function GoldContent() {
       {/* <Header /> */}
       {/* HEADER */}
       {/* Header Row - Search + Icons */}
-      <div className="sticky top-0 z-40 bg-white px-4 py-3 shadow-sm dark:bg-[#141414]">
+      <div className="sticky top-0 z-40 bg-gray-50 px-4 py-3 shadow-sm dark:bg-[#141414]">
         <div className="flex items-center gap-2">
           <button
             onClick={() => router.back()}
@@ -410,7 +410,7 @@ function GoldContent() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search gold coins..."
-              className="h-12 w-full rounded-full border border-[#EAEAEA] bg-[#F6F6F6] py-3 pr-4 pl-12 text-sm text-[#1a1a1a] placeholder-gray-400 transition-all focus:border-[#B8960C] focus:bg-white focus:shadow-md focus:outline-none dark:border-[#2a2a2a] dark:bg-[#1a1a1a] dark:text-white dark:placeholder-gray-500 dark:focus:border-[#D4AF37]"
+              className="h-12 w-full rounded-full border border-[#EAEAEA] bg-[#F6F6F6] py-3 pr-4 pl-12 text-sm text-[#1a1a1a] placeholder-gray-400 transition-all focus:border-[#B8960C] focus:bg-gray-50 focus:shadow-md focus:outline-none dark:border-[#2a2a2a] dark:bg-[#1a1a1a] dark:text-white dark:placeholder-gray-500 dark:focus:border-[#D4AF37]"
             />
             <Search className="absolute top-1/2 left-4 h-[18px] w-[18px] -translate-y-1/2 text-gray-400 dark:text-gray-500" />
           </div>
@@ -443,7 +443,7 @@ function GoldContent() {
             {showBox && (
               <button
                 onClick={() => setShowBox(false)}
-                className="group absolute top-1/2 left-3 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#B8960C] bg-white shadow-lg transition-all duration-300 hover:scale-110 hover:bg-[#B8960C]"
+                className="group absolute top-1/2 left-3 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#B8960C] bg-gray-50 shadow-lg transition-all duration-300 hover:scale-110 hover:bg-[#B8960C]"
               >
                 <ChevronLeft className="h-6 w-6 text-[#B8960C] transition-colors duration-300 group-hover:text-white" />
               </button>
@@ -453,13 +453,13 @@ function GoldContent() {
             {!showBox && (
               <button
                 onClick={() => setShowBox(true)}
-                className="group absolute top-1/2 right-3 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#B8960C] bg-white shadow-lg transition-all duration-300 hover:scale-110 hover:bg-[#B8960C]"
+                className="group absolute top-1/2 right-3 z-30 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#B8960C] bg-gray-50 shadow-lg transition-all duration-300 hover:scale-110 hover:bg-[#B8960C]"
               >
                 <ChevronRight className="h-6 w-6 text-[#B8960C] transition-colors duration-300 group-hover:text-white" />
               </button>
             )}
 
-            <div className="group relative h-[460px] w-full overflow-hidden rounded-[40px] border bg-white shadow-[0_20px_50px_rgba(0,0,0,0.10)]">
+            <div className="group relative h-[460px] w-full overflow-hidden rounded-[40px] border bg-gray-50 shadow-[0_20px_50px_rgba(0,0,0,0.10)]">
               <div className="pointer-events-none absolute inset-0 rounded-[40px] bg-gradient-to-tr from-white/25 via-transparent to-transparent" />
 
               <Image
@@ -479,7 +479,7 @@ function GoldContent() {
           </div>
 
           {/* DETAILS */}
-          <div className="rounded-[28px] bg-white p-10 shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 hover:shadow-xl">
+          <div className="rounded-[28px] bg-gray-50 p-10 shadow-[0_10px_30px_rgba(0,0,0,0.06)] transition-all duration-300 hover:shadow-xl">
             <h1 className="mb-4 text-3xl font-bold text-[#1a1a1a]">
               {coin.displayName}
             </h1>
@@ -499,7 +499,7 @@ function GoldContent() {
                 onClick={() => {
                   addToCart(coin);
                 }}
-                className="rounded-full border-2 border-[#B8960C] bg-white px-8 py-3 text-sm font-bold text-[#B8960C] transition-all hover:bg-[#B8960C] hover:text-white"
+                className="rounded-full border-2 border-[#B8960C] bg-gray-50 px-8 py-3 text-sm font-bold text-[#B8960C] transition-all hover:bg-[#B8960C] hover:text-white"
               >
                 ADD TO CART
               </button>
@@ -519,7 +519,7 @@ function GoldContent() {
       {/* Cart Drawer - Improved Design */}
       {isCartOpen && (
         <div className="fixed inset-0 z-50 flex items-end bg-black/40 backdrop-blur-sm sm:items-center sm:justify-center sm:px-4">
-          <div className="w-full max-w-lg overflow-hidden rounded-t-[28px] bg-white shadow-2xl sm:rounded-[28px] dark:bg-[#141414]">
+          <div className="w-full max-w-lg overflow-hidden rounded-t-[28px] bg-gray-50 shadow-2xl sm:rounded-[28px] dark:bg-[#141414]">
             {/* Cart Header */}
             <div className="flex items-center justify-between border-b border-[#ECECEC] px-6 py-5 dark:border-[#2a2a2a]">
               <div className="flex items-center gap-3">
@@ -571,7 +571,7 @@ function GoldContent() {
                     return (
                       <div
                         key={item.weight}
-                        className="flex items-center gap-4 rounded-[18px] border border-[#ECECEC] bg-white p-4 transition-all hover:shadow-md dark:border-[#2a2a2a] dark:bg-[#1a1a1a]"
+                        className="flex items-center gap-4 rounded-[18px] border border-[#ECECEC] bg-gray-50 p-4 transition-all hover:shadow-md dark:border-[#2a2a2a] dark:bg-[#1a1a1a]"
                       >
                         {/* Coin Icon */}
                         <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-[14px] bg-linear-to-br from-[#f5e6a3] via-[#e8c84a] to-[#c9a432] shadow-md">
@@ -637,7 +637,7 @@ function GoldContent() {
                               e.stopPropagation();
                               updateQuantity(item.weight, -1);
                             }}
-                            className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#B8960C] bg-white transition-all hover:bg-[#B8960C] hover:text-white active:scale-90 dark:border-[#D4AF37] dark:bg-[#0a0a0a] dark:hover:bg-[#D4AF37]"
+                            className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-[#B8960C] bg-gray-50 transition-all hover:bg-[#B8960C] hover:text-white active:scale-90 dark:border-[#D4AF37] dark:bg-[#0a0a0a] dark:hover:bg-[#D4AF37]"
                           >
                             <Minus className="h-4 w-4 text-[#B8960C] dark:text-[#D4AF37]" />
                           </button>
@@ -685,7 +685,7 @@ function GoldContent() {
                       onClick={() => setSelectedPayment("rupees")}
                       className={`group rounded-[16px] border-2 p-4 text-left transition-all active:scale-95 ${selectedPayment === "rupees"
                         ? "border-[#B8960C] bg-gradient-to-br from-[#fffef5] to-[#fef9e6] shadow-lg shadow-[#B8960C]/20 dark:border-[#D4AF37] dark:from-[#D4AF37]/15 dark:to-[#D4AF37]/5"
-                        : "border-[#E6E6E6] bg-white hover:border-[#B8960C] hover:shadow-md dark:border-[#2a2a2a] dark:bg-[#141414] dark:hover:border-[#D4AF37]"
+                        : "border-[#E6E6E6] bg-gray-50 hover:border-[#B8960C] hover:shadow-md dark:border-[#2a2a2a] dark:bg-[#141414] dark:hover:border-[#D4AF37]"
                         }`}
                     >
                       <div
@@ -721,7 +721,7 @@ function GoldContent() {
                       onClick={() => setSelectedPayment("wallet_gold")}
                       className={`group rounded-[16px] border-2 p-4 text-left transition-all active:scale-95 ${selectedPayment === "wallet_gold"
                         ? "border-[#B8960C] bg-gradient-to-br from-[#fffef5] to-[#fef9e6] shadow-lg shadow-[#B8960C]/20 dark:border-[#D4AF37] dark:from-[#D4AF37]/15 dark:to-[#D4AF37]/5"
-                        : "border-[#E6E6E6] bg-white hover:border-[#B8960C] hover:shadow-md dark:border-[#2a2a2a] dark:bg-[#141414] dark:hover:border-[#D4AF37]"
+                        : "border-[#E6E6E6] bg-gray-50 hover:border-[#B8960C] hover:shadow-md dark:border-[#2a2a2a] dark:bg-[#141414] dark:hover:border-[#D4AF37]"
                         }`}
                     >
                       <div
@@ -803,7 +803,7 @@ function GoldContent() {
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={clearCart}
-                      className="rounded-full border-2 border-[#E6E6E6] bg-white py-3.5 text-sm font-semibold text-gray-700 transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600 active:scale-[0.97] dark:border-[#2a2a2a] dark:bg-[#0a0a0a] dark:text-gray-300 dark:hover:border-red-500/50 dark:hover:bg-red-900/20"
+                      className="rounded-full border-2 border-[#E6E6E6] bg-gray-50 py-3.5 text-sm font-semibold text-gray-700 transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600 active:scale-[0.97] dark:border-[#2a2a2a] dark:bg-[#0a0a0a] dark:text-gray-300 dark:hover:border-red-500/50 dark:hover:bg-red-900/20"
                     >
                       Clear Cart
                     </button>

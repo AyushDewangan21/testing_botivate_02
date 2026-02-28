@@ -340,7 +340,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
         {step === "amount" && (
           <div>
             {/* Live Rate Card with Timer */}
-            <div className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="mb-6 rounded-2xl border border-gray-100 bg-gray-50 p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <div className="mb-2 flex items-center gap-2">
@@ -424,7 +424,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                 }}
                 className={`rounded-lg py-2.5 text-xs font-semibold transition-all sm:rounded-xl sm:py-3 sm:text-sm ${inputMode === "grams"
                   ? "bg-[#FCDE5B] text-[#1a1a2e] shadow-md"
-                  : "border border-gray-200 bg-white text-gray-700 hover:border-[#FCDE5B] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+                  : "border border-gray-200 bg-gray-50 text-gray-700 hover:border-[#FCDE5B] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
                   }`}
               >
                 Sell in Grams
@@ -438,7 +438,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                 }}
                 className={`rounded-lg py-2.5 text-xs font-semibold transition-all sm:rounded-xl sm:py-3 sm:text-sm ${inputMode === "rupees"
                   ? "bg-[#FCDE5B] text-[#1a1a2e] shadow-md"
-                  : "border border-gray-200 bg-white text-gray-700 hover:border-[#FCDE5B] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
+                  : "border border-gray-200 bg-gray-50 text-gray-700 hover:border-[#FCDE5B] dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300"
                   }`}
               >
                 Sell in ₹
@@ -447,7 +447,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
 
             {/* Amount Input - Responsive */}
             {/* Amount Inputs */}
-            <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="mb-4 rounded-xl border border-gray-100 bg-gray-50 p-4 shadow-lg sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
 
               <div className="flex items-center gap-3">
 
@@ -506,7 +506,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                   <button
                     key={gms}
                     onClick={() => handleGramsChange(gms.toString())}
-                    className="rounded-lg border border-gray-200 bg-white py-2.5 text-xs font-semibold text-gray-700 transition-all hover:border-[#FCDE5B] hover:bg-[#FCDE5B]/5 disabled:cursor-not-allowed disabled:opacity-50 sm:rounded-xl sm:py-3 sm:text-sm dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
+                    className="rounded-lg border border-gray-200 bg-gray-50 py-2.5 text-xs font-semibold text-gray-700 transition-all hover:border-[#FCDE5B] hover:bg-[#FCDE5B]/5 disabled:cursor-not-allowed disabled:opacity-50 sm:rounded-xl sm:py-3 sm:text-sm dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
                   // disabled={gms > userGoldBalance}
                   >
                     {gms}g
@@ -517,7 +517,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
 
             {/* Price Breakdown - Responsive */}
             {amount && isValidAmount && (
-              <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
+              <div className="mb-4 rounded-xl border border-gray-100 bg-gray-50 p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
                 <h3 className="mb-3 text-sm font-bold text-gray-900 sm:mb-4 sm:text-base dark:text-white">
                   Estimated Proceeds
                 </h3>
@@ -611,7 +611,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                     }
                     className={`w-full rounded-xl border-2 p-4 text-left transition-colors ${selectedStorage === option.id
                       ? "border-[#3D3066] bg-[#F3F1F7] dark:border-[#8B7FA8] dark:bg-neutral-700"
-                      : "border-gray-200 bg-white hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
+                      : "border-gray-200 bg-gray-50 hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
                       }`}
                   >
                     <div className="mb-2 flex items-center gap-3">
@@ -661,7 +661,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
 
             {/* Proceed Confirmation */}
             {selectedStorage === "vault" && (
-              <div className="mb-6 rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800">
+              <div className="mb-6 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800">
                 <div className="flex items-start gap-3">
                   <input
                     type="checkbox"
@@ -690,7 +690,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
             <div className="flex gap-3">
               <button
                 onClick={() => setStep("amount")}
-                className="flex-1 rounded-lg border border-gray-300 bg-white py-4 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                className="flex-1 rounded-lg border border-gray-300 bg-gray-50 py-4 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
               >
                 Back
               </button>
@@ -750,7 +750,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
             </div>
 
             {/* Payment Methods - Production Level UI */}
-            <div className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="mb-6 rounded-2xl border border-gray-100 bg-gray-50 p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="font-bold text-gray-900 dark:text-white">
                   Receive Payment Via
@@ -1000,7 +1000,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
             <div className="flex gap-3">
               <button
                 onClick={() => setStep("storage")}
-                className="flex-1 rounded-xl border border-gray-300 bg-white py-4 font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                className="flex-1 rounded-xl border border-gray-300 bg-gray-50 py-4 font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
               >
                 Back
               </button>
@@ -1042,7 +1042,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                 </div>
 
                 {/* Order Summary Card */}
-                <div className="mb-6 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
+                <div className="mb-6 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
                   {/* Header */}
                   <div className="bg-gradient-to-r from-[#1a1a2e] to-[#16213e] px-5 py-4">
                     <div className="flex items-center justify-between">
@@ -1103,7 +1103,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                 </div>
 
                 {/* Payment Method Card */}
-                <div className="mb-6 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
+                <div className="mb-6 overflow-hidden rounded-2xl border border-gray-100 bg-gray-50 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
                   {/* Header */}
                   <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4 dark:border-neutral-700">
                     <div className="flex items-center gap-2">
@@ -1251,7 +1251,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setStep("payment")}
-                    className="flex-1 rounded-xl border border-gray-300 bg-white py-4 font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                    className="flex-1 rounded-xl border border-gray-300 bg-gray-50 py-4 font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
                   >
                     Back
                   </button>
@@ -1294,7 +1294,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
 
         {step === "success" && (
           <div className="text-center">
-            <div className="mb-6 rounded-xl bg-white p-8 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+            <div className="mb-6 rounded-xl bg-gray-50 p-8 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
               {/* Pending Icon - Clock instead of CheckCircle */}
               <div className="relative mx-auto mb-6 h-24 w-24 rounded-full bg-amber-100 p-6 dark:bg-amber-900/30">
                 <Clock className="absolute inset-0 m-auto h-12 w-12 text-amber-600 dark:text-amber-500" />
@@ -1398,7 +1398,7 @@ export function SellGoldFlow({ onClose }: SellGoldFlowProps) {
                   onClose();
                   router.push("/profile?tab=transactions");
                 }}
-                className="w-full rounded-xl border border-gray-300 bg-white py-4 font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                className="w-full rounded-xl border border-gray-300 bg-gray-50 py-4 font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
               >
                 Track Request Status
               </button>

@@ -225,11 +225,11 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
   shadow-[0_10px_40px_rgba(31,23,61,0.35)]">
 
         <div className="mb-4 flex items-center justify-between">
-          <img src="01.jpg" alt="Zold Logo" className="h-16 rounded-xl" />
+          <img src="02.png" alt="Zold Logo" className="h-16 rounded-xl" />
           {userRole === 'ADMIN' && (
             <button
               onClick={() => setIsAddPartnerOpen(true)}
-              className="flex items-center gap-2 rounded-lg bg-white/20 px-4 py-2 text-white hover:bg-white/30 transition-colors"
+              className="flex items-center gap-2 rounded-lg bg-gray-50/20 px-4 py-2 text-white hover:bg-gray-50/30 transition-colors"
             >
               <Plus className="h-5 w-5" />
               <span>Add Partner</span>
@@ -238,7 +238,7 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
         </div>
 
         {/* Search Bar */}
-        <div className="mb-4 flex items-center gap-2 rounded-lg bg-white px-4 py-3 dark:bg-neutral-800">
+        <div className="mb-4 flex items-center gap-2 rounded-lg bg-gray-50 px-4 py-3 dark:bg-neutral-800">
           <Search className="h-5 w-5 text-gray-400 dark:text-neutral-500" />
           <input
             type="text"
@@ -254,8 +254,8 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
           <button
             onClick={() => setViewMode("list")}
             className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2 transition-colors ${viewMode === "list"
-              ? "bg-white text-[#3D3066] dark:bg-neutral-800 dark:text-white"
-              : "bg-white/20 text-white hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20"
+              ? "bg-gray-50 text-[#3D3066] dark:bg-neutral-800 dark:text-white"
+              : "bg-gray-50/20 text-white hover:bg-gray-50/30 dark:bg-gray-50/10 dark:hover:bg-gray-50/20"
               }`}
           >
             <List className="h-5 w-5" />
@@ -264,8 +264,8 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
           <button
             onClick={() => setViewMode("map")}
             className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2 transition-colors ${viewMode === "map"
-              ? "bg-white text-[#3D3066] dark:bg-neutral-800 dark:text-white"
-              : "bg-white/20 text-white hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20"
+              ? "bg-gray-50 text-[#3D3066] dark:bg-neutral-800 dark:text-white"
+              : "bg-gray-50/20 text-white hover:bg-gray-50/30 dark:bg-gray-50/10 dark:hover:bg-gray-50/20"
               }`}
           >
             <Map className="h-5 w-5" />
@@ -287,7 +287,7 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
         )}
 
         {/* Certifications Section */}
-        <div className="mb-6 rounded-2xl bg-white p-6 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+        <div className="mb-6 rounded-2xl bg-gray-50 p-6 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
           <h3 className="mb-4 text-lg font-semibold text-black dark:text-white">Certifications & Licenses</h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-700/50">
@@ -327,7 +327,7 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
             {isInternalLoading ? (
               // Show skeleton loaders while loading
               Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800 animate-pulse">
+                <div key={i} className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800 animate-pulse">
                   <div className="mb-3 flex items-start justify-between">
                     <div className="flex-1">
                       <div className="mb-2 h-5 w-48 rounded bg-gray-200 dark:bg-neutral-700" />
@@ -354,7 +354,7 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
                   <div
                     key={partner.id}
                     onClick={() => setSelectedPartner(partner)}
-                    className="cursor-pointer rounded-xl border border-gray-200 bg-white p-4 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
+                    className="cursor-pointer rounded-xl border border-gray-200 bg-gray-50 p-4 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
                   >
                     <div className="mb-3 flex items-start justify-between">
                       <div className="flex-1">
@@ -429,7 +429,7 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
             )}
           </div>
         ) : (
-          <div className="overflow-hidden bg-white dark:bg-neutral-800">
+          <div className="overflow-hidden bg-gray-50 dark:bg-neutral-800">
             <PartnersMap
               partners={filteredPartners}
               onSelectPartner={setSelectedPartner}
@@ -451,9 +451,9 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
       {/* Partner Details Modal */}
       {selectedPartner && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center dark:bg-black/70">
-          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl bg-white sm:rounded-2xl dark:bg-neutral-800">
+          <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl bg-gray-50 sm:rounded-2xl dark:bg-neutral-800">
             {/* Header */}
-            <div className="sticky top-0 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="sticky top-0 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-700 dark:bg-neutral-800">
               <h2 className="text-black dark:text-white">{selectedPartner.name}</h2>
               <button
                 onClick={() => setSelectedPartner(null)}
@@ -574,10 +574,10 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
                 <button className="w-full rounded-lg bg-[#3D3066] py-3 text-white transition-colors hover:bg-[#5C4E7F] dark:bg-[#4D3F7F] dark:hover:bg-[#5C4E9F]">
                   Convert Gold to Jewellery Here
                 </button>
-                <button className="w-full rounded-lg border border-gray-300 bg-white py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
+                <button className="w-full rounded-lg border border-gray-300 bg-gray-50 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
                   Deposit Physical Gold
                 </button>
-                <button className="w-full rounded-lg border border-gray-300 bg-white py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
+                <button className="w-full rounded-lg border border-gray-300 bg-gray-50 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
                   Book Visit
                 </button>
               </div>
@@ -589,8 +589,8 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
       {/* Add Partner Modal - Enhanced */}
       {isAddPartnerOpen && (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 p-4 sm:items-center dark:bg-black/70 overflow-y-auto">
-          <div className="w-full max-w-2xl my-8 rounded-t-3xl bg-white p-6 shadow-xl sm:rounded-2xl dark:bg-neutral-800 max-h-[90vh] overflow-y-auto">
-            <div className="mb-6 flex items-center justify-between sticky top-0 bg-white dark:bg-neutral-800 pb-4 border-b dark:border-neutral-700">
+          <div className="w-full max-w-2xl my-8 rounded-t-3xl bg-gray-50 p-6 shadow-xl sm:rounded-2xl dark:bg-neutral-800 max-h-[90vh] overflow-y-auto">
+            <div className="mb-6 flex items-center justify-between sticky top-0 bg-gray-50 dark:bg-neutral-800 pb-4 border-b dark:border-neutral-700">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 Create Partner Account
               </h2>
@@ -823,7 +823,7 @@ export function PartnersTab({ isLoading: _isLoading }: PartnerTabProps) {
               <div className="flex gap-3 pt-4">
                 <button
                   onClick={() => setIsAddPartnerOpen(false)}
-                  className="flex-1 rounded-lg border border-gray-300 bg-white py-2.5 text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
+                  className="flex-1 rounded-lg border border-gray-300 bg-gray-50 py-2.5 text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
                 >
                   Cancel
                 </button>

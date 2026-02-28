@@ -246,7 +246,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
     <div className="min-h-screen pb-6 dark:bg-neutral-900 dark:text-gray-100">
       {/* Header */}
       <div
-        className="rounded-b-3xl bg-white px-6 pt-6 pb-6 bg-yellow-50
+        className="rounded-b-3xl bg-gray-50 px-4 pt-6 pb-6 bg-yellow-50
   shadow-[0_10px_30px_rgba(0,0,0,0.06)]"
       >
         <div className="mb-6 flex items-center justify-between">
@@ -259,7 +259,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
                 <ArrowLeft className="h-6 w-6" />
               </button>
             )}
-            <img src="01.jpg" alt="Zold Logo" className="h-16 rounded-xl" />
+            <img src="02.png" alt="Zold Logo" className="h-16 rounded-xl" />
           </div>
 
           {/* Test Mode Banner - Right side of header */}
@@ -293,14 +293,14 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
 
         {/* Wallet Overview */}
         <div
-          className="rounded-2xl p-6 backdrop-blur-md
+          className="rounded-2xl p-2 backdrop-blur-md
     bg-gradient-to-br
     from-yellow-100
     // via-[#fff3cc]
     to-[#f7e08a]
     border border-yellow-200/60"
         >
-          <div className="mb-6">
+          <div className="mb-6 mt-2">
             <p className="mb-1 text-sm text-gray-500">Total Gold Holdings</p>
 
             {isInternalLoading ? (
@@ -310,7 +310,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
               </>
             ) : (
               <>
-                <p className="mb-1 font-semibold text-gray-900">
+                <p className="mb-1 font-semibold text-gray-600">
                   {totalGold.toFixed(3)} grams
                 </p>
                 <p className="text-sm text-gray-700">
@@ -326,7 +326,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
               {isInternalLoading ? (
                 <div className="h-5 w-20 animate-pulse rounded bg-yellow-100" />
               ) : (
-                <p className="text-sm font-medium text-gray-900">
+                <p className="text-sm font-medium text-gray-700">
                   ₹{avgBuyPrice.toFixed(2)}/gm
                 </p>
               )}
@@ -355,7 +355,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
                 onClick={() => setGraphPeriod(period)}
                 className={`rounded-lg px-3 py-1 text-sm transition-colors ${graphPeriod === period
                   ? "bg-[#FCDE5B] text-[#1a1a1a]"
-                  : "bg-white text-gray-700 border border-yellow-200 hover:bg-yellow-50"
+                  : "bg-gray-50 text-gray-500  text-xs border border-yellow-200 hover:bg-yellow-50"
                   }`}
               >
                 {period}
@@ -365,7 +365,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
 
           {/* Simple Graph */}
           {showGraph && (
-            <div className="flex h-32 items-end justify-between gap-1 rounded-lg bg-white/70 p-4">
+            <div className="flex h-32 items-end justify-between gap-1 rounded-lg bg-gray-50/70 p-4">
               {Array.from({ length: 20 }).map((_, i) => {
                 const height = Math.random() * 100;
                 return (
@@ -382,10 +382,10 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
       </div>
 
 
-      <div className="mt-6 px-6">
+      <div className="mt-6 px-2">
         {/* Breakdown Section */}
-        <div className="mb-6 rounded-2xl bg-white p-4 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
-          <h3 className="mb-4 text-black dark:text-white">Gold Breakdown</h3>
+        <div className="mb-6 rounded-2xl bg-gray-50 p-2 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+          <h3 className="mb-4 text-gray-700 dark:text-white">Gold Breakdown</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between rounded-lg bg-green-50 p-3 dark:bg-green-900/30">
               <div className="flex items-center gap-3">
@@ -444,14 +444,14 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
           </div>
           <button
             onClick={() => onOpenManageSIP?.()}
-            className="w-full rounded-lg bg-white px-4 py-2 text-sm text-purple-600 transition-colors hover:bg-purple-50 dark:bg-white/20 dark:text-white dark:hover:bg-white/30"
+            className="w-full rounded-lg bg-gray-50 px-4 py-2 text-sm text-purple-600 transition-colors hover:bg-purple-50 dark:bg-gray-50/20 dark:text-white dark:hover:bg-gray-50/30"
           >
             Manage SIP
           </button>
         </div>
 
         {/* Transactions */}
-        <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+        <div className="rounded-2xl bg-gray-50 p-4 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-black dark:text-white">Transactions</h3>
             <div className="flex items-center gap-2">
@@ -502,7 +502,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
                 <select
                   value={dateFilter}
                   onChange={(e) => setDateFilter(e.target.value)}
-                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-[#3D3066] focus:outline-none dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
+                  className="w-full rounded-lg border border-gray-200 px-3 py-2 text-xs text focus:border-[#3D3066] focus:outline-none dark:border-neutral-600 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
                 >
                   <option value="all">All Time</option>
                   <option value="7days">Last 7 Days</option>
@@ -513,7 +513,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
 
               {/* Summary Stats */}
               <div className="grid grid-cols-2 gap-3 border-t border-gray-200 pt-3 dark:border-neutral-600">
-                <div className="rounded-lg bg-white p-3 dark:bg-neutral-800">
+                <div className="rounded-lg bg-gray-50 p-3 dark:bg-neutral-800">
                   <p className="mb-1 text-xs text-gray-500 dark:text-neutral-500">
                     Total Bought
                   </p>
@@ -521,7 +521,7 @@ export function WalletTab({ onOpenManageSIP, onBack }: WalletTabProps) {
                     {totalBought.toFixed(3)} gm
                   </p>
                 </div>
-                <div className="rounded-lg bg-white p-3 dark:bg-neutral-800">
+                <div className="rounded-lg bg-gray-50 p-3 dark:bg-neutral-800">
                   <p className="mb-1 text-xs text-gray-500 dark:text-neutral-500">
                     Total Sold
                   </p>

@@ -119,9 +119,9 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
     const matchesSearch = faq.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.answer.toLowerCase().includes(searchQuery.toLowerCase()) ||
       faq.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    
+
     const matchesCategory = activeCategory === "all" || faq.category === activeCategory;
-    
+
     return matchesSearch && matchesCategory;
   });
 
@@ -134,7 +134,7 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -142,9 +142,9 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -152,7 +152,7 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -170,7 +170,7 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
               </p>
             </div>
           </div>
-          
+
           <div className="rounded-full bg-[#3D3066]/10 p-2 dark:bg-[#4D3F7F]/30">
             <HelpCircle className="h-6 w-6 text-[#3D3066] dark:text-[#8B7FA8]" />
           </div>
@@ -187,7 +187,7 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
                 placeholder="Search questions..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-xl border border-gray-300 bg-white py-3 pl-12 pr-4 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                className="w-full rounded-xl border border-gray-300 bg-gray-50 py-3 pl-12 pr-4 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
               />
               {searchQuery && (
                 <button
@@ -210,14 +210,13 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
                 <button
                   key={category.id}
                   onClick={() => setActiveCategory(category.id)}
-                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    activeCategory === category.id
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${activeCategory === category.id
                       ? "bg-[#3D3066] text-white dark:bg-[#4D3F7F]"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
-                  }`}
+                    }`}
                 >
                   {category.name}
-                  <span className="ml-2 rounded-full bg-white/20 px-2 py-0.5 text-xs">
+                  <span className="ml-2 rounded-full bg-gray-50/20 px-2 py-0.5 text-xs">
                     {category.count}
                   </span>
                 </button>
@@ -230,7 +229,7 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
             <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
               Frequently Asked Questions
             </h3>
-            
+
             {filteredFaqs.length === 0 ? (
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-8 text-center dark:border-neutral-700 dark:bg-neutral-800">
                 <HelpCircle className="mx-auto mb-3 h-12 w-12 text-gray-400 dark:text-neutral-500" />
@@ -266,7 +265,7 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
                         <ChevronDown className="h-5 w-5 text-gray-400" />
                       )}
                     </button>
-                    
+
                     {expandedFaqs.includes(faq.id) && (
                       <div className="border-t border-gray-200 p-4 dark:border-neutral-700">
                         <div className="whitespace-pre-line text-gray-600 dark:text-neutral-400">
@@ -301,16 +300,16 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
               </div>
               <HelpCircle className="h-8 w-8 text-white/70" />
             </div>
-            
+
             <div className="space-y-3">
               <button
                 onClick={handleContactSupport}
-                className="flex w-full items-center justify-between rounded-xl bg-white/20 p-3 backdrop-blur-sm transition-colors hover:bg-white/30"
+                className="flex w-full items-center justify-between rounded-xl bg-gray-50/20 p-3 backdrop-blur-sm transition-colors hover:bg-gray-50/30"
               >
                 <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-white/20 p-2">
+                  <div className="rounded-full bg-gray-50/20 p-2">
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.5-5.2-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z"/>
+                      <path d="M20 15.5c-1.2 0-2.4-.2-3.6-.6-.3-.1-.7 0-1 .2l-2.2 2.2c-2.8-1.5-5.2-3.8-6.6-6.6l2.2-2.2c.3-.3.4-.7.2-1-.3-1.1-.5-2.3-.5-3.5 0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.6-.4-1-1-1z" />
                     </svg>
                   </div>
                   <div>
@@ -320,15 +319,15 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
                 </div>
                 <ExternalLink className="h-4 w-4" />
               </button>
-              
+
               <button
                 onClick={handleContactSupport}
-                className="flex w-full items-center justify-between rounded-xl bg-white/20 p-3 backdrop-blur-sm transition-colors hover:bg-white/30"
+                className="flex w-full items-center justify-between rounded-xl bg-gray-50/20 p-3 backdrop-blur-sm transition-colors hover:bg-gray-50/30"
               >
                 <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-white/20 p-2">
+                  <div className="rounded-full bg-gray-50/20 p-2">
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M21 6h-2v9H6v2c0 .6.4 1 1 1h11l4 4V7c0-.6-.4-1-1-1zm-4 6V3c0-.6-.4-1-1-1H3c-.6 0-1 .4-1 1v14l4-4h10c.6 0 1-.4 1-1z"/>
+                      <path d="M21 6h-2v9H6v2c0 .6.4 1 1 1h11l4 4V7c0-.6-.4-1-1-1zm-4 6V3c0-.6-.4-1-1-1H3c-.6 0-1 .4-1 1v14l4-4h10c.6 0 1-.4 1-1z" />
                     </svg>
                   </div>
                   <div>
@@ -338,15 +337,15 @@ export function FAQPage({ user, onClose, isOpen }: FAQPageProps) {
                 </div>
                 <ExternalLink className="h-4 w-4" />
               </button>
-              
+
               <button
                 onClick={handleContactSupport}
-                className="flex w-full items-center justify-between rounded-xl bg-white/20 p-3 backdrop-blur-sm transition-colors hover:bg-white/30"
+                className="flex w-full items-center justify-between rounded-xl bg-gray-50/20 p-3 backdrop-blur-sm transition-colors hover:bg-gray-50/30"
               >
                 <div className="flex items-center gap-3">
-                  <div className="rounded-full bg-white/20 p-2">
+                  <div className="rounded-full bg-gray-50/20 p-2">
                     <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
                     </svg>
                   </div>
                   <div>

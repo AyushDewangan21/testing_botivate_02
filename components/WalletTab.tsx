@@ -41,17 +41,17 @@ export function WalletTab({ onBack, onBuyGold, onSellGold }: WalletTabProps) {
           <div className="flex items-center gap-4">
             <button
               onClick={onBack}
-              className="rounded-full bg-white/20 p-2 backdrop-blur-sm dark:bg-white/10"
+              className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm dark:bg-gray-50/10"
             >
               <ArrowLeft className="h-5 w-5 text-white" />
             </button>
             <ZoldLogo variant="full" size="sm" theme="light" />
           </div>
           <div className="flex items-center gap-2">
-            <button className="rounded-full bg-white/20 p-2 backdrop-blur-sm dark:bg-white/10">
+            <button className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm dark:bg-gray-50/10">
               <Download className="h-5 w-5 text-white" />
             </button>
-            <button className="rounded-full bg-white/20 p-2 backdrop-blur-sm dark:bg-white/10">
+            <button className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm dark:bg-gray-50/10">
               <Share2 className="h-5 w-5 text-white" />
             </button>
           </div>
@@ -60,7 +60,7 @@ export function WalletTab({ onBack, onBuyGold, onSellGold }: WalletTabProps) {
 
 
         {/* Wallet Summary */}
-        <div className="rounded-2xl bg-white/10 p-6 backdrop-blur-md dark:bg-white/5">
+        <div className="rounded-2xl bg-gray-50/10 p-6 backdrop-blur-md dark:bg-gray-50/5">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <p className="text-sm text-white/80">Total Gold Holdings</p>
@@ -112,7 +112,7 @@ export function WalletTab({ onBack, onBuyGold, onSellGold }: WalletTabProps) {
           </button>
           <button
             onClick={onSellGold}
-            className="rounded-xl bg-white p-4 text-[#3D3066] transition-colors hover:bg-gray-50 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700"
+            className="rounded-xl bg-gray-50 p-4 text-[#3D3066] transition-colors hover:bg-gray-50 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700"
           >
             <div className="flex flex-col items-center gap-2">
               <TrendingUp className="h-6 w-6" />
@@ -131,7 +131,7 @@ export function WalletTab({ onBack, onBuyGold, onSellGold }: WalletTabProps) {
                   key={timeframe}
                   onClick={() => setSelectedTimeframe(timeframe)}
                   className={`rounded-md px-3 py-1 text-sm ${selectedTimeframe === timeframe
-                    ? "bg-white text-[#3D3066] shadow dark:bg-neutral-600 dark:text-white"
+                    ? "bg-gray-50 text-[#3D3066] shadow dark:bg-neutral-600 dark:text-white"
                     : "text-gray-600 dark:text-neutral-400"
                     }`}
                 >
@@ -145,7 +145,7 @@ export function WalletTab({ onBack, onBuyGold, onSellGold }: WalletTabProps) {
             {transactions.map((tx) => (
               <div
                 key={tx.id}
-                className="rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800"
+                className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -192,7 +192,7 @@ export function WalletTab({ onBack, onBuyGold, onSellGold }: WalletTabProps) {
               return (
                 <div
                   key={holding.id}
-                  className="rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800"
+                  className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800"
                 >
                   <div className="mb-3 flex items-center justify-between">
                     <div>
@@ -223,7 +223,7 @@ export function WalletTab({ onBack, onBuyGold, onSellGold }: WalletTabProps) {
         </div>
 
         {/* Storage Info */}
-        <div className="rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800">
+        <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800">
           <div className="mb-4 flex items-center justify-between">
             <div>
               <p className="font-medium text-gray-900 dark:text-white">Gold Storage</p>

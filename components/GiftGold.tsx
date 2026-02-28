@@ -17,9 +17,13 @@ import {
   UserCheck,
   UserPlus,
   Phone,
+  ArrowLeftRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { getAuthHeaders } from "../lib/auth";
+import { useSelector } from "react-redux";
+import router from "next/router";
+
 
 interface GiftGoldProps {
   onClose: () => void;
@@ -42,6 +46,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
   // Grams mode
   const [gramsAmount, setGramsAmount] = useState(0.5);
+  const [weightInput, setWeightInput] = useState("0.5");
+  const [valueInput, setValueInput] = useState("");
+
+  // Present amount
+  const presetAmounts = [500, 1000, 2000, 5000, 10000];
+
+  // store selected preset value
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
 
   // Coins mode
   const [selectedCoin, setSelectedCoin] = useState<1 | 2 | 5 | 10>(1);
@@ -55,6 +67,9 @@ export function GiftGold({ onClose }: GiftGoldProps) {
   const [occasion, setOccasion] = useState("birthday");
   const [isLoading, setIsLoading] = useState(false);
 
+
+  // User profileExtarct data 
+
   // User lookup state
   const [lookupResult, setLookupResult] = useState<{
     found: boolean;
@@ -67,6 +82,25 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
   // Gold price
   const [goldPrice, setGoldPrice] = useState(6245.5);
+
+  // set amount from preset
+  const setFromAmount = (amount: number) => {
+    const grams = amount / goldPrice;
+    setGramsAmount(Number(grams.toFixed(4)));
+    setWeightInput(grams.toFixed(4));
+    setSelectedAmount(amount);
+  };
+
+
+
+  const [currentUserName, setCurrentUserName] = useState("User");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      setCurrentUserName(user?.username || user?.name || "User");
+    }
+  }, []);
 
   // Fetch coin inventory and gold price
   useEffect(() => {
@@ -95,6 +129,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
     fetchData();
   }, []);
 
+  // Update value when weight changes
+  useEffect(() => {
+    if (giftType === "grams") {
+      const value = gramsAmount * goldPrice;
+      setValueInput(value.toFixed(2));
+    }
+  }, [gramsAmount, goldPrice, giftType]);
+
   // Calculate display values based on gift type
   const getDisplayValues = () => {
     if (giftType === "grams") {
@@ -112,6 +154,40 @@ export function GiftGold({ onClose }: GiftGoldProps) {
   };
 
   const displayValues = getDisplayValues();
+
+  // Handle weight input change
+  const handleWeightChange = (weight: string) => {
+    setWeightInput(weight);
+    const parsedWeight = parseFloat(weight);
+    if (!isNaN(parsedWeight) && parsedWeight > 0) {
+      setGramsAmount(parsedWeight);
+    }
+  };
+
+  // Handle value input change
+  const handleValueChange = (value: string) => {
+    setValueInput(value);
+    const parsedValue = parseFloat(value);
+    if (!isNaN(parsedValue) && parsedValue > 0) {
+      const calculatedWeight = parsedValue / goldPrice;
+      setGramsAmount(calculatedWeight);
+      setWeightInput(calculatedWeight.toFixed(4));
+    }
+  };
+
+  // Swap weight and value inputs
+  const handleSwap = () => {
+    const tempWeight = weightInput;
+    const tempValue = valueInput;
+    setWeightInput(tempValue);
+    setValueInput(tempWeight);
+
+    const parsedValue = parseFloat(tempValue);
+    if (!isNaN(parsedValue) && parsedValue > 0) {
+      const calculatedWeight = parsedValue / goldPrice;
+      setGramsAmount(calculatedWeight);
+    }
+  };
 
   // Get coin balance
   const getCoinBalance = (grams: number) => {
@@ -216,14 +292,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 dark:bg-black/70 pt-2 ">
+    <div className="fixed inset-0  flex items-start justify-center bg-black/60 dark:bg-black/60   ">
       <style>{`.zold-hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .zold-hide-scrollbar::-webkit-scrollbar{ display:none; }`}</style>
-      <div className="zold-hide-scrollbar max-h-[95vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-white dark:bg-neutral-800 rounded-b-[2rem]">
+      <div className="zold-hide-scrollbar h-[95vh] sm:h-[95vh] w-[100vw] max-w-lg overflow-y-auto bg-gray-50 dark:bg-neutral-800 rounded-b-[2rem] rounded-t-[2rem]">
         {/* Header - Changed from pink to gold */}
-        <div className="sticky top-0 rounded-t-3xl bg-gradient-to-r from-amber-500 to-yellow-600 px-6 py-5">
+        <div className="sticky top-0 bg-gradient-to-r from-amber-500 to-yellow-600 px-6 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="rounded-full bg-white/20 p-2 backdrop-blur-sm">
+              <div className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm">
                 <Gift className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -235,16 +311,16 @@ export function GiftGold({ onClose }: GiftGoldProps) {
             </div>
             <button
               onClick={onClose}
-              className="rounded-full bg-white/20 p-2 backdrop-blur-sm transition-colors hover:bg-white/30"
+              className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm transition-colors hover:bg-gray-50/30"
             >
               <X className="h-5 w-5 text-white" />
             </button>
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="p-4">
           {/* Step Indicator - Changed from purple to gold/amber */}
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 mt-2 flex items-center justify-between">
             <div
               className={`flex items-center gap-2 ${step === "amount" ? "text-amber-600 dark:text-amber-400" : "text-gray-400 dark:text-neutral-500"}`}
             >
@@ -253,7 +329,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               >
                 1
               </div>
-              <span className="text-sm">Amount</span>
+              <span className="text-xs">Amount</span>
             </div>
             <div className="mx-2 h-px flex-1 bg-gray-200 dark:bg-neutral-700"></div>
             <div
@@ -264,7 +340,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               >
                 2
               </div>
-              <span className="text-sm">Recipient</span>
+              <span className="text-xs">Recipient</span>
             </div>
             <div className="mx-2 h-px flex-1 bg-gray-200 dark:bg-neutral-700"></div>
             <div
@@ -275,7 +351,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               >
                 3
               </div>
-              <span className="text-sm">Message</span>
+              <span className="text-xs">Message</span>
             </div>
           </div>
 
@@ -284,7 +360,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
             <div>
               {/* Select Occasion */}
               <div className="mb-6">
-                <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">
+                <h3 className="mb-3 font-bold text-gray-600 dark:text-white">
                   Select Occasion
                 </h3>
                 <div className="grid grid-cols-2 gap-3">
@@ -292,12 +368,12 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                     <button
                       key={occ.id}
                       onClick={() => setOccasion(occ.id)}
-                      className={`rounded-xl border-2 p-3 transition-all ${occasion === occ.id
-                        ? "border-amber-500 bg-amber-50 dark:border-amber-400 dark:bg-neutral-700"
-                        : "border-gray-200 bg-white hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
+                      className={`rounded-xl border-2 p-2 transition-all ${occasion === occ.id
+                        ? "border-amber-500/70 bg-amber-50 dark:border-amber-400 dark:bg-neutral-700"
+                        : "border-gray-200 bg-gray-50 hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
                         }`}
                     >
-                      <p className="text-sm text-gray-900 dark:text-white">
+                      <p className="text-sm text-gray-600 font-semibold dark:text-white">
                         {occ.label}
                       </p>
                     </button>
@@ -307,14 +383,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
               {/* Gift Type Selector - REMOVED RUPEES OPTION */}
               <div className="mb-6">
-                <h3 className="mb-3 font-semibold text-gray-900 dark:text-white">
+                <h3 className="mb-3 font-bold text-gray-600 dark:text-white">
                   Gift Type
                 </h3>
                 <div className="grid grid-cols-2 gap-2 rounded-xl bg-gray-100 p-1 dark:bg-neutral-700">
                   <button
                     onClick={() => setGiftType("grams")}
                     className={`flex items-center justify-center gap-2 rounded-lg py-3 text-sm font-medium transition-all ${giftType === "grams"
-                      ? "bg-white text-amber-600 shadow dark:bg-neutral-600 dark:text-amber-400"
+                      ? "bg-gray-50 text-amber-600 shadow dark:bg-neutral-600 dark:text-amber-400"
                       : "text-gray-600 dark:text-neutral-400"
                       }`}
                   >
@@ -324,7 +400,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                   <button
                     onClick={() => setGiftType("coins")}
                     className={`flex items-center justify-center gap-2 rounded-lg py-3 text-sm font-medium transition-all ${giftType === "coins"
-                      ? "bg-white text-amber-600 shadow dark:bg-neutral-600 dark:text-amber-400"
+                      ? "bg-gray-50 text-amber-600 shadow dark:bg-neutral-600 dark:text-amber-400"
                       : "text-gray-600 dark:text-neutral-400"
                       }`}
                   >
@@ -339,40 +415,94 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               {/* By Grams */}
               {giftType === "grams" && (
                 <>
-                  <div className="mb-4 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 p-6 text-white">
-                    <div className="mb-2 flex items-center justify-between">
-                      <span className="text-white/80">Weight</span>
+                  <div className="mb-4 rounded-2xl bg-gradient-to-br from-amber-500 to-yellow-600 p-3 text-white">
+                    {/* Weight and Value Input Row with Swap Button */}
+                    <div className="space-y-3">
+                      {/* Weight Input */}
                       <div className="flex items-center gap-2">
-                        <input
-                          type="number"
-                          step="0.01"
-                          value={gramsAmount}
-                          onChange={(e) =>
-                            setGramsAmount(Number(e.target.value))
-                          }
-                          className="w-24 rounded-lg bg-white/20 px-3 py-2 text-right text-xl font-bold text-white outline-none"
-                        />
-                        <span className="text-lg font-medium">grams</span>
+                        <div className="flex-1">
+                          <label className="mb-1 block text-xs text-white/80">Weight (grams)</label>
+                          <input
+                            type="number"
+                            step="0.1"
+                            value={weightInput}
+                            onChange={(e) => handleWeightChange(e.target.value)}
+                            className="w-full rounded-lg bg-gray-50/20 px-3 py-2 text-left text-sm font-bold text-white outline-none"
+                          />
+                        </div>
+
+                        {/* Swap Button */}
+                        <button
+                          onClick={handleSwap}
+                          className="mt-6 flex h-10 w-10 items-center justify-center rounded-full bg-gray-50/20 hover:bg-gray-50/30 transition-colors"
+                        >
+                          <ArrowLeftRight className="h-5 w-5 text-white" />
+                        </button>
+
+                        {/* Value Input */}
+                        <div className="flex-1">
+                          <label className="mb-1 block text-xs text-white/80">Value (₹)</label>
+                          <input
+                            type="number"
+                            step="1"
+                            value={valueInput}
+                            onChange={(e) => handleValueChange(e.target.value)}
+                            className="w-full rounded-lg bg-gray-50/20 px-3 py-2 text-left text-sm font-bold text-white outline-none"
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/80">Value</span>
-                      <span>₹{displayValues.amount}</span>
+
+
                     </div>
                   </div>
-                  <div className="grid grid-cols-5 gap-2">
-                    {presetGrams.map((g) => (
-                      <button
-                        key={g}
-                        onClick={() => setGramsAmount(g)}
-                        className={`rounded-lg border-2 py-3 text-sm transition-all ${gramsAmount === g
-                          ? "border-amber-500 bg-amber-50 text-amber-600 dark:bg-neutral-700 dark:text-amber-400"
-                          : "border-gray-200 bg-white text-gray-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white"
-                          }`}
-                      >
-                        {g}g
-                      </button>
-                    ))}
+
+
+                  {/* Preset Grams */}
+                  <div>
+                    <p className="mb-1 text-xs font-semibold text-gray-500 dark:text-neutral-400">
+                      Pick Weight
+                    </p>
+
+                    <div className="grid grid-cols-5 gap-2">
+                      {presetGrams.map((g) => (
+                        <button
+                          key={g}
+                          onClick={() => {
+                            setGramsAmount(g);
+                            setWeightInput(g.toString());
+                            setSelectedAmount(null); // reset amount highlight
+                          }}
+                          className={`rounded-lg border-2 py-3 text-xs sm:text-sm transition-all ${gramsAmount === g
+                            ? "border-amber-500 bg-amber-50 text-amber-600 dark:bg-neutral-700 dark:text-amber-400"
+                            : "border-gray-200 bg-gray-50 text-gray-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white"
+                            }`}
+                        >
+                          {g}g
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Preset Amounts */}
+                  <div className="mt-3">
+                    <p className="mb-1 text-xs font-semibold text-gray-500 dark:text-neutral-400">
+                      Pick Amount
+                    </p>
+
+                    <div className="grid grid-cols-5 gap-2">
+                      {presetAmounts.map((amt) => (
+                        <button
+                          key={amt}
+                          onClick={() => setFromAmount(amt)}
+                          className={`rounded-lg border-2 py-3 text-xs sm:text-sm transition-all ${selectedAmount === amt
+                            ? "border-amber-500 bg-amber-50 text-amber-600 dark:bg-neutral-700 dark:text-amber-400"
+                            : "border-gray-200 bg-gray-50 text-gray-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white"
+                            }`}
+                        >
+                          ₹{amt}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </>
               )}
@@ -396,7 +526,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                       <button
                         onClick={() => {
                           onClose();
-                          window.location.href = "/coins";
+                          router.push("/coins");
                         }}
                         className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-600 px-6 py-3 font-semibold text-white transition-all hover:from-amber-600 hover:to-yellow-700"
                       >
@@ -422,7 +552,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                                 ? "border-amber-500 bg-amber-50 dark:border-amber-400 dark:bg-neutral-700"
                                 : balance === 0
                                   ? "cursor-not-allowed border-gray-200 bg-gray-100 opacity-50 dark:border-neutral-700 dark:bg-neutral-800"
-                                  : "border-gray-200 bg-white hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800"
+                                  : "border-gray-200 bg-gray-50 hover:border-gray-300 dark:border-neutral-700 dark:bg-neutral-800"
                                 }`}
                             >
                               <div className="mb-2 flex items-center justify-center">
@@ -464,7 +594,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                                     Math.max(1, coinQuantity - 1),
                                   )
                                 }
-                                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 hover:bg-white/30"
+                                className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50/20 hover:bg-gray-50/30"
                               >
                                 <Minus className="h-4 w-4" />
                               </button>
@@ -480,7 +610,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                                     ),
                                   )
                                 }
-                                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 hover:bg-white/30"
+                                className="flex h-8 w-8 items-center justify-center rounded-full bg-gray-50/20 hover:bg-gray-50/30"
                               >
                                 <Plus className="h-4 w-4" />
                               </button>
@@ -513,7 +643,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
               <button
                 onClick={() => setStep("recipient")}
-                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 py-4 font-semibold text-white transition-colors hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700"
+                className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-amber-500 py-4 font-semibold text-white text-xs sm:text-sm transition-colors hover:bg-amber-600 dark:bg-amber-600 dark:hover:bg-amber-700"
               >
                 <span>Next</span>
                 <ArrowRight className="h-5 w-5" />
@@ -525,14 +655,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
           {step === "recipient" && (
             <div>
               <div className="mb-6">
-                <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
+                <h3 className="mb-4 font-semibold text-gray-600 dark:text-white">
                   Recipient Details
                 </h3>
 
                 <div className="space-y-4">
                   {/* Mobile Number First - for lookup */}
                   <div>
-                    <label className="mb-2 block text-sm text-gray-700 dark:text-neutral-300">
+                    <label className="mb-2 block text-sm text-gray-500 dark:text-neutral-300">
                       Mobile Number <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
@@ -618,16 +748,16 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
                   {/* New User Card */}
                   {lookupResult && !lookupResult.found && (
-                    <div className="rounded-xl border-2 border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-900/20">
+                    <div className="rounded-xl border-2 border-amber-200 bg-amber-50 p-2 dark:border-amber-800 dark:bg-amber-900/20">
                       <div className="flex items-center gap-3">
                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 dark:bg-amber-800/30">
-                          <UserPlus className="h-6 w-6 text-amber-600 dark:text-amber-400" />
+                          <UserPlus className="h-6 w-8 text-amber-600 dark:text-amber-400" />
                         </div>
                         <div>
-                          <p className="font-semibold text-amber-900 dark:text-amber-300">
+                          <p className="font-semibold text-amber-900/80 dark:text-amber-300">
                             New User
                           </p>
-                          <p className="text-sm text-amber-700 dark:text-amber-400">
+                          <p className="text-xs text-amber-700 dark:text-amber-400">
                             {lookupResult.message}
                           </p>
                         </div>
@@ -637,7 +767,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
                   {/* Recipient Name - editable or auto-filled */}
                   <div>
-                    <label className="mb-2 block text-sm text-gray-700 dark:text-neutral-300">
+                    <label className="mb-2 block text-sm text-gray-500 dark:text-neutral-300">
                       Recipient Name{" "}
                       {lookupResult?.found && (
                         <span className="text-green-600">(Auto-filled)</span>
@@ -724,7 +854,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                     className={`bg-gradient-to-br ${occasions.find((o) => o.id === occasion)?.color} rounded-2xl p-6 text-white`}
                   >
                     <div className="mb-4 flex items-center justify-center">
-                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+                      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gray-50/20 backdrop-blur-sm">
                         {giftType === "coins" ? (
                           <Coins className="h-8 w-8 text-white" />
                         ) : (
@@ -736,14 +866,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                       You've received a {giftType === "coins" ? "coin" : "gold"} gift!
                     </h3>
                     <p className="mb-4 text-center text-sm text-white/90">
-                      {recipientName || "Someone"} gifted you{" "}
+                      {currentUserName || "Someone"} gifted you{" "}
                       {giftType === "coins"
                         ? displayValues.coins
                         : `${displayValues.grams}g`}{" "}
                       of 24K gold (₹{displayValues.amount})
                     </p>
                     {personalMessage && (
-                      <div className="rounded-xl bg-white/20 p-3 backdrop-blur-sm">
+                      <div className="rounded-xl bg-gray-50/20 p-3 backdrop-blur-sm">
                         <p className="text-sm text-white/90 italic">
                           "{personalMessage}"
                         </p>

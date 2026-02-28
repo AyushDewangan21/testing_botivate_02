@@ -68,10 +68,10 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
     <div className="min-h-screen pb-6 dark:bg-neutral-900 dark:text-gray-100">
       {/* Header */}
       <div className="rounded-b-3xl bg-gradient-to-br from-[#3D3066] via-[#5C4E7F] to-[#8B7FA8] px-6 pt-6 pb-8">
-        <img src="01.jpg" alt="Zold Logo" className="h-16 rounded-xl mb-4" />
+        <img src="02.png" alt="Zold Logo" className="h-16 rounded-xl mb-4" />
 
         {/* Hero Banner */}
-        <div className="rounded-2xl bg-white/10 p-6 backdrop-blur-md dark:bg-white/5">
+        <div className="rounded-2xl bg-gray-50/10 p-6 backdrop-blur-md dark:bg-gray-50/5">
           <div className="mb-4 flex items-start justify-between">
             <div>
               <p className="mb-2 text-sm text-white/90 dark:text-white/80">
@@ -86,7 +86,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
             </div>
             <Banknote className="h-12 w-12 text-white/80" />
           </div>
-          <div className="rounded-lg bg-white/20 p-3 dark:bg-white/10">
+          <div className="rounded-lg bg-gray-50/20 p-3 dark:bg-gray-50/10">
             <p className="mb-1 text-xs text-white/90 dark:text-white/80">
               Interest Rate
             </p>
@@ -99,7 +99,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
 
       <div className="-mt-4 px-6 ">
         {/* Tab Selector */}
-        <div className="mb-6 flex rounded-xl bg-white p-1 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+        <div className="mb-6 flex rounded-xl bg-gray-50 p-1 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
           <button
             onClick={() => setSelectedTab("overview")}
             className={`flex-1 rounded-lg py-2 transition-colors ${selectedTab === "overview"
@@ -134,7 +134,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
               </h2>
               <div className="space-y-3">
                 {/* Online Loan */}
-                <div className="rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]">
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]">
                   <div className="mb-4 flex items-start justify-between">
                     <div className="flex-1">
                       <div className="mb-2 flex items-center gap-2">
@@ -181,7 +181,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
                 </div>
 
                 {/* Partner Store Loan */}
-                <div className="rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]">
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 transition-colors hover:border-[#8B7FA8] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]">
                   <div className="mb-4 flex items-start justify-between">
                     <div className="flex-1">
                       <div className="mb-2 flex items-center gap-2">
@@ -223,7 +223,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
                   </div>
                   <button
                     onClick={onOpenPartners} // Directly use the prop
-                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
+                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-gray-50 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600"
                   >
                     Find Nearby Partners
                     <ChevronRight className="h-5 w-5" />
@@ -233,7 +233,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
             </div>
 
             {/* Loan Calculator */}
-            <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-neutral-700 dark:bg-neutral-800">
               <h3 className="mb-4 text-black dark:text-white">
                 Loan Calculator
               </h3>
@@ -323,7 +323,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
               activeLoans.map((loan) => (
                 <div
                   key={loan.id}
-                  className="rounded-xl border border-gray-200 bg-white p-5 dark:border-neutral-700 dark:bg-neutral-800"
+                  className="rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-neutral-700 dark:bg-neutral-800"
                 >
                   <div className="mb-4 flex items-start justify-between">
                     <div>
@@ -395,7 +395,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
                     <button className="flex-1 rounded-lg bg-[#3D3066] py-3 text-white transition-colors hover:bg-[#5C4E7F] dark:bg-[#4D3F7F] dark:hover:bg-[#5C4E9F]">
                       Pay EMI
                     </button>
-                    <button className="flex-1 rounded-lg border border-gray-300 bg-white py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
+                    <button className="flex-1 rounded-lg border border-gray-300 bg-gray-50 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white dark:hover:bg-neutral-600">
                       View Details
                     </button>
                   </div>
@@ -423,7 +423,7 @@ export function LoansTab({ onOpenApplyLoan, onOpenApplyLoanpage, onOpenPartners,
                 </div>
               ))
             ) : (
-              <div className="rounded-xl bg-white p-12 text-center dark:bg-neutral-800">
+              <div className="rounded-xl bg-gray-50 p-12 text-center dark:bg-neutral-800">
                 <Banknote className="mx-auto mb-4 h-16 w-16 text-gray-300 dark:text-neutral-600" />
                 <p className="mb-2 text-gray-900 dark:text-white">
                   No Active Loans

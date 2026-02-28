@@ -268,7 +268,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
       </div>
 
       {/* Main Content - Responsive Container */}
-      <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-4 pb-24 sm:px-6 sm:py-6 lg:px- bg-white">
+      <div className="mx-auto w-full max-w-4xl flex-1 px-4 py-4 pb-24 sm:px-6 sm:py-6 lg:px- bg-gray-50">
         {/* Test Wallet Banner - Responsive */}
         <div className="mb-4 rounded-xl bg-linear-to-r from-[#1a1a2e] to-[#16213e] p-4 shadow-xl sm:mb-6 sm:rounded-2xl sm:p-5">
           <div className="flex flex-col gap-3 text-white sm:flex-row sm:items-center sm:justify-between sm:gap-0">
@@ -310,7 +310,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
               {transactions.slice(0, 5).map((txn) => (
                 <div
                   key={txn.id}
-                  className="min-w-[110px] shrink-0 rounded-lg border border-gray-100 bg-white px-3 py-2.5 sm:min-w-[130px] sm:rounded-xl sm:px-4 sm:py-3 dark:border-neutral-700 dark:bg-neutral-800"
+                  className="min-w-[110px] shrink-0 rounded-lg border border-gray-100 bg-gray-50 px-3 py-2.5 sm:min-w-[130px] sm:rounded-xl sm:px-4 sm:py-3 dark:border-neutral-700 dark:bg-neutral-800"
                 >
                   <div className="mb-1 flex items-center gap-1.5">
                     <Coins className="h-3 w-3 text-[#FCDE5B] sm:h-3.5 sm:w-3.5" />
@@ -334,7 +334,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
           <div>
 
             {/* Live Rate Card */}
-            <div className="mb-4 rounded-xl bg-white p-4 sm:mb-6 sm:rounded-2xl sm:p-5 dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="mb-4 rounded-xl bg-gray-50 p-4 sm:mb-6 sm:rounded-2xl sm:p-5 dark:border-neutral-700 dark:bg-neutral-800">
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
                 <div>
                   <div className="mb-1.5 flex items-center gap-2 sm:mb-2">
@@ -369,7 +369,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
 
 
             {/* ENTER AMOUNT (Now placed here) */}
-            <div className="mb-4  bg-white p-4  sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="mb-4  bg-gray-50 p-4  sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
 
               <label className="block text-sm font-medium text-gray-700 dark:text-neutral-300 mb-3">
                 Enter Amount
@@ -446,7 +446,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
 
             {/* Price Breakdown */}
             {amount && (
-              <div className="mb-4 rounded-xl border border-gray-100 bg-white p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
+              <div className="mb-4 rounded-xl border border-gray-100 bg-gray-50 p-4 shadow-lg sm:mb-6 sm:rounded-2xl sm:p-6 dark:border-neutral-700 dark:bg-neutral-800">
                 <h3 className="mb-3 text-sm font-bold text-gray-900 sm:mb-4 sm:text-base dark:text-white">
                   Price Breakdown
                 </h3>
@@ -504,7 +504,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
 
         {step === "success" && (
           <div className="mx-auto max-w-md text-center">
-            <div className="mb-4 rounded-xl border border-gray-100 bg-white p-6 shadow-xl sm:mb-6 sm:rounded-2xl sm:p-8 dark:border-neutral-700 dark:bg-neutral-800">
+            <div className="mb-4 rounded-xl border border-gray-100 bg-gray-50 p-6 shadow-xl sm:mb-6 sm:rounded-2xl sm:p-8 dark:border-neutral-700 dark:bg-neutral-800">
               <div className="relative mx-auto mb-4 h-20 w-20 rounded-full bg-green-100 p-5 sm:mb-6 sm:h-24 sm:w-24 sm:p-6 dark:bg-green-900/30">
                 <CheckCircle className="absolute inset-0 m-auto h-10 w-10 text-green-600 sm:h-12 sm:w-12 dark:text-green-500" />
                 <Sparkles className="absolute -top-1 -right-1 h-5 w-5 animate-pulse text-[#FCDE5B] sm:-top-2 sm:-right-2 sm:h-6 sm:w-6" />
@@ -543,7 +543,7 @@ export function BuyGoldFlow({ onClose }: BuyGoldFlowProps) {
               </button>
               <button
                 onClick={onClose}
-                className="w-full rounded-lg border border-gray-200 bg-white py-3.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 sm:rounded-xl sm:py-4 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                className="w-full rounded-lg border border-gray-200 bg-gray-50 py-3.5 text-sm font-semibold text-gray-700 transition-colors hover:bg-gray-50 sm:rounded-xl sm:py-4 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
               >
                 Close
               </button>

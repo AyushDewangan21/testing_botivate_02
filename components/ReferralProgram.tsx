@@ -69,12 +69,12 @@ export function ReferralProgram({ onClose }: ReferralProgramProps) {
   return (
     <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-start justify-center z-50 pt-2">
       <style>{`.zold-hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .zold-hide-scrollbar::-webkit-scrollbar{ display:none; }`}</style>
-      <div className="bg-white dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[95vh] overflow-y-auto zold-hide-scrollbar rounded-b-[2rem]">
+      <div className="bg-gray-50 dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[95vh] overflow-y-auto zold-hide-scrollbar rounded-b-[2rem]">
         {/* Header */}
         <div className="sticky top-0 bg-gradient-to-r from-purple-500 to-pink-500 px-6 py-5 rounded-t-3xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+              <div className="bg-gray-50/20 backdrop-blur-sm rounded-full p-2">
                 <Gift className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -84,7 +84,7 @@ export function ReferralProgram({ onClose }: ReferralProgramProps) {
             </div>
             <button
               onClick={onClose}
-              className="bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-colors"
+              className="bg-gray-50/20 backdrop-blur-sm rounded-full p-2 hover:bg-gray-50/30 transition-colors"
             >
               <X className="w-5 h-5 text-white" />
             </button>
@@ -142,7 +142,7 @@ export function ReferralProgram({ onClose }: ReferralProgramProps) {
           {/* Referral Code */}
           <div className="mb-6">
             <h3 className="text-gray-900 dark:text-white mb-3">Your Referral Code</h3>
-            <div className="bg-white dark:bg-neutral-800 border-2 border-dashed border-[#3D3066] dark:border-[#8B7FA8] rounded-xl p-4">
+            <div className="bg-gray-50 dark:bg-neutral-800 border-2 border-dashed border-[#3D3066] dark:border-[#8B7FA8] rounded-xl p-4">
               <div className="flex items-center justify-between mb-3">
                 <div>
                   <p className="text-gray-500 dark:text-neutral-400 text-xs mb-1">Your unique code</p>
@@ -229,7 +229,7 @@ export function ReferralProgram({ onClose }: ReferralProgramProps) {
             ) : (
               <div className="space-y-3">
                 {referralData.history.map((referral, index) => (
-                  <div key={index} className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
+                  <div key={index} className="bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl p-4">
                     <div className="flex items-center justify-between mb-2">
                       <p className="text-gray-900 dark:text-white">{referral.name}</p>
                       {referral.status === 'completed' ? (

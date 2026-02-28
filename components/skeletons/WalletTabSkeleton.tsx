@@ -10,7 +10,7 @@ export function WalletTabSkeleton() {
                 </div>
 
                 {/* Wallet Overview */}
-                <div className="rounded-2xl bg-white p-6 dark:bg-neutral-700">
+                <div className="rounded-2xl bg-gray-50 p-6 dark:bg-neutral-700">
                     <div className="mb-6">
                         <Skeleton className="mb-2 h-4 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
                         <Skeleton className="mb-2 h-8 w-48 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
@@ -45,7 +45,7 @@ export function WalletTabSkeleton() {
 
             <div className="-mt-4 px-6">
                 {/* Breakdown Section */}
-                <div className="mb-6 rounded-2xl bg-white p-4 shadow-lg dark:bg-neutral-800">
+                <div className="mb-6 rounded-2xl bg-gray-50 p-4 shadow-lg dark:bg-neutral-800">
                     <Skeleton className="mb-4 h-6 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
                     <div className="space-y-3">
                         {[1, 2].map((i) => (
@@ -67,7 +67,7 @@ export function WalletTabSkeleton() {
                 <Skeleton className="mb-6 h-28 w-full rounded-xl bg-gradient-to-r from-[#c  6b1f2] via-[#e5defc] to-[#F3F1F7]" />
 
                 {/* Transactions */}
-                <div className="rounded-2xl bg-white p-4 shadow-lg dark:bg-neutral-800">
+                <div className="rounded-2xl bg-gray-50 p-4 shadow-lg dark:bg-neutral-800">
                     <div className="mb-4 flex items-center justify-between">
                         <Skeleton className="h-6 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
                         <Skeleton className="h-5 w-24 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />

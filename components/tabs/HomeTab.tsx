@@ -16,7 +16,9 @@ import {
   ArrowUpRight,
   Shield,
   Clock,
-  UserIcon
+  UserIcon,
+  Menu,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -25,6 +27,8 @@ import zoldImg from "@/components/images/Zold.jpg";
 import doubleZoldGold from "@/components/images/doubleZoldGold.png";
 import doubleZoldGold2 from "@/components/images/doubleZoldGold2.png";
 import doubleZoldSilver from "@/components/images/doubleZoldSIlver.png";
+import sell_gold from "@/components/images/Sell-Gold.png";
+import sell_silver from "@/components/images/Sell-Silver.png";
 import zoldCoin from "@/components/images/zoldCoin.png";
 import {
   XAxis,
@@ -44,8 +48,8 @@ import { GiftGold } from "../GiftGold";
 import { ReferralProgram } from "../ReferralProgram";
 import JewelleryPage from "@/components/JewelleryPage";
 import zoldImage from "@/components/images/Zold.jpg";
-import BuyGoldImage from "@/components/images/buyGoldImage.png"
-import SellGoldImage from "@/components/images/sellGoldImage.jpg"
+import BuyGoldImage from "@/components/images/buyGoldImage.png";
+import SellGoldImage from "@/components/images/sellGoldImage.jpg";
 
 interface HomeTabProps {
   isLoading: boolean;
@@ -108,6 +112,8 @@ export function HomeTab({
   const [totalCoinValue, setTotalCoinValue] = useState(0);
   const [activeAction, setActiveAction] = useState<string | null>(null);
 
+  // Sidebar state
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const [showGift, setShowGift] = useState(false);
   const [showRefer, setShowRefer] = useState(false);
@@ -121,6 +127,45 @@ export function HomeTab({
     return null;
   };
 
+  // Function to lock body scroll
+  const lockBodyScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+  }, []);
+
+  // Function to unlock body scroll
+  const unlockBodyScroll = useCallback(() => {
+    const scrollY = document.body.style.top;
+    document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+    window.scrollTo(0, parseInt(scrollY || "0") * -1);
+  }, []);
+
+  // Handle scroll locking for modals
+  useEffect(() => {
+    if (showRefer || showShop || showGoals || showNotifications) {
+      lockBodyScroll();
+    } else {
+      unlockBodyScroll();
+    }
+
+    return () => {
+      unlockBodyScroll();
+    };
+  }, [
+    showGift,
+    showRefer,
+    showShop,
+    showGoals,
+    lockBodyScroll,
+    unlockBodyScroll,
+  ]);
+
   const fetchWalletData = useCallback(async () => {
     try {
       const token = getAuthToken();
@@ -130,10 +175,16 @@ export function HomeTab({
       }
 
       const results = await Promise.allSettled([
-        fetch(`${API_URL}/gold/rates/current`).then(res => res.json()),
-        fetch(`${API_URL}/gold/wallet/balance`, { headers: { Authorization: `Bearer ${token}` } }).then(res => res.json()),
-        fetch(`${API_URL}/gold/wallet/stats`, { headers: { Authorization: `Bearer ${token}` } }).then(res => res.json()),
-        fetch(`${API_URL}/coins/inventory`, { headers: { Authorization: `Bearer ${token}` } }).then(res => res.json())
+        fetch(`${API_URL}/gold/rates/current`).then((res) => res.json()),
+        fetch(`${API_URL}/gold/wallet/balance`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((res) => res.json()),
+        fetch(`${API_URL}/gold/wallet/stats`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((res) => res.json()),
+        fetch(`${API_URL}/coins/inventory`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((res) => res.json()),
       ]);
 
       const [ratesResult, balanceResult, statsResult, coinsResult] = results;
@@ -147,8 +198,12 @@ export function HomeTab({
       // Handle Balance
       if (balanceResult.status === "fulfilled" && balanceResult.value.success) {
         setUserGoldGrams(parseFloat(balanceResult.value.data.goldBalance) || 0);
-        setUserGoldValue(parseFloat(balanceResult.value.data.currentValue) || 0);
-        setRecentTransactions(balanceResult.value.data.recentTransactions || []);
+        setUserGoldValue(
+          parseFloat(balanceResult.value.data.currentValue) || 0,
+        );
+        setRecentTransactions(
+          balanceResult.value.data.recentTransactions || [],
+        );
       }
 
       // Handle Stats
@@ -157,7 +212,11 @@ export function HomeTab({
       }
 
       // Handle Inventory
-      if (coinsResult.status === "fulfilled" && coinsResult.value.success && coinsResult.value.data?.inventory) {
+      if (
+        coinsResult.status === "fulfilled" &&
+        coinsResult.value.success &&
+        coinsResult.value.data?.inventory
+      ) {
         const inventory = coinsResult.value.data.inventory.filter(
           (coin: CoinInventoryItem) => coin.quantity > 0,
         );
@@ -169,7 +228,6 @@ export function HomeTab({
         setTotalCoins(total);
         setTotalCoinValue(parseFloat(coinsResult.value.data.totalValue) || 0);
       }
-
     } catch (error) {
       console.error("Error fetching wallet data:", error);
     } finally {
@@ -251,19 +309,10 @@ export function HomeTab({
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (showNotifications) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [showNotifications]);
-
-  // Removed static loading check - components render immediately
-  // Only show skeletons for dynamic data sections
+  // Handle sidebar close
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
 
   // Calculate total portfolio value
   const totalPortfolioValue = userGoldValue + totalCoinValue;
@@ -275,22 +324,178 @@ export function HomeTab({
     );
 
   return (
-    <div className="min-h-screen bg-[#fff9e8]/90 pb-24 dark:bg- [#FFFAE8]/20">
+    <div className="min-h-screen pb-5 dark:bg-[#FFFAE8]/20">
       {/* ═══════════════════════════════════════════════════════════════
-          PREMIUM HEADER WITH GOLD CARD
+          MOBILE SIDEBAR - Hamburger Menu (3 lines)
           ═══════════════════════════════════════════════════════════════ */}
-      <div className="px-4 pt-4 pb-5 bg-[#fff9e8]/90">
-        {/* Top Bar */}
-        <div className="mb-2 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+
+      {/* Hamburger Menu Button - Only visible on mobile */}
+      <button
+        onClick={() => setIsSidebarOpen(true)}
+        className="fixed top-4 left-4 z-50 block rounded-lg border border-amber-600/20 bg-gray-50 p-2.5 shadow-md lg:hidden"
+      >
+        <Menu className="h-4 w-4 text-[#1a1a1a]" />
+      </button>
+
+      {/* Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 lg:hidden"
+          onClick={closeSidebar}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div
+        className={`fixed top-0 left-0 z-51 h-full w-60 transform bg-gray-50 shadow-2xl transition-transform duration-300 ease-in-out lg:hidden ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+      >
+        {/* Sidebar Header */}
+        <div className="flex items-center justify-between border-b border-gray-200 p-4">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/02.png"
+              alt="ZOLD"
+              width={36}
+              height={36}
+              className="object-contain"
+            />
+            <span className="text-lg font-bold text-[#1a1a1a]">ZOLD Gold</span>
+          </div>
+          <button
+            onClick={closeSidebar}
+            className="h-8 w-8 rounded-full p-1.5 transition-colors"
+          >
+            <X className="h-5 w-5 text-black" />
+          </button>
+        </div>
+
+        {/* Sidebar Navigation Items */}
+        <div className="p-1">
+          <nav className="space-y-2">
+
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                onBuyGold();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <TrendingUp className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Buy Gold
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                onSellGold();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <TrendingDown className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Sell Gold
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                router.push("/buy-coins");
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <Coins className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Gold Coins
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                onOpenGoldGoals && onOpenGoldGoals();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <Target className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Gold Goals
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                onOpenGiftGold && onOpenGiftGold();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <Gift className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Gift Gold
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                onOpenReferral && onOpenReferral();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <Users className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Refer & Earn
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                onJewellery();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <ShoppingBag className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Jewellery
+              </span>
+            </button>
+
+            <button
+              onClick={() => {
+                closeSidebar();
+                onOpenAuspiciousDays && onOpenAuspiciousDays();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors hover:bg-amber-50"
+            >
+              <Star className="h-5 w-5 text-amber-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Auspicious Days
+              </span>
+            </button>
+          </nav>
+        </div>
+      </div>
+
+      {/* Main Content - Adjust padding for mobile to accommodate hamburger menu */}
+      <div className="bg-[#fff9e8]/90 px-2 pt-2 pb-5 lg:px-4">
+        {/* Top Bar - Adjusted for mobile with hamburger menu space */}
+        <div className="mb-2 flex items-center justify-between sm:mt-2">
+          <div className="ml-2 flex items-center gap-3 sm:ml-0 lg:gap-3">
+            {/* Logo - Hidden on mobile to avoid overlap with hamburger menu */}
             <Image
               src="/02.png"
               alt="ZOLD"
               width={44}
               height={44}
-              className=" object-contain"
+              className="hidden object-contain lg:block"
             />
-            <div>
+            <div className="ml-12 lg:ml-0">
               <h1 className="text-lg font-bold text-[#1a1a1a] dark:text-white">
                 ZOLD Gold
               </h1>
@@ -304,69 +509,22 @@ export function HomeTab({
           </div>
           <button
             onClick={() => router.push("/profile")}
-            className="relative rounded-full bg-white border-2 border-amber-600/20 p-2.5 transition-colors hover:bg-[#eee] dark:bg-[#222] dark:hover:bg-[#333]"
+            className="relative rounded-full border-1 border-gray-800/20 bg-gray-50 p-2.5 shadow-sm transition-colors hover:shadow-md dark:bg-[#222] dark:hover:bg-[#333]"
           >
-            <UserIcon className="h-6 w-6 text-[#1a1a1a] dark:text-white" />
-
+            <UserIcon className="h-4 w-4 text-[#1a1a1a] sm:h-6 sm:w-6 dark:text-white" />
           </button>
         </div>
 
-        {/* ═════════════  LIVE GOLD RATE - Clean Two-Column  ═════════ Previous (Unupdated)  ═════════════════════════
-        <div className="mb-4 rounded-2xl bg-white p-4 shadow-sm dark:bg-[#141414]">
-          <div className="mb-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="relative flex h-2 w-2 items-center justify-center">
-                <span className="absolute h-2 w-2 animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              </div>
-              <span className="text-sm font-semibold text-[#1a1a1a] dark:text-white">
-                Live Gold Rate
-              </span>
-              <span className="rounded bg-[#D4AF37]/15 px-1.5 py-0.5 text-[9px] font-bold text-[#B8960C]">
-                24K • 999.0
-              </span>
-            </div>
-            <span
-              className={`flex items-center gap-0.5 text-xs font-semibold ${priceChange >= 0 ? "text-emerald-600" : "text-red-500"}`}
-            >
-              {priceChange >= 0 ? (
-                <TrendingUp className="h-3 w-3" />
-              ) : (
-                <TrendingDown className="h-3 w-3" />
-              )}
-              {priceChange >= 0 ? "+" : ""}
-              {priceChange}%
-            </span>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div
-              className="rounded-xl bg-emerald-100 border-2 border-emerald-500/30 p-3 shadow-[0_6px_18px_rgba(20,184,166,0.25)]">
-              <p className="mb-0.5 text-[10px] font-medium text-emerald-900 uppercase">
-                Buy </p>
-              {isInternalLoading ?
-                (<div className="h-7 w-24 animate-pulse rounded bg-emerald-200/50" />)
-                : (<p className="text-lg font-bold text-emerald-900"> ₹{goldBuyPrice.toFixed(2)}
-                  <span className="text-xs font-normal opacity-60">/g</span> </p>)}
-            </div>
-            <div className="rounded-xl bg-rose-100 border-2 border-rose-300/90 p-3 shadow-[0_6px_18px_rgba(244,63,94,0.25)]">
-              <p className="mb-0.5 text-[10px] font-medium text-rose-800 uppercase"> Sell </p>
-              {isInternalLoading ? (<div className="h-7 w-24 animate-pulse rounded bg-rose-200/50" />)
-                : (<p className="text-lg font-bold text-red-900"> ₹{goldSellPrice.toFixed(2)}
-                  <span className="text-xs font-normal opacity-60">/g</span> </p>)}
-            </div>
-          </div>
-        </div> */}
-
-        {/*  ═════════════  LIVE GOLD RATE - Clean Two-Column  ═════════ */}
-        <div className="w-full rounded-lg p-4 mb-3">
-          <div className="mb-3 flex items-center justify-between">
+        {/* ═════════════  LIVE GOLD RATE - Clean Two-Column  ═════════ */}
+        <div className="mb-3 w-full rounded-lg">
+          <div className="mt-3 mb-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="relative flex h-2 w-2 items-center justify-center">
                 <span className="absolute h-2 w-2 animate-ping rounded-full bg-red-400 opacity-75" />
                 <span className="relative h-1.5 w-1.5 rounded-full bg-red-500" />
               </div>
 
-              <span className="text-sm font-semibold text-[#1a1a1a]/80">
+              <span className="text-[10px] font-semibold text-red-500/70 sm:text-sm">
                 Live Rate
               </span>
 
@@ -389,110 +547,105 @@ export function HomeTab({
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {/* GOLD */}
-
             <div
-              className="
-  relative overflow-hidden
-  rounded-2xl p-5 shadow-sm
-  flex flex-col justify-between
-  bg-[radial-gradient(circle_at_center,#fdf7de_0%,#f6e7b8_40%,#edd28d_80%)]
-      border-2 border-[#e4cd8e]/70
-
-"
+              className="relative flex h-[80px] flex-col justify-between overflow-hidden rounded-xl border-2 border-[#e4cd8e]/70 bg-[radial-gradient(circle_at_center,#fdf7de_0%,#f6e7b8_40%,#edd28d_80%)] p-3 shadow-sm sm:h-[120px] sm:rounded-2xl sm:p-5"
               onClick={onBuyGold}
-
             >
-
-              {/* Soft overlay */}
-              <div className="absolute inset-0 bg-white/20 blur-sm opacity-40 pointer-events-none" />
+              <div className="pointer-events-none absolute inset-0 bg-gray-50/20 opacity-40 blur-sm" />
 
               {/* LIVE */}
-              <div className="absolute top-3 right-3 flex items-center gap-1">
-                <span className="relative flex h-2 w-2">
+              <div className="absolute top-2 right-2 flex items-center gap-1 sm:top-3 sm:right-3">
+                <span className="relative flex h-1 w-1">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-90" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                  <span className="relative inline-flex h-1 w-1 rounded-full bg-red-500" />
                 </span>
-                <span className="text-xs font-semibold text-red-600">Live</span>
+                <span className="text-[7px] font-bold text-red-600/60 sm:text-sm">
+                  Live
+                </span>
               </div>
 
               <div className="relative">
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="text-xl font-bold text-gray-800/85">GOLD</h3>
-                  <span className="text-xs font-medium text-gray-700/75">24K | 999</span>
+                <div className="mb-1 flex items-center gap-1 sm:mb-2 sm:gap-2">
+                  <h3 className="text-base font-bold text-gray-800/85 sm:text-xl">
+                    GOLD
+                  </h3>
+                  <span className="mt-1 text-[8px] font-medium text-gray-700/80 sm:text-xs">
+                    24K | 999
+                  </span>
                 </div>
 
                 <div className="flex items-end">
-                  <span className="text-xl font-medium text-gray-900/60">
+                  <span className="text-base font-medium text-gray-900/60 sm:text-xl">
                     ₹{goldBuyPrice.toFixed(2)}
                   </span>
-                  <span className="text-sm text-gray-700/75 mb-1">/gm</span>
+                  <span className="mb-0.5 text-[11px] text-gray-700/75 sm:mb-1 sm:text-sm">
+                    /gm
+                  </span>
                 </div>
               </div>
             </div>
 
             {/* SILVER */}
             <div
-              className="
-      relative overflow-hidden
-      rounded-2xl p-5 shadow-lg
-      flex flex-col justify-between
-      bg-[radial-gradient(circle_at_center,#F3F5F8_0%,#E1E5EB_35%,#C3CAD4_75%,#9EA8B7_100%)]
-       border-2 border-[#cfd5de]/90
-    " onClick={onBuySilver}
+              className="relative flex h-[80px] flex-col justify-between overflow-hidden rounded-xl border-2 border-[#cfd5de]/90 bg-[radial-gradient(circle_at_center,#F3F5F8_0%,#E1E5EB_35%,#C3CAD4_75%,#9EA8B7_100%)] p-3 shadow-lg sm:h-[120px] sm:rounded-2xl sm:p-5"
+              onClick={onBuySilver}
             >
-
-              <div className="absolute inset-0 bg-white/15 blur-sm opacity-40 pointer-events-none" />
-
+              <div className="pointer-events-none absolute inset-0 bg-gray-50/15 opacity-40 blur-sm" />
 
               {/* LIVE */}
-              <div className="absolute top-3 right-3 flex items-center gap-1">
-                <span className="relative flex h-2 w-2">
+              <div className="absolute top-2 right-2 flex items-center gap-1 sm:top-3 sm:right-3">
+                <span className="relative flex h-1 w-1">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-90" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
+                  <span className="relative inline-flex h-1 w-1 rounded-full bg-red-500" />
                 </span>
-                <span className="text-xs font-semibold text-red-600/50">Live</span>
+                <span className="text-[7px] font-bold text-red-600/60 sm:text-sm">
+                  Live
+                </span>
               </div>
 
               <div className="relative">
-                <div className="flex items-center gap-2 mb-2">
-                  <h3 className="text-xl font-bold text-gray-900/80">SILVER</h3>
-                  <span className="text-xs font-medium text-gray-700/80">24K | 999</span>
+                <div className="mb-1 flex items-center gap-1 sm:mb-2 sm:gap-2">
+                  <h3 className="text-base font-bold text-gray-900/80 sm:text-xl">
+                    SILVER
+                  </h3>
+                  <span className="mt-1 text-[8px] font-medium text-gray-700/80 sm:text-xs">
+                    24K | 999
+                  </span>
                 </div>
 
                 <div className="flex items-end">
-                  <span className="text-xl font-semibold text-gray-900/60">
+                  <span className="text-base font-semibold text-gray-900/60 sm:text-xl">
                     ₹5000.00
                   </span>
-                  <span className="text-sm text-gray-700/80 mb-1">/gm</span>
+                  <span className="mb-0.5 text-[11px] text-gray-700/80 sm:mb-1 sm:text-sm">
+                    /gm
+                  </span>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
-
         {/* Premium Gold Portfolio Card */}
-        <div className="gold-card relative overflow-hidden rounded-2xl p-5 mb-2 mt-6">
+        <div className="gold-card relative mt-6 mb-2 overflow-hidden rounded-2xl p-3">
           {/* Decorative shine */}
-          <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-white/20 blur-3xl" />
-          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+          <div className="absolute top-0 right-0 h-32 w-32 rounded-full bg-gray-50/20 blur-3xl" />
+          <div className="absolute -bottom-8 -left-8 h-24 w-24 rounded-full bg-gray-50/10 blur-2xl" />
 
           <div className="relative">
             {/* Total Value Section */}
-            <div className="mb-4 flex items-start justify-between">
+            <div className="mt-2 mb-4 flex items-start justify-between">
               <div>
                 <p className="mb-1 text-xs font-medium tracking-wider text-[#5a4a1a]/60 uppercase">
                   Total Portfolio
                 </p>
-                <p className="text-3xl font-bold text-[#2d2510]">
+                <p className="text-2xl font-bold text-[#2d2510]/90 sm:text-3xl">
                   ₹{totalPortfolioValue.toLocaleString()}
                 </p>
                 <div className="mt-1.5 flex items-center gap-2">
-                  <span className="text-sm text-[#5a4a1a]/70">
+                  <span className="text:xs text-[#5a4a1a]/70 sm:text-sm">
                     {totalGoldGrams.toFixed(3)}g gold
                   </span>
                   <span
@@ -537,10 +690,10 @@ export function HomeTab({
                 <div className="mb-1 flex items-center gap-1.5">
                   <Wallet className="h-3.5 w-3.5 text-[#5a4a1a]/70" />
                   <span className="text-[10px] font-medium text-[#5a4a1a]/70">
-                    Digital Gold
+                    Gold Bar
                   </span>
                 </div>
-                <p className="text-base font-bold text-[#2d2510]">
+                <p className="text-sm font-bold text-[#2d2510]">
                   {userGoldGrams.toFixed(3)}g
                 </p>
               </div>
@@ -553,7 +706,7 @@ export function HomeTab({
                     Gold Coins
                   </span>
                 </div>
-                <p className="text-base font-bold text-[#2d2510]">
+                <p className="text-sm font-bold text-[#2d2510]">
                   {totalCoins} coins
                 </p>
               </div>
@@ -565,7 +718,7 @@ export function HomeTab({
                 {coinInventory.map((coin, idx) => (
                   <span
                     key={idx}
-                    className="rounded-full bg-[#2d2510]/15 px-2.5 py-1 text-[10px] font-semibold text-[#2d2510]"
+                    className="ml-1 rounded-full bg-[#2d2510]/15 px-2.5 py-1 text-[10px] font-bold text-[#2d2510]"
                   >
                     {coin.coinGrams}g × {coin.quantity}
                   </span>
@@ -574,234 +727,117 @@ export function HomeTab({
             )}
           </div>
         </div>
-
       </div>
+
       {/* Main Content */}
-      <div className="px-4 pt-4 bg-[#fff9e8]/90">
-
-
-
-
-
-
-
-
+      <div className="bg-[#fff9e8]/90 px-4 pt-2">
         {/* ================ METAL ACTION BUTTONS ================= */}
-        <div className="px-1">
-          {/* ===== ALL ACTIONS IN ONE ROW RESPONSIVE ===== */}
-          <div
-            className="
-      mx-auto max-w-[900px]
-      grid grid-cols-4 sm:grid-cols-6
-      gap-3 sm:gap-8 mb-5
-    "
-          >
+        <div>
+          <div className="mx-auto mb-8 grid max-w-[1400px] grid-cols-3 gap-4 sm:grid-cols-12 sm:gap-10 lg:grid-cols-6">
             {/* BUY GOLD */}
-            <div className="flex flex-col items-center col-span-1">
+            <div className="col-span-1 flex flex-col items-center sm:col-span-3 lg:col-span-1">
               <button
                 onClick={onBuyGold}
-                className="
-          group relative overflow-hidden
-          w-full aspect-square max-h-32
-          rounded-lg flex items-center justify-center
-          bg-gradient-to-b from-white via-[#faf3d6] to-[#f7eac8]
-          border border-[#ead69c]/70
-          shadow-sm hover:shadow-md
-          active:scale-[0.97] transition
-        "
+                className="group relative flex h-20 w-full items-center justify-center overflow-hidden rounded-[10px] border border-[#ead69c]/70 bg-gradient-to-b from-white via-[#faf3d6] to-[#f7eac8] shadow-sm transition hover:shadow-md active:scale-[0.97] sm:h-25"
               >
-                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-40 blur-md transition" />
-                <Image src={doubleZoldGold2} alt="zold" className="h-20 w-20 object-cover rounded-md z-10 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gray-50/20 opacity-0 blur-md transition group-hover:opacity-40" />
+                <Image
+                  src={doubleZoldGold2}
+                  alt="zold"
+                  className="h-12 w-12 rounded-md object-cover transition-transform duration-300 group-hover:scale-110 sm:h-18 sm:w-18"
+                />
               </button>
-              <p className="text-sm font-semibold text-gray-700/90 mt-2">BUY Gold</p>
+              <p className="mt-2 text-xs font-bold text-[#1a1a1a]/70 sm:text-sm">
+                Buy Gold
+              </p>
             </div>
 
             {/* SELL GOLD */}
-            <div className="flex flex-col items-center col-span-1">
+            <div className="col-span-1 flex flex-col items-center sm:col-span-3 lg:col-span-1">
               <button
                 onClick={onSellGold}
-                className="
-          group relative overflow-hidden
-          w-full aspect-square max-h-32
-          rounded-lg flex items-center justify-center
-          bg-gradient-to-b from-white via-[#faf3d6] to-[#f7eac8]
-          border border-[#e4cd8e]/70
-          shadow-sm hover:shadow-md
-          active:scale-[0.97] transition
-        "
+                className="group relative flex h-20 w-full items-center justify-center overflow-hidden rounded-[10px] border border-[#e4cd8e]/70 bg-gradient-to-b from-white via-[#faf3d6] to-[#f7eac8] shadow-sm transition hover:shadow-md active:scale-[0.97] sm:h-25"
               >
-                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-40 blur-md transition" />
-                <Image src={doubleZoldGold2} alt="zold" className="h-20 w-20 object-cover rounded-md z-10 transition-transform duration-300 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gray-50/20 opacity-0 blur-md transition group-hover:opacity-40" />
+                <Image
+                  src={sell_gold}
+                  alt="zold"
+                  className="h-12 w-12 rounded-md object-cover transition-transform duration-300 group-hover:scale-110 sm:h-15 sm:w-15"
+                />
               </button>
-              <p className="text-sm font-semibold text-gray-700/90 mt-2">SELL Gold</p>
+              <p className="mt-2 text-xs font-bold text-[#1a1a1a]/70 sm:text-sm">
+                Sell Gold
+              </p>
             </div>
 
-            {/* BUY SILVER */}
-            <div className="flex flex-col items-center col-span-1">
-              <button
-                onClick={onBuySilver}
-                className="
-          group relative overflow-hidden
-          w-full aspect-square max-h-32
-          rounded-lg flex items-center justify-center
-          bg-gradient-to-b from-white via-[#E1E5EB] to-[#C3CAD4]
-          border border-[#d6dbe3]/70
-          shadow-sm hover:shadow-md
-          active:scale-[0.97] transition
-        "
-              >
-                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-40 blur-md transition" />
-                <Image src={doubleZoldSilver} alt="zold" className="h-20 w-20 object-cover rounded-md z-10 transition-transform duration-300 group-hover:scale-110" />
-              </button>
-              <p className="text-sm font-semibold text-gray-700/90 mt-2">BUY Silver</p>
-            </div>
-
-            {/* SELL SILVER */}
-            <div className="flex flex-col items-center col-span-1">
-              <button
-                onClick={onSellSilver}
-                className="
-          group relative overflow-hidden
-          w-full aspect-square max-h-32
-          rounded-lg flex items-center justify-center
-          bg-gradient-to-b from-white via-[#d7dde6] to-[#b0b8c6]
-          border border-[#cfd5de]/70
-          shadow-sm hover:shadow-md
-          active:scale-[0.97] transition
-        "
-              >
-                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-40 blur-md transition" />
-                <Image src={doubleZoldSilver} alt="zold" className="h-20 w-20 object-cover rounded-md z-10 transition-transform duration-300 group-hover:scale-110" />
-              </button>
-              <p className="text-sm font-semibold text-gray-700/90 mt-2">SELL Silver</p>
-            </div>
-
-            {/* ⭐ BUY COINS — CENTERED BELOW ON SMALL SCREENS */}
-            <div className="col-span-4 sm:col-span-2 flex flex-col items-center mt-4 sm:mt-0">
+            {/* BUY COINS */}
+            <div className="col-span-1 flex flex-col items-center sm:col-span-6 lg:col-span-2">
               <button
                 onClick={() => router.push("buy-coins")}
-                className="
-          group relative overflow-hidden
-          w-full max-w-[200px] sm:w-full sm:max-w-none
-          h-32 sm:h-full
-          rounded-xl
-          flex items-center justify-center
-          bg-gradient-to-b from-white via-[#faf3d6] to-[#f7eac8]
-          border border-[#ead69c]/70
-          shadow-md hover:shadow-lg
-          active:scale-[0.98] transition
-        "
+                className="group relative flex h-20 w-full items-center justify-center overflow-hidden rounded-[10px] border border-[#ead69c]/70 bg-gradient-to-b from-white via-[#faf3d6] to-[#f7eac8] shadow-sm transition hover:shadow-lg active:scale-[0.98] sm:h-25"
               >
                 <Image
                   src={zoldCoin}
                   alt="zold"
-                  className="
-            h-[88px] w-[88px]
-            object-cover rounded-md z-10
-            transition-transform duration-300
-            group-hover:scale-110
-          "
+                  className="h-12 w-12 rounded-[20px] object-cover transition-transform duration-300 group-hover:scale-110 sm:h-18 sm:w-18"
                 />
               </button>
-              <p className="text-sm font-semibold text-gray-700/90 mt-2">
-                BUY Coins
+              <p className="mt-2 text-xs font-bold text-[#1a1a1a]/70 sm:text-sm">
+                Buy Coins
               </p>
+            </div>
+
+            {/* SILVER BLOCK */}
+            <div className="col-span-3 sm:col-span-12 md:col-span-12 lg:col-span-2">
+              <div className="grid grid-cols-2 gap-3 sm:gap-8">
+                {/* BUY SILVER */}
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={onBuySilver}
+                    className="group relative flex h-20 w-full items-center justify-center overflow-hidden rounded-[10px] border border-[#d6dbe3]/70 bg-gradient-to-b from-white via-[#E1E5EB] to-[#C3CAD4] shadow-sm transition hover:shadow-md active:scale-[0.97] sm:h-25"
+                  >
+                    <div className="absolute inset-0 bg-gray-50/20 opacity-0 blur-md transition group-hover:opacity-40" />
+                    <Image
+                      src={doubleZoldSilver}
+                      alt="zold"
+                      className="h-14 w-14 rounded-md object-cover transition-transform duration-300 group-hover:scale-110 sm:h-18 sm:w-18"
+                    />
+                  </button>
+                  <p className="mt-2 text-xs font-bold text-[#1a1a1a]/70 sm:text-sm">
+                    Buy Silver
+                  </p>
+                </div>
+
+                {/* SELL SILVER */}
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={onSellSilver}
+                    className="group relative flex h-20 w-full items-center justify-center overflow-hidden rounded-[10px] border border-[#cfd5de]/70 bg-gradient-to-b from-white via-[#d7dde6] to-[#b0b8c6] shadow-sm transition hover:shadow-md active:scale-[0.97] sm:h-25"
+                  >
+                    <div className="absolute inset-0 bg-gray-50/20 opacity-0 blur-md transition group-hover:opacity-40" />
+                    <Image
+                      src={sell_silver}
+                      alt="zold"
+                      className="h-12 w-12 rounded-md object-cover transition-transform duration-300 group-hover:scale-110 sm:h-15 sm:w-15"
+                    />
+                  </button>
+                  <p className="mt-2 text-xs font-bold text-[#1a1a1a]/70 sm:text-sm">
+                    Sell Silver
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-
-
-
-        {/* ═══════════════════════════════════════════════════════════════
-            BUY GOLD COINS - Premium Section
-            ═══════════════════════════════════════════════════════════════ */}
-
-        {/* <div className="mb-4 rounded-2xl bg-white p-4 shadow-sm dark:bg-[#141414]">
-         
-          <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-linear-to-br from-[#f5e6a3] to-[#d4af37]">
-                <Coins className="h-4 w-4 text-[#5a4a1a]" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-[#1a1a1a] dark:text-white">
-                  Buy Gold Coins
-                </h3>
-                <p className="text-[10px] text-[#888]">
-                  24K Pure • 999.0 Fineness
-                </p>
-              </div>
-            </div>
-            <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400">
-              Free Delivery
-            </span>
-          </div>
-
-          <div className="grid grid-cols-4 gap-2">
-            {[
-              { weight: 1, price: goldBuyPrice * 1 },
-              { weight: 2, price: goldBuyPrice * 2 },
-              { weight: 5, price: goldBuyPrice * 5 },
-              { weight: 10, price: goldBuyPrice * 10 },
-            ].map((coin) => (
-              <button
-                key={coin.weight}
-                onClick={() => router.push("/buy-coins")}
-                className="group relative flex flex-col items-center rounded-xl border-2 border-[#f0f0f0] bg-[#fafafa] p-3 transition-all hover:border-[#D4AF37] hover:bg-white hover:shadow-md active:scale-[0.97] dark:border-[#2a2a2a] dark:bg-[#1a1a1a] dark:hover:border-[#D4AF37] dark:hover:bg-[#222]"
-              >
-               
-                <div className="relative mb-2 flex h-12 w-12 items-center justify-center">
-               
-                  <div className="absolute inset-0 rounded-full bg-linear-to-br from-[#f5e6a3] via-[#e8c84a] to-[#c9a432] shadow-md ring-2 ring-[#b8960c]/20" />
-                  <div className="absolute inset-1 rounded-full bg-linear-to-br from-white/30 to-transparent" />
-              
-                  <div className="relative flex flex-col items-center">
-                    <span className="text-lg font-bold text-[#3d3015]">
-                      {coin.weight}
-                    </span>
-                    <span className="text-[8px] font-semibold text-[#5a4a1a]/70">
-                      GM
-                    </span>
-                  </div>
-                </div>
-
-                <p className="text-[11px] font-bold text-[#1a1a1a] dark:text-white">
-                  ₹{Math.round(coin.price).toLocaleString()}
-                </p>
-
-            
-                <div className="mt-1.5 h-0.5 w-4 rounded-full bg-[#e0e0e0] transition-all group-hover:w-6 group-hover:bg-[#D4AF37] dark:bg-[#333]" />
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-3 flex items-center justify-between border-t border-[#f0f0f0] pt-3 dark:border-[#2a2a2a]">
-            <button
-              onClick={() => router.push("/buy-coins")}
-              className="flex items-center gap-1 text-xs font-semibold text-[#B8960C] transition-colors hover:text-[#96780a]"
-            >
-              <span>View all coins</span>
-              <ChevronRight className="h-3.5 w-3.5" />
-            </button>
-            <button
-              onClick={() => router.push("/buy-coins")}
-              className="rounded-lg bg-[#D4AF37] px-4 py-2 text-xs font-semibold text-[#1a1a1a] transition-all hover:bg-[#c9a432] active:scale-[0.97]"
-            >
-              Buy Coins
-            </button>
-          </div>
-        </div> */}
-
 
         {/* ═══════════════════════════════════════════════════════════════
             QUICK ACTIONS GRID
             ═══════════════════════════════════════════════════════════════ */}
         <div className="mb-4">
-          <h2 className="mb-3 font-semibold text-[#1a1a1a] dark:text-white">
+          <h2 className="mb-3 font-semibold text-[#1a1a1a]/70 dark:text-white">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-4 gap-2">
             {[
               {
                 icon: Target,
@@ -827,12 +863,11 @@ export function HomeTab({
                 onClick: () => router.push("/jewellery"),
                 color: "#8B5CF6",
               },
-
             ].map((action, idx) => (
               <button
                 key={idx}
                 onClick={action.onClick}
-                className="flex flex-col items-center gap-2 rounded-xl bg-white p-4 shadow-sm transition-all hover:shadow-md active:scale-[0.97] dark:bg-[#1a1a1a]"
+                className="flex flex-col items-center gap-2 rounded-xl bg-gray-50 p-3 shadow-sm transition-all hover:shadow-md active:scale-[0.97] dark:bg-[#1a1a1a]"
               >
                 <div
                   className="flex h-10 w-10 items-center justify-center rounded-full"
@@ -843,21 +878,22 @@ export function HomeTab({
                     style={{ color: action.color }}
                   />
                 </div>
-                <span className="text-xs font-medium text-[#1a1a1a] dark:text-white">
+                <span className="text-xs font-medium text-[#1a1a1a]/60 dark:text-white">
                   {action.label}
                 </span>
               </button>
             ))}
           </div>
         </div>
+
         {/* ═══════════════════════════════════════════════════════════════
             PRICE CHART
             ═══════════════════════════════════════════════════════════════ */}
-        <div className="mb-4 rounded-2xl bg-white p-5 shadow-sm dark:bg-[#1a1a1a]">
+        <div className="mb-10 rounded-2xl bg-gray-50 p-3 shadow-sm dark:bg-[#1a1a1a]">
           <div className="mb-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <BarChart3 className="h-5 w-5 text-[#D4AF37]" />
-              <span className="font-semibold text-[#1a1a1a] dark:text-white">
+            <div className="flex items-center">
+              <BarChart3 className="m-2 ml-8 hidden h-5 w-5 text-[#D4AF37] sm:block" />
+              <span className="text-center text-xs font-semibold text-[#1a1a1a]/90 sm:text-lg dark:text-white">
                 Price Chart
               </span>
             </div>
@@ -867,8 +903,8 @@ export function HomeTab({
                   key={tf}
                   onClick={() => setChartTimeframe(tf)}
                   className={`rounded-md px-3 py-1.5 text-xs font-semibold transition-all ${chartTimeframe === tf
-                    ? "bg-white text-[#1a1a1a] shadow-sm dark:bg-[#333] dark:text-white"
-                    : "text-[#888] hover:text-[#1a1a1a] dark:hover:text-white"
+                    ? "bg-gray-50 text-[#1a1a1a]/70 shadow-sm dark:bg-[#333] dark:text-white"
+                    : "text-[#888]/70 hover:text-[#1a1a1a] dark:hover:text-white"
                     }`}
                 >
                   {tf}
@@ -877,7 +913,7 @@ export function HomeTab({
             </div>
           </div>
 
-          <div className="h-40" style={{ minHeight: '160px' }}>
+          <div className="mt-8 h-40" style={{ minHeight: "180px" }}>
             {isMounted ? (
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={priceData[chartTimeframe]}>
@@ -943,20 +979,20 @@ export function HomeTab({
 
           <div className="mt-3 grid grid-cols-3 gap-2 border-t border-[#f0f0f0] pt-3 dark:border-[#333]">
             <div className="text-center">
-              <p className="text-[10px] text-[#888] uppercase">High</p>
-              <p className="font-semibold text-[#1a1a1a] dark:text-white">
+              <p className="sm:text:sm text-xs text-[#888] uppercase">High</p>
+              <p className="sm:text:sm text-sm font-bold text-[#1a1a1a]/70 dark:text-white">
                 ₹6,280
               </p>
             </div>
             <div className="border-x border-[#f0f0f0] text-center dark:border-[#333]">
-              <p className="text-[10px] text-[#888] uppercase">Low</p>
-              <p className="font-semibold text-[#1a1a1a] dark:text-white">
+              <p className="sm:text:sm text-xs text-[#888] uppercase">Low</p>
+              <p className="sm:text:sm text-sm font-bold text-[#1a1a1a]/70 dark:text-white">
                 ₹6,145
               </p>
             </div>
             <div className="text-center">
-              <p className="text-[10px] text-[#888] uppercase">Vol</p>
-              <p className="font-semibold text-[#1a1a1a] dark:text-white">
+              <p className="sm:text:sm text-xs text-[#888] uppercase">Vol</p>
+              <p className="sm:text:sm text-sm font-bold text-[#1a1a1a]/70 dark:text-white">
                 125 kg
               </p>
             </div>
@@ -968,7 +1004,7 @@ export function HomeTab({
             ═══════════════════════════════════════════════════════════════ */}
         <button
           onClick={onOpenAuspiciousDays}
-          className="mb-4 w-full overflow-hidden rounded-2xl bg-linear-to-r from-[#8B2942] to-[#6B1D32] p-5 text-left text-white shadow-sm transition-all hover:shadow-md active:scale-[0.99]"
+          className="mb-10 w-full overflow-hidden rounded-2xl bg-linear-to-r from-[#8B2942] to-[#6B1D32] p-5 text-left text-white shadow-sm transition-all hover:shadow-md active:scale-[0.99]"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -990,12 +1026,12 @@ export function HomeTab({
             ═══════════════════════════════════════════════════════════════ */}
         <div className="mb-4">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-semibold text-[#1a1a1a] dark:text-white">
+            <h2 className="text-sm font-semibold text-[#1a1a1a]/80 dark:text-white">
               Your Goals
             </h2>
             <button
               onClick={onOpenGoldGoals}
-              className="text-sm font-medium text-[#8B2942]"
+              className="text-xs font-bold text-[#8B2942]/60"
             >
               View All
             </button>
@@ -1004,7 +1040,7 @@ export function HomeTab({
           <div className="space-y-3">
             <button
               onClick={onOpenGoldGoals}
-              className="w-full rounded-2xl bg-white p-4 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.99] dark:bg-[#1a1a1a]"
+              className="w-full rounded-2xl bg-gray-50 p-4 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.99] dark:bg-[#1a1a1a]"
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#D4AF37]/10 text-xl">
@@ -1012,7 +1048,7 @@ export function HomeTab({
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-[#1a1a1a] dark:text-white">
+                    <h4 className="text-sm font-semibold text-[#1a1a1a]/80 sm:text-sm dark:text-white">
                       Wedding Jewellery
                     </h4>
                     <span className="text-xs font-bold text-[#D4AF37]">
@@ -1031,7 +1067,7 @@ export function HomeTab({
 
             <button
               onClick={onOpenGoldGoals}
-              className="w-full rounded-2xl bg-white p-4 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.99] dark:bg-[#1a1a1a]"
+              className="w-full rounded-2xl bg-gray-50 p-4 text-left shadow-sm transition-all hover:shadow-md active:scale-[0.99] dark:bg-[#1a1a1a]"
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#8B2942]/10 text-xl">
@@ -1039,10 +1075,10 @@ export function HomeTab({
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-[#1a1a1a] dark:text-white">
+                    <h4 className="text-sm font-semibold text-[#1a1a1a]/80 sm:text-sm dark:text-white">
                       Diwali Gold
                     </h4>
-                    <span className="text-xs font-bold text-[#8B2942]">
+                    <span className="text-xs font-bold text-[#8B2942]/80">
                       45%
                     </span>
                   </div>
@@ -1061,20 +1097,20 @@ export function HomeTab({
         {/* ═══════════════════════════════════════════════════════════════
             RECENT TRANSACTIONS
             ═══════════════════════════════════════════════════════════════ */}
-        <div className="mb-4">
+        <div className="mt-10 mb-4">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="font-semibold text-[#1a1a1a] dark:text-white">
+            <h2 className="text-sm font-semibold text-[#1a1a1a]/80 dark:text-white">
               Recent Activity
             </h2>
             <button
               onClick={onOpenWalletDetails}
-              className="text-sm font-medium text-[#8B2942]"
+              className="text-xs font-bold text-[#8B2942]/60"
             >
               See All
             </button>
           </div>
 
-          <div className="overflow-hidden rounded-2xl bg-white shadow-sm dark:bg-[#1a1a1a]">
+          <div className="overflow-hidden rounded-2xl bg-gray-50 shadow-sm dark:bg-[#1a1a1a]">
             {recentTransactions.length > 0 ? (
               recentTransactions.slice(0, 3).map((tx, idx) => (
                 <div
@@ -1170,12 +1206,54 @@ export function HomeTab({
         </div>
       </div>
 
-      {/* Notifications Modal */}
-      {showGift && <GiftGold onClose={() => setShowGift(false)} />}
-      {showRefer && <ReferralProgram onClose={() => setShowRefer(false)} />}
-      {showShop && <JewelleryPage onClose={() => setShowShop(false)} />}
-      {showGoals && <GoldGoals onClose={() => setShowGoals(false)} />}
+      {/* Modals - Fixed positioning for mobile */}
+      {showGift && (
+        <div className="fixed bottom-16 z-[100] flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setShowGift(false)}
+          />
+          <div className="relative z-[101] h-full w-full overflow-y-auto rounded-none bg-white sm:h-auto sm:max-h-[90vh] sm:w-[90%] sm:max-w-lg sm:rounded-2xl">
+            <GiftGold onClose={() => setShowGift(false)} />
+          </div>
+        </div>
+      )}
 
+      {showRefer && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setShowRefer(false)}
+          />
+          <div className="relative z-[101] h-full w-full overflow-y-auto rounded-none bg-white sm:h-auto sm:max-h-[90vh] sm:w-[90%] sm:max-w-lg sm:rounded-2xl">
+            <ReferralProgram onClose={() => setShowRefer(false)} />
+          </div>
+        </div>
+      )}
+
+      {showShop && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setShowShop(false)}
+          />
+          <div className="relative z-[101] h-full w-full overflow-y-auto rounded-none bg-white sm:h-auto sm:max-h-[90vh] sm:w-[90%] sm:max-w-lg sm:rounded-2xl">
+            <JewelleryPage onClose={() => setShowShop(false)} />
+          </div>
+        </div>
+      )}
+
+      {showGoals && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center">
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setShowGoals(false)}
+          />
+          <div className="relative z-[101] h-full w-full overflow-y-auto rounded-none bg-white sm:h-auto sm:max-h-[90vh] sm:w-[90%] sm:max-w-lg sm:rounded-2xl">
+            <GoldGoals onClose={() => setShowGoals(false)} />
+          </div>
+        </div>
+      )}
     </div>
   );
-} 
+}

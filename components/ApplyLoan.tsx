@@ -28,12 +28,12 @@ export function ApplyLoan({ isOpen, onClose, eligibleGold, maxLoanAmount, intere
     return (
         <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 dark:bg-black/70">
             <style>{`.zold-hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .zold-hide-scrollbar::-webkit-scrollbar{ display:none; }`}</style>
-            <div className="zold-hide-scrollbar max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-white dark:bg-neutral-800">
+            <div className="zold-hide-scrollbar max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-gray-50 dark:bg-neutral-800">
                 {/* Header - Stolen from GiftGold style but with Loan branding */}
                 <div className="sticky top-0 z-10 rounded-t-3xl bg-gradient-to-r from-[#3D3066] to-[#5C4E7F] px-6 py-5">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="rounded-full bg-white/20 p-2 backdrop-blur-sm">
+                            <div className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm">
                                 <Banknote className="h-6 w-6 text-white" />
                             </div>
                             <div>
@@ -45,7 +45,7 @@ export function ApplyLoan({ isOpen, onClose, eligibleGold, maxLoanAmount, intere
                         </div>
                         <button
                             onClick={onClose}
-                            className="rounded-full bg-white/20 p-2 backdrop-blur-sm transition-colors hover:bg-white/30"
+                            className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm transition-colors hover:bg-gray-50/30"
                         >
                             <X className="h-5 w-5 text-white" />
                         </button>
@@ -62,7 +62,7 @@ export function ApplyLoan({ isOpen, onClose, eligibleGold, maxLoanAmount, intere
                                 onClick={() => setSelectedOption("online")}
                                 className={`w-full rounded-xl border-2 p-4 text-left transition-all ${selectedOption === "online"
                                     ? "border-[#3D3066] bg-[#F3F1F7] dark:border-[#8B7FA8] dark:bg-neutral-700"
-                                    : "border-gray-200 hover:border-[#8B7FA8] dark:border-neutral-700 bg-white dark:bg-neutral-800"
+                                    : "border-gray-200 hover:border-[#8B7FA8] dark:border-neutral-700 bg-gray-50 dark:bg-neutral-800"
                                     }`}
                             >
                                 <div className="flex items-start justify-between">
@@ -139,7 +139,7 @@ export function ApplyLoan({ isOpen, onClose, eligibleGold, maxLoanAmount, intere
                                             onClick={() => setTenure(months)}
                                             className={`rounded-xl py-3 text-sm transition-all ${tenure === months
                                                 ? "bg-[#3D3066] text-white dark:bg-[#4D3F7F]"
-                                                : "border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                                                : "border border-gray-200 bg-gray-50 text-gray-700 hover:bg-gray-50 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
                                                 }`}
                                         >
                                             {months} months

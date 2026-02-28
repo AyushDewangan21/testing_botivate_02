@@ -119,7 +119,7 @@ export function CoinPortfolio() {
 
   if (loading) {
     return (
-      <div className="animate-pulse space-y-4 rounded-2xl border border-gray-100 bg-white p-6 dark:border-neutral-700 dark:bg-neutral-800">
+      <div className="animate-pulse space-y-4 rounded-2xl border border-gray-100 bg-gray-50 p-6 dark:border-neutral-700 dark:bg-neutral-800">
         <div className="h-6 w-40 rounded bg-gray-200 dark:bg-neutral-700"></div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[1, 2, 3, 4].map((i) => (
@@ -147,7 +147,7 @@ export function CoinPortfolio() {
           <div>
             <div className="mb-1 flex items-center gap-2">
               <Award className="h-5 w-5 text-[#FCDE5B]" />
-              <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+              <h2 className="text-lg font-semibold text-gray-700 dark:text-white">
                 My Gold Coins
               </h2>
             </div>
@@ -160,7 +160,7 @@ export function CoinPortfolio() {
               fetchCoinInventory();
               fetchCoinTransactions();
             }}
-            className="rounded-full bg-white/80 p-2 transition-all hover:bg-white dark:bg-neutral-700/80 dark:hover:bg-neutral-700"
+            className="rounded-full bg-gray-50/80 p-2 transition-all hover:bg-gray-50 dark:bg-neutral-700/80 dark:hover:bg-neutral-700"
           >
             <RefreshCw className="h-4 w-4 text-gray-600 dark:text-neutral-300" />
           </button>
@@ -173,7 +173,7 @@ export function CoinPortfolio() {
               <p className="text-sm text-gray-500 dark:text-neutral-400">
                 Total Value
               </p>
-              <p className="text-3xl font-bold text-gray-900 dark:text-white">
+              <p className="text-3xl font-bold text-gray-600 dark:text-white">
                 ₹{parseFloat(inventory.totalValue).toLocaleString("en-IN")}
               </p>
             </div>
@@ -194,11 +194,10 @@ export function CoinPortfolio() {
         {inventory?.inventory.map((coin) => (
           <div
             key={coin.coinGrams}
-            className={`relative overflow-hidden rounded-xl border-2 p-4 transition-all ${
-              coin.quantity > 0
-                ? "border-[#FCDE5B]/50 bg-white shadow-lg dark:bg-neutral-800"
-                : "border-gray-200 bg-gray-50 dark:border-neutral-700 dark:bg-neutral-900"
-            }`}
+            className={`relative overflow-hidden rounded-xl border-2 p-4 transition-all ${coin.quantity > 0
+              ? "border-[#FCDE5B]/50 bg-gray-50 shadow-lg dark:bg-neutral-800"
+              : "border-gray-200 bg-gray-50 dark:border-neutral-700 dark:bg-neutral-900"
+              }`}
           >
             {/* Coin Visual */}
             <div className="mb-3 flex justify-center">
@@ -255,14 +254,14 @@ export function CoinPortfolio() {
 
       {/* Recent Transactions */}
       {transactions.length > 0 && (
-        <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
+        <div className="rounded-2xl border border-gray-100 bg-gray-50 p-5 shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
           <button
             onClick={() => setShowTransactions(!showTransactions)}
             className="flex w-full items-center justify-between"
           >
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-gray-500 dark:text-neutral-400" />
-              <h3 className="font-semibold text-gray-900 dark:text-white">
+              <h3 className="font-semibold text-gray-700 dark:text-white">
                 Coin Transactions
               </h3>
             </div>
@@ -280,11 +279,10 @@ export function CoinPortfolio() {
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`rounded-full p-2 ${
-                        tx.type === "BUY_WITH_RUPEES"
-                          ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
-                          : "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
-                      }`}
+                      className={`rounded-full p-2 ${tx.type === "BUY_WITH_RUPEES"
+                        ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                        : "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                        }`}
                     >
                       {tx.type === "BUY_WITH_RUPEES" ? (
                         <TrendingUp className="h-4 w-4" />

@@ -39,25 +39,25 @@ interface LanguagesPageProps {
 export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
   const [selectedLanguage, setSelectedLanguage] = useState("en");
   const [languageSections, setLanguageSections] = useState<LanguageSection[]>([
-  {
-    title: "App Interface",
-    description: "Menus, buttons, and app navigation",
-    icon: <Settings className="h-4 w-4" />,
-    enabled: true,
-  },
-  {
-    title: "Audio Content",
-    description: "Voice guidance and audio notifications",
-    icon: <Volume2 className="h-4 w-4" />,
-    enabled: false,
-  },
-  {
-    title: "Educational Content",
-    description: "Learning resources and tutorials",
-    icon: <BookOpen className="h-4 w-4" />,
-    enabled: false,
-  },
-]);
+    {
+      title: "App Interface",
+      description: "Menus, buttons, and app navigation",
+      icon: <Settings className="h-4 w-4" />,
+      enabled: true,
+    },
+    {
+      title: "Audio Content",
+      description: "Voice guidance and audio notifications",
+      icon: <Volume2 className="h-4 w-4" />,
+      enabled: false,
+    },
+    {
+      title: "Educational Content",
+      description: "Learning resources and tutorials",
+      icon: <BookOpen className="h-4 w-4" />,
+      enabled: false,
+    },
+  ]);
 
   // Available languages with support details
   const languages: Language[] = [
@@ -223,7 +223,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -231,9 +231,9 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -241,7 +241,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -267,7 +267,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
           <div className="mb-6 rounded-xl border border-[#3D3066] bg-[#3D3066]/5 p-4 dark:border-[#8B7FA8] dark:bg-[#3D3066]/10">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="rounded-full bg-white p-2 dark:bg-neutral-800">
+                <div className="rounded-full bg-gray-50 p-2 dark:bg-neutral-800">
                   <Globe className="h-5 w-5 text-[#3D3066] dark:text-[#8B7FA8]" />
                 </div>
                 <div>
@@ -318,11 +318,10 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
               {languages.map((language) => (
                 <div
                   key={language.id}
-                  className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all ${
-                    selectedLanguage === language.code
+                  className={`flex cursor-pointer items-center justify-between rounded-xl border p-4 transition-all ${selectedLanguage === language.code
                       ? "border-[#3D3066] bg-[#3D3066]/5 dark:border-[#8B7FA8] dark:bg-[#3D3066]/10"
-                      : "border-gray-200 bg-white dark:border-neutral-800 dark:bg-neutral-800/50"
-                  } ${language.available ? "hover:border-[#3D3066] dark:hover:border-[#8B7FA8]" : "opacity-70"}`}
+                      : "border-gray-200 bg-gray-50 dark:border-neutral-800 dark:bg-neutral-800/50"
+                    } ${language.available ? "hover:border-[#3D3066] dark:hover:border-[#8B7FA8]" : "opacity-70"}`}
                 >
                   <div className="flex items-center gap-3">
                     {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100 text-2xl dark:bg-neutral-700">
@@ -340,7 +339,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-3">
                     {/* Translation Progress Bar */}
                     {/* <div className="hidden sm:block">
@@ -356,7 +355,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
                         </span>
                       </div>
                     </div> */}
-                    
+
                     {selectedLanguage === language.code ? (
                       <div className="rounded-full bg-[#3D3066] p-1.5 dark:bg-[#8B7FA8]">
                         <Check className="h-4 w-4 text-white" />
@@ -382,7 +381,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
               {languageSections.map((section, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-800 dark:bg-neutral-800/50"
+                  className="flex items-center justify-between rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-800 dark:bg-neutral-800/50"
                 >
                   <div className="flex items-center gap-3">
                     <div className={`rounded-full p-2 ${
@@ -410,7 +409,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
                     }`}
                   >
                     <div
-                      className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
+                      className={`absolute top-1 h-4 w-4 rounded-full bg-gray-50 transition-transform ${
                         section.enabled ? "left-1 translate-x-7" : "left-1"
                       }`}
                     />
@@ -466,7 +465,7 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
               </div>
 
               <div className="pt-3">
-                <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700">
+                <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-gray-300 bg-gray-50 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700">
                   <span>Request a Language</span>
                   <ChevronRight className="h-4 w-4" />
                 </button>
@@ -485,12 +484,12 @@ export function LanguagesPage({ user, onClose, isOpen }: LanguagesPageProps) {
             <button
               onClick={() => {
                 setSelectedLanguage("en");
-                setLanguageSections(sections => 
+                setLanguageSections(sections =>
                   sections.map(section => ({ ...section, enabled: true }))
                 );
                 alert("Reset to default English settings");
               }}
-              className="w-full rounded-lg border border-gray-300 bg-white py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+              className="w-full rounded-lg border border-gray-300 bg-gray-50 py-3 text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
             >
               Reset to Default Settings
             </button>

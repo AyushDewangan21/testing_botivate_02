@@ -29,7 +29,7 @@ export function TermsConditionsPage({ user, onClose, isOpen }: TermsConditionsPa
     console.log("Terms & Conditions accepted by user:", user?.id);
     setAccepted(true);
     setShowAcceptance(false);
-    
+
     // Show success message
     setTimeout(() => {
       onClose();
@@ -58,7 +58,7 @@ export function TermsConditionsPage({ user, onClose, isOpen }: TermsConditionsPa
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -66,9 +66,9 @@ export function TermsConditionsPage({ user, onClose, isOpen }: TermsConditionsPa
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -76,7 +76,7 @@ export function TermsConditionsPage({ user, onClose, isOpen }: TermsConditionsPa
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -94,7 +94,7 @@ export function TermsConditionsPage({ user, onClose, isOpen }: TermsConditionsPa
               </p>
             </div>
           </div>
-          
+
           <div className="flex gap-2">
             <button
               onClick={handleDownload}
@@ -261,7 +261,7 @@ export function TermsConditionsPage({ user, onClose, isOpen }: TermsConditionsPa
       {/* Acceptance Confirmation Modal */}
       {showAcceptance && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl dark:bg-neutral-800">
+          <div className="w-full max-w-md rounded-2xl bg-gray-50 p-6 shadow-xl dark:bg-neutral-800">
             <div className="mb-4 flex items-center gap-3">
               <div className="rounded-full bg-blue-100 p-2 dark:bg-blue-900/30">
                 <AlertCircle className="h-6 w-6 text-blue-600 dark:text-blue-400" />
@@ -275,7 +275,7 @@ export function TermsConditionsPage({ user, onClose, isOpen }: TermsConditionsPa
                 </p>
               </div>
             </div>
-            
+
             <div className="mb-6 space-y-3">
               <div className="flex items-start gap-3">
                 <Check className="mt-0.5 h-5 w-5 text-green-600" />

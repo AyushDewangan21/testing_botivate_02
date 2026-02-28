@@ -61,7 +61,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -69,9 +69,9 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -79,7 +79,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -97,7 +97,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
               </p>
             </div>
           </div>
-          
+
           <div className="flex gap-2">
             <button
               onClick={handlePrint}
@@ -125,11 +125,10 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
-                  className={`flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                    activeSection === section.id
+                  className={`flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${activeSection === section.id
                       ? "bg-[#3D3066] text-white dark:bg-[#4D3F7F]"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
-                  }`}
+                    }`}
                 >
                   {section.icon}
                   {section.title}
@@ -201,7 +200,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
                   <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                     Information We Collect
                   </h3>
-                  
+
                   <div className="mb-4 space-y-3">
                     <div className="flex items-start gap-3">
                       <div className="rounded bg-blue-100 p-1.5 dark:bg-blue-900/30">
@@ -259,7 +258,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
                   <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                     How We Use Your Information
                   </h3>
-                  
+
                   <div className="space-y-4">
                     <div className="rounded-lg bg-gray-50 p-4 dark:bg-neutral-800">
                       <h4 className="font-medium text-gray-900 dark:text-white">Service Provision</h4>
@@ -305,7 +304,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
                       Security Measures
                     </h3>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div className="rounded-lg bg-green-50 p-4 dark:bg-green-900/20">
                       <h4 className="font-medium text-green-800 dark:text-green-300">Encryption</h4>
@@ -346,7 +345,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
                   <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
                     Your Rights & Choices
                   </h3>
-                  
+
                   <div className="space-y-3">
                     <div className="flex items-start gap-3 rounded-lg bg-gray-50 p-4 dark:bg-neutral-800">
                       <div className="rounded bg-blue-100 p-1.5 dark:bg-blue-900/30">
@@ -418,7 +417,7 @@ export function PrivacyPolicyPage({ user, onClose, isOpen }: PrivacyPolicyPagePr
                       Cookies & Tracking
                     </h3>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <div className="rounded-lg bg-gray-50 p-4 dark:bg-neutral-800">
                       <h4 className="font-medium text-gray-900 dark:text-white">Essential Cookies</h4>

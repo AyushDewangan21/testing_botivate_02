@@ -232,7 +232,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
             <ChevronLeft className="h-5 w-5" />
             <span className="text-sm">Back to Wallet</span>
           </button>
-          <img src="01.jpg" alt="zold logo" className="h-16 rounded-xl" />
+          <img src="02.png" alt="zold logo" className="h-16 rounded-xl" />
         </div>
 
         <div className="text-center text-white">
@@ -244,7 +244,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
 
         {/* Summary Cards */}
         <div className="mt-6 grid grid-cols-2 gap-4">
-          <div className="rounded-xl bg-white/10 p-4 backdrop-blur-md dark:bg-white/5">
+          <div className="rounded-xl bg-gray-50/10 p-4 backdrop-blur-md dark:bg-gray-50/5">
             <p className="mb-1 text-sm text-white/70">Active SIPs</p>
             <p className="text-xl font-semibold text-white">
               {activeSIPs.length}
@@ -253,7 +253,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
               Total: ₹{activeSIPs.reduce((sum, sip) => sum + sip.amount, 0).toLocaleString()}/mo
             </p>
           </div>
-          <div className="rounded-xl bg-white/10 p-4 backdrop-blur-md dark:bg-white/5">
+          <div className="rounded-xl bg-gray-50/10 p-4 backdrop-blur-md dark:bg-gray-50/5">
             <p className="mb-1 text-sm text-white/70">Gold Accumulated</p>
             <p className="text-xl font-semibold text-white">
               {activeSIPs.reduce((sum, sip) => sum + sip.goldAccumulated, 0).toFixed(3)} gm
@@ -268,7 +268,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
       <div className="px-6 pb-6">
         {/* Tabs */}
         <div className="-mt-4 mb-6">
-          <div className="flex rounded-t-xl bg-white p-1 dark:bg-neutral-800">
+          <div className="flex rounded-t-xl bg-gray-50 p-1 dark:bg-neutral-800">
             <button
               onClick={() => setActiveTab("active")}
               className={`flex-1 rounded-lg py-2 text-sm font-medium transition-colors ${activeTab === "active"
@@ -304,7 +304,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
           {(activeTab === "active" ? activeSIPs : sipHistory).map((sip) => (
             <div
               key={sip.id}
-              className="overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50"
+              className="overflow-hidden rounded-2xl bg-gray-50 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50"
             >
               <div className="p-5">
                 {/* Header */}
@@ -452,7 +452,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
       {/* Create SIP Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 dark:bg-neutral-800">
+          <div className="w-full max-w-md rounded-2xl bg-gray-50 p-6 dark:bg-neutral-800">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Create New SIP
@@ -537,7 +537,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
       {/* Edit SIP Modal */}
       {showEditModal && selectedSIP && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 dark:bg-neutral-800">
+          <div className="w-full max-w-md rounded-2xl bg-gray-50 p-6 dark:bg-neutral-800">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Edit SIP
@@ -609,7 +609,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
       {/* Pause SIP Modal */}
       {showPauseModal && selectedSIP && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 dark:bg-neutral-800">
+          <div className="w-full max-w-sm rounded-2xl bg-gray-50 p-6 dark:bg-neutral-800">
             <div className="mb-4 text-center">
               <AlertTriangle className="mx-auto mb-3 h-12 w-12 text-yellow-500" />
               <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
@@ -642,7 +642,7 @@ export function ManageSIPPage({ onClose }: ManageSIPPageProps) {
       {/* Delete SIP Modal */}
       {showDeleteModal && selectedSIP && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-sm rounded-2xl bg-white p-6 dark:bg-neutral-800">
+          <div className="w-full max-w-sm rounded-2xl bg-gray-50 p-6 dark:bg-neutral-800">
             <div className="mb-4 text-center">
               <AlertCircle className="mx-auto mb-3 h-12 w-12 text-red-500" />
               <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">

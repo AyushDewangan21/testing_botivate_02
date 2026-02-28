@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { 
-  ArrowLeft, 
-  Edit2, 
-  Save, 
-  X, 
-  Plus, 
-  Trash2, 
+import {
+  ArrowLeft,
+  Edit2,
+  Save,
+  X,
+  Plus,
+  Trash2,
   Copy,
   Check,
   Building,
@@ -161,7 +161,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
       });
 
       const data = await response.json();
-      if(data.success) {
+      if (data.success) {
         await fetchBankAccounts();
       } else {
         alert(data.message || 'Failed to set primary account');
@@ -177,7 +177,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
       alert("Cannot delete primary account. Please set another account as primary first.");
       return;
     }
-    
+
     try {
       const token = getAuthToken();
       if (!token) return;
@@ -278,7 +278,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -286,9 +286,9 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -296,7 +296,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -314,7 +314,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
               </p>
             </div>
           </div>
-          
+
           {!isAddingNew && !isEditing && (
             <button
               onClick={() => setIsAddingNew(true)}
@@ -358,7 +358,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
               <h3 className="font-medium text-gray-900 dark:text-white">
                 {isEditing ? "Edit Bank Account" : "Add New Bank Account"}
               </h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-neutral-300">
@@ -369,7 +369,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
                     name="bankName"
                     value={formData.bankName}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="Enter bank name"
                   />
                 </div>
@@ -383,7 +383,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
                     name="accountHolderName"
                     value={formData.accountHolderName}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="Enter account holder name"
                   />
                 </div>
@@ -397,7 +397,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
                     name="accountNumber"
                     value={formData.accountNumber}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="Enter account number"
                   />
                 </div>
@@ -411,7 +411,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
                     name="ifscCode"
                     value={formData.ifscCode}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="Enter IFSC code"
                   />
                 </div>
@@ -424,7 +424,7 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
                     name="accountType"
                     value={formData.accountType}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
                   >
                     <option value="savings">Savings Account</option>
                     <option value="current">Current Account</option>
@@ -458,11 +458,10 @@ export function BankAccountsPage({ user, onClose, isOpen }: BankAccountsPageProp
               bankAccounts.map((account) => (
                 <div
                   key={account.id}
-                  className={`rounded-xl border p-4 transition-all ${
-                    account.isPrimary
+                  className={`rounded-xl border p-4 transition-all ${account.isPrimary
                       ? "border-[#3D3066] bg-[#3D3066]/5 dark:border-[#8B7FA8] dark:bg-[#3D3066]/10"
-                      : "border-gray-200 bg-white dark:border-neutral-800 dark:bg-neutral-800/50"
-                  }`}
+                      : "border-gray-200 bg-gray-50 dark:border-neutral-800 dark:bg-neutral-800/50"
+                    }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">

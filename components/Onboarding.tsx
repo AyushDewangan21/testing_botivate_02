@@ -45,7 +45,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
       <div className="p-4 text-right flex-shrink-0">
         <button
           onClick={handleSkip}
-          className="text-white/90 px-4 py-2 rounded-lg hover:bg-white/10 transition-colors"
+          className="text-white/90 px-4 py-2 rounded-lg hover:bg-gray-50/10 transition-colors"
         >
           Skip
         </button>
@@ -53,7 +53,7 @@ export function Onboarding({ onComplete }: OnboardingProps) {
 
       {/* Content - Made flexible to fit within viewport */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-4 min-h-0">
-        <div className="bg-white/20 backdrop-blur-sm rounded-full p-6 mb-6 sm:p-8 sm:mb-8">
+        <div className="bg-gray-50/20 backdrop-blur-sm rounded-full p-6 mb-6 sm:p-8 sm:mb-8">
           {(() => {
             const IconComponent = slides[currentSlide].icon;
             return <IconComponent className="w-16 h-16 sm:w-20 sm:h-20 text-white" strokeWidth={1.5} />;
@@ -75,18 +75,17 @@ export function Onboarding({ onComplete }: OnboardingProps) {
           {slides.map((_, index) => (
             <div
               key={index}
-              className={`h-2 rounded-full transition-all ${
-                index === currentSlide
-                  ? 'w-8 bg-white'
-                  : 'w-2 bg-white/40'
-              }`}
+              className={`h-2 rounded-full transition-all ${index === currentSlide
+                  ? 'w-8 bg-gray-50'
+                  : 'w-2 bg-gray-50/40'
+                }`}
             />
           ))}
         </div>
 
         <button
           onClick={handleNext}
-          className="bg-white text-[#3D3066] px-5 py-3 sm:px-6 sm:py-3 rounded-full flex items-center gap-2 hover:bg-purple-50 transition-colors text-sm sm:text-base"
+          className="bg-gray-50 text-[#3D3066] px-5 py-3 sm:px-6 sm:py-3 rounded-full flex items-center gap-2 hover:bg-purple-50 transition-colors text-sm sm:text-base"
         >
           {currentSlide === slides.length - 1 ? 'Get Started' : 'Next'}
           <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />

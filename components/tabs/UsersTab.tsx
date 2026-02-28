@@ -123,7 +123,7 @@ export function UsersTab() {
         </div>
 
         {/* Filters */}
-        <div className="flex flex-col gap-4 rounded-xl bg-white p-4 shadow-sm md:flex-row md:items-center dark:bg-neutral-800">
+        <div className="flex flex-col gap-4 rounded-xl bg-gray-50 p-4 shadow-sm md:flex-row md:items-center dark:bg-neutral-800">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-700" />
             <input
@@ -149,7 +149,7 @@ export function UsersTab() {
         </div>
 
         {/* Table (ALWAYS VISIBLE) */}
-        <div className="rounded-xl bg-white shadow-sm dark:bg-neutral-800">
+        <div className="rounded-xl bg-gray-50 shadow-sm dark:bg-neutral-800">
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="bg-gray-50 dark:bg-neutral-700/50 text-gray-500">
@@ -224,7 +224,7 @@ export function UsersTab() {
       {/* Modal */}
       {selectedUser && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-          <div className="w-full max-w-lg rounded-xl bg-white p-6 dark:bg-neutral-800">
+          <div className="w-full max-w-lg rounded-xl bg-gray-50 p-6 dark:bg-neutral-800">
             <h2 className="text-xl font-bold mb-4">
               {selectedUser.name}
             </h2>

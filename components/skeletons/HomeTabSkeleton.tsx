@@ -14,7 +14,7 @@ export function HomeTabSkeleton() {
                 </div>
 
                 {/* Live Gold Rates Skeleton */}
-                <div className="animate-pulse rounded-2xl bg-white p-4 dark:bg-neutral-700">
+                <div className="animate-pulse rounded-2xl bg-gray-50 p-4 dark:bg-neutral-700">
                     <Skeleton className="mb-3 h-4 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
                     <div className="grid grid-cols-2 gap-4">
                         <div>
@@ -35,7 +35,7 @@ export function HomeTabSkeleton() {
 
             <div className="-mt-6 px-6">
                 {/* Wallet Summary Card Skeleton */}
-                <div className="mb-6 animate-pulse rounded-2xl bg-white p-6 shadow-lg dark:bg-neutral-800">
+                <div className="mb-6 animate-pulse rounded-2xl bg-gray-50 p-6 shadow-lg dark:bg-neutral-800">
                     <div className="mb-4 flex items-center justify-between">
                         <Skeleton className="h-4 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
                         <Skeleton className="h-5 w-5 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
@@ -55,7 +55,7 @@ export function HomeTabSkeleton() {
                 </div>
 
                 {/* Price Chart Section Skeleton */}
-                <div className="mb-6 animate-pulse rounded-2xl bg-white p-5 shadow-lg dark:bg-neutral-800">
+                <div className="mb-6 animate-pulse rounded-2xl bg-gray-50 p-5 shadow-lg dark:bg-neutral-800">
                     <div className="mb-4 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <Skeleton className="h-5 w-5 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />

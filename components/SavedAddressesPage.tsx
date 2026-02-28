@@ -44,7 +44,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
   const [isEditing, setIsEditing] = useState(false);
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<SavedAddress | null>(null);
-  
+
   // Sample saved addresses data - including partner locations
   const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([
     {
@@ -168,7 +168,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
       alert("Cannot delete default address. Please set another address as default first.");
       return;
     }
-    
+
     setSavedAddresses(addresses => addresses.filter(addr => addr.id !== addressId));
   };
 
@@ -267,7 +267,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -275,9 +275,9 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -285,7 +285,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -303,7 +303,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
               </p>
             </div>
           </div>
-          
+
           {!isAddingNew && !isEditing && (
             <button
               onClick={() => setIsAddingNew(true)}
@@ -347,7 +347,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
               <h3 className="font-medium text-gray-900 dark:text-white">
                 {isEditing ? "Edit Address" : "Add New Address"}
               </h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-neutral-300">
@@ -358,7 +358,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="e.g., Home, Office, Partner Name"
                   />
                 </div>
@@ -371,7 +371,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                     name="type"
                     value={formData.type}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
                   >
                     <option value="home">Home</option>
                     <option value="work">Work</option>
@@ -388,7 +388,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                     value={formData.address}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="House no., Building, Street, Area"
                   />
                 </div>
@@ -403,7 +403,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       placeholder="City"
                     />
                   </div>
@@ -416,7 +416,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                       name="state"
                       value={formData.state}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       placeholder="State"
                     />
                   </div>
@@ -432,7 +432,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                       name="pincode"
                       value={formData.pincode}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       placeholder="Pincode"
                     />
                   </div>
@@ -445,7 +445,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       placeholder="Phone number"
                     />
                   </div>
@@ -460,7 +460,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                     name="landmark"
                     value={formData.landmark}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="Nearby landmark"
                   />
                 </div>
@@ -491,11 +491,10 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
               savedAddresses.map((address) => (
                 <div
                   key={address.id}
-                  className={`rounded-xl border p-4 transition-all ${
-                    address.isDefault
+                  className={`rounded-xl border p-4 transition-all ${address.isDefault
                       ? "border-[#3D3066] bg-[#3D3066]/5 dark:border-[#8B7FA8] dark:bg-[#3D3066]/10"
-                      : "border-gray-200 bg-white dark:border-neutral-800 dark:bg-neutral-800/50"
-                  }`}
+                      : "border-gray-200 bg-gray-50 dark:border-neutral-800 dark:bg-neutral-800/50"
+                    }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -579,7 +578,7 @@ export function SavedAddressesPage({ user, onClose, isOpen }: SavedAddressesPage
                           <Trash2 className="h-4 w-4 text-red-600 dark:text-red-400" />
                         </button>
                       </div>
-                      
+
                       {!address.isDefault && (
                         <button
                           onClick={() => handleSetDefault(address.id)}

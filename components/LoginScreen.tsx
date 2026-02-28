@@ -88,10 +88,10 @@ export function LoginScreen({ onComplete }: LoginScreenProps) {
 
         if (data.success) {
           if (data.role === 'ADMIN') {
-              alert("Admin account requests need approval. Please check your email.");
-              setStep("login");
+            alert("Admin account requests need approval. Please check your email.");
+            setStep("login");
           } else {
-              setStep("signup_otp");
+            setStep("signup_otp");
           }
         } else {
           setError(data.message || "Signup failed");
@@ -118,10 +118,10 @@ export function LoginScreen({ onComplete }: LoginScreenProps) {
         const data = await response.json();
 
         if (data.success) {
-            alert("Email Verified! Please login.");
-            setStep("login");
+          alert("Email Verified! Please login.");
+          setStep("login");
         } else {
-            setError(data.message || "Invalid OTP");
+          setError(data.message || "Invalid OTP");
         }
       } catch (err) {
         setError("Network error.");
@@ -140,16 +140,16 @@ export function LoginScreen({ onComplete }: LoginScreenProps) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-[#3D3066] via-[#5C4E7F] to-[#8B7FA8] p-3 sm:p-4 md:p-6 lg:p-8">
       {/* Form Card */}
-      <div className="w-full max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg rounded-2xl bg-white p-4 xs:p-5 sm:p-6 md:p-8 shadow-xl mx-2 xs:mx-3 sm:mx-4">
+      <div className="w-full max-w-xs xs:max-w-sm sm:max-w-md md:max-w-lg rounded-2xl bg-gray-50 p-4 xs:p-5 sm:p-6 md:p-8 shadow-xl mx-2 xs:mx-3 sm:mx-4">
         {error && (
-            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center">
-              {error}
-            </div>
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center">
+            {error}
+          </div>
         )}
         {/* Logo/Image Container */}
         <div className="mb-4 sm:mb-6 md:mb-8 flex items-center justify-center">
           <img
-            src="01.jpg"
+            src="02.png"
             alt="Zold Logo"
             className="h-16 xs:h-20 sm:h-24 md:h-28 lg:h-32 w-auto rounded-2xl object-cover"
           />

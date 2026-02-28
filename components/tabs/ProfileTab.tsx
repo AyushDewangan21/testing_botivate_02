@@ -158,18 +158,16 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
         {/* Header */}
         <div className="rounded-b-3xl 
   bg-gradient-to-br 
-  from-[#4B3B80] 
-  via-[#3A2C66] 
-  to-[#1F173D] 
+  bg-[#B87333]
   px-6 pt-6 pb-8
   shadow-[0_10px_40px_rgba(31,23,61,0.35)]">
 
           <h1 className="mb-6 text-white">Profile</h1>
 
           {/* User Info Card */}
-          <div className="rounded-2xl bg-white/10 p-5 backdrop-blur-md dark:bg-white/5">
+          <div className="rounded-2xl bg-gray-50/10 p-5 backdrop-blur-md dark:bg-gray-50/5">
             <div className="mb-4 flex items-center gap-4">
-              <div className="rounded-full bg-white/20 p-4 dark:bg-white/10">
+              <div className="rounded-full bg-gray-50/20 p-4 dark:bg-gray-50/10">
                 <User className="h-8 w-8 text-white dark:text-white/90" />
               </div>
               <div className="flex-1">
@@ -221,7 +219,7 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
           {/* Account Section */}
           <div
             className={cn(
-              "mb-4 overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-neutral-700/50 dark:shadow-neutral-900/50",
+              "mb-4 overflow-hidden rounded-2xl bg-gray-50 shadow-lg dark:bg-neutral-700/50 dark:shadow-neutral-900/50",
             )}
           >
             <div className="border-b border-gray-100 p-4 dark:border-neutral-700">
@@ -312,7 +310,7 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
           </div>
 
           {/* Settings Section */}
-          <div className="mb-4 overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+          <div className="mb-4 overflow-hidden rounded-2xl bg-gray-50 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
             <div className="border-b border-gray-100 p-4 dark:border-neutral-700">
               <h3 className="text-black dark:text-white">Settings</h3>
             </div>
@@ -340,7 +338,7 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
                   }
                 >
                   <div
-                    className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${darkMode ? "left-1 translate-x-7" : "left-1"
+                    className={`absolute top-1 h-4 w-4 rounded-full bg-gray-50 transition-transform ${darkMode ? "left-1 translate-x-7" : "left-1"
                       }`}
                   />
                 </button>
@@ -405,14 +403,14 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
                   className="relative h-6 w-12 rounded-full bg-[#3D3066] transition-colors dark:bg-[#4D3F7F]"
                   aria-label="Toggle biometric lock"
                 >
-                  <div className="absolute top-1 left-1 h-4 w-4 translate-x-7 rounded-full bg-white transition-transform" />
+                  <div className="absolute top-1 left-1 h-4 w-4 translate-x-7 rounded-full bg-gray-50 transition-transform" />
                 </button>
               </div> */}
             </div>
           </div>
 
           {/* Help & Support Section */}
-          <div className="mb-4 overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+          <div className="mb-4 overflow-hidden rounded-2xl bg-gray-50 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
             <div className="border-b border-gray-100 p-4 dark:border-neutral-700">
               <h3 className="text-black dark:text-white">Help & Support</h3>
             </div>
@@ -460,7 +458,7 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
           </div>
 
           {/* Legal Section */}
-          <div className="mb-4 overflow-hidden rounded-2xl bg-white shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
+          <div className="mb-4 overflow-hidden rounded-2xl bg-gray-50 shadow-lg dark:bg-neutral-800 dark:shadow-neutral-900/50">
             <div className="border-b border-gray-100 p-4 dark:border-neutral-700">
               <h3 className="text-black dark:text-white">Legal</h3>
             </div>
@@ -505,7 +503,7 @@ export function ProfileTab({ user, onLogout, isLoading }: ProfileTabProps) {
           </div>
 
           {/* App Info */}
-          <div className="mb-4 rounded-2xl bg-white p-4 dark:bg-neutral-800 dark:shadow-neutral-900/50">
+          <div className="mb-4 rounded-2xl bg-gray-50 p-4 dark:bg-neutral-800 dark:shadow-neutral-900/50">
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-600 dark:text-neutral-400">
                 App Version

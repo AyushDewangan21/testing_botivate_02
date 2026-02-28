@@ -270,7 +270,7 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
 
   const handleSetAutoBuy = () => {
     if (!selectedDay) return;
-    
+
     setEnableAutoBuy(true);
     toast.success(`Auto-buy scheduled for ${selectedDay.name}! ₹${autoBuyAmount} will be auto-invested.`);
   };
@@ -285,8 +285,8 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
 
   if (selectedDay) {
     return (
-      <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-end justify-center z-50">  
-        <div className="bg-white dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[90vh] overflow-y-auto">
+      <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-end justify-center z-50">
+        <div className="bg-gray-50 dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[90vh] overflow-y-auto">
           {/* Header */}
           <div className={`sticky top-0 bg-gradient-to-r ${selectedDay.color} px-6 py-5 rounded-t-3xl`}>
             <div className="flex items-center justify-between">
@@ -297,9 +297,9 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
                   <p className="text-white/80 text-sm">{selectedDay.month} {selectedDay.day}, 2025</p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={() => setSelectedDay(null)}
-                className="bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-colors"
+                className="bg-gray-50/20 backdrop-blur-sm rounded-full p-2 hover:bg-gray-50/30 transition-colors"
               >
                 <X className="w-5 h-5 text-white" />
               </button>
@@ -352,7 +352,7 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
                 <Clock className="w-5 h-5 text-[#3D3066] dark:text-[#8B7FA8]" />
                 <h3 className="text-gray-900 dark:text-white">Setup Auto-Buy</h3>
               </div>
-              
+
               <p className="text-gray-600 dark:text-neutral-400 text-sm mb-4">
                 Automatically purchase gold on {selectedDay.name} at the best rates. Set it and forget it!
               </p>
@@ -382,11 +382,10 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
                   <button
                     key={amount}
                     onClick={() => setAutoBuyAmount(amount)}
-                    className={`py-2 px-3 rounded-lg text-sm transition-all ${
-                      autoBuyAmount === amount
-                        ? 'bg-[#3D3066] dark:bg-[#4D3F7F] text-white'
-                        : 'bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:border-[#3D3066] dark:hover:border-[#8B7FA8]'
-                    }`}
+                    className={`py-2 px-3 rounded-lg text-sm transition-all ${autoBuyAmount === amount
+                      ? 'bg-[#3D3066] dark:bg-[#4D3F7F] text-white'
+                      : 'bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:border-[#3D3066] dark:hover:border-[#8B7FA8]'
+                      }`}
                   >
                     ₹{amount}
                   </button>
@@ -394,21 +393,19 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
               </div>
 
               {/* Auto-Buy Toggle */}
-              <div className="flex items-center justify-between p-4 bg-white dark:bg-neutral-800 rounded-lg border-2 border-dashed border-[#3D3066] dark:border-[#8B7FA8]">
+              <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-neutral-800 rounded-lg border-2 border-dashed border-[#3D3066] dark:border-[#8B7FA8]">
                 <div>
                   <p className="text-gray-900 dark:text-white text-sm">Enable Auto-Buy</p>
                   <p className="text-gray-500 dark:text-neutral-500 text-xs">Purchase automatically on the day</p>
                 </div>
                 <button
                   onClick={() => setEnableAutoBuy(!enableAutoBuy)}
-                  className={`relative w-14 h-7 rounded-full transition-colors ${
-                    enableAutoBuy ? 'bg-[#3D3066] dark:bg-[#4D3F7F]' : 'bg-gray-300 dark:bg-neutral-600'
-                  }`}
+                  className={`relative w-14 h-7 rounded-full transition-colors ${enableAutoBuy ? 'bg-[#3D3066] dark:bg-[#4D3F7F]' : 'bg-gray-300 dark:bg-neutral-600'
+                    }`}
                 >
                   <div
-                    className={`absolute top-1 left-1 w-5 h-5 bg-white dark:bg-neutral-300 rounded-full transition-transform ${
-                      enableAutoBuy ? 'translate-x-7' : ''
-                    }`}
+                    className={`absolute top-1 left-1 w-5 h-5 bg-gray-50 dark:bg-neutral-300 rounded-full transition-transform ${enableAutoBuy ? 'translate-x-7' : ''
+                      }`}
                   />
                 </button>
               </div>
@@ -462,12 +459,12 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-end justify-center z-50">
-      <div className="bg-white dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-gray-50 dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] px-6 py-5 rounded-t-3xl">
+        <div className="sticky top-0 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] px-6 py-5 rounded-t-3xl z-1">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="bg-white/20 backdrop-blur-sm rounded-full p-2">
+            <div className="flex items-center gap-3 ">
+              <div className="bg-gray-50/20 backdrop-blur-sm rounded-full p-2">
                 <Calendar className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -475,9 +472,9 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
                 <p className="text-white/80 text-sm">शुभ मुहूर्त for Gold Purchase</p>
               </div>
             </div>
-            <button 
+            <button
               onClick={onClose}
-              className="bg-white/20 backdrop-blur-sm rounded-full p-2 hover:bg-white/30 transition-colors"
+              className="bg-gray-50/20 backdrop-blur-sm rounded-full p-2 hover:bg-gray-50/30 transition-colors"
             >
               <X className="w-5 h-5 text-white" />
             </button>
@@ -502,21 +499,19 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
           <div className="flex items-center justify-between mb-4">
             <button
               onClick={() => setActiveTab('monthly')}
-              className={`py-2 px-4 rounded-lg text-sm transition-all ${
-                activeTab === 'monthly'
-                  ? 'bg-[#3D3066] dark:bg-[#4D3F7F] text-white'
-                  : 'bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:border-[#3D3066] dark:hover:border-[#8B7FA8]'
-              }`}
+              className={`py-2 px-4 rounded-lg text-sm transition-all ${activeTab === 'monthly'
+                ? 'bg-[#3D3066] dark:bg-[#4D3F7F] text-white'
+                : 'bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:border-[#3D3066] dark:hover:border-[#8B7FA8]'
+                }`}
             >
               Monthly Auspicious Days
             </button>
             <button
               onClick={() => setActiveTab('festivals')}
-              className={`py-2 px-4 rounded-lg text-sm transition-all ${
-                activeTab === 'festivals'
-                  ? 'bg-[#3D3066] dark:bg-[#4D3F7F] text-white'
-                  : 'bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:border-[#3D3066] dark:hover:border-[#8B7FA8]'
-              }`}
+              className={`py-2 px-4 rounded-lg text-sm transition-all ${activeTab === 'festivals'
+                ? 'bg-[#3D3066] dark:bg-[#4D3F7F] text-white'
+                : 'bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:border-[#3D3066] dark:hover:border-[#8B7FA8]'
+                }`}
             >
               Festival Days
             </button>
@@ -529,40 +524,40 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
               {auspiciousDays
                 .filter(day => day.type === activeTab)
                 .map((day) => (
-                <button
-                  key={day.id}
-                  onClick={() => setSelectedDay(day)}
-                  className="w-full bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl p-4 hover:border-[#3D3066] dark:hover:border-[#8B7FA8] hover:shadow-md dark:hover:shadow-neutral-900/50 transition-all text-left"
-                >
-                  <div className="flex items-start gap-4">
-                    {/* Date Badge */}
-                    <div className={`bg-gradient-to-br ${day.color} text-white rounded-xl px-4 py-3 text-center flex-shrink-0`}>
-                      <p className="text-2xl mb-1">{day.image}</p>
-                      <p className="text-xs opacity-80">{day.month}</p>
-                      <p className="text-xl">{day.day}</p>
-                    </div>
+                  <button
+                    key={day.id}
+                    onClick={() => setSelectedDay(day)}
+                    className="w-full bg-gray-50 dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 rounded-xl p-4 hover:border-[#3D3066] dark:hover:border-[#8B7FA8] hover:shadow-md dark:hover:shadow-neutral-900/50 transition-all text-left"
+                  >
+                    <div className="flex items-start gap-4">
+                      {/* Date Badge */}
+                      <div className={`bg-gradient-to-br ${day.color} text-white rounded-xl px-4 py-3 text-center flex-shrink-0`}>
+                        <p className="text-2xl mb-1">{day.image}</p>
+                        <p className="text-xs opacity-80">{day.month}</p>
+                        <p className="text-xl">{day.day}</p>
+                      </div>
 
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-2 mb-2">
-                        <h4 className="text-gray-900 dark:text-white">{day.name}</h4>
-                        <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs px-2 py-1 rounded-full flex-shrink-0">
-                          {day.discount}% OFF
-                        </span>
-                      </div>
-                      <p className="text-gray-600 dark:text-neutral-400 text-xs mb-2 line-clamp-2">{day.significance}</p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-neutral-500">
-                          <Clock className="w-3 h-3" />
-                          <span>{getDaysUntil(day.date)} days left</span>
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <h4 className="text-gray-900 dark:text-white">{day.name}</h4>
+                          <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs px-2 py-1 rounded-full flex-shrink-0">
+                            {day.discount}% OFF
+                          </span>
                         </div>
-                        <ChevronRight className="w-5 h-5 text-gray-400 dark:text-neutral-600" />
+                        <p className="text-gray-600 dark:text-neutral-400 text-xs mb-2 line-clamp-2">{day.significance}</p>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-neutral-500">
+                            <Clock className="w-3 h-3" />
+                            <span>{getDaysUntil(day.date)} days left</span>
+                          </div>
+                          <ChevronRight className="w-5 h-5 text-gray-400 dark:text-neutral-600" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </button>
-              ))}
+                  </button>
+                ))}
             </div>
           </div>
 

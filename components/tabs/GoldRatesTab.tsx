@@ -127,7 +127,7 @@ export default function GoldRatesTab() {
   return (
     <div className="space-y-6">
       {/* Current Rates Card */}
-      <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6">
+      <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl shadow-lg p-6">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Current Gold Rates</h2>
           {!editing ? (
@@ -189,7 +189,7 @@ export default function GoldRatesTab() {
                 value={newBuyRate}
                 onChange={(e) => setNewBuyRate(e.target.value)}
                 step="0.01"
-                className="text-3xl font-bold text-green-900 dark:text-green-100 w-full bg-white dark:bg-neutral-700 px-3 py-2 rounded-lg border-2 border-green-300 dark:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
+                className="text-3xl font-bold text-green-900 dark:text-green-100 w-full bg-gray-50 dark:bg-neutral-700 px-3 py-2 rounded-lg border-2 border-green-300 dark:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="6245.50"
               />
             ) : (
@@ -212,7 +212,7 @@ export default function GoldRatesTab() {
                 value={newSellRate}
                 onChange={(e) => setNewSellRate(e.target.value)}
                 step="0.01"
-                className="text-3xl font-bold text-orange-900 dark:text-orange-100 w-full bg-white dark:bg-neutral-700 px-3 py-2 rounded-lg border-2 border-orange-300 dark:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                className="text-3xl font-bold text-orange-900 dark:text-orange-100 w-full bg-gray-50 dark:bg-neutral-700 px-3 py-2 rounded-lg border-2 border-orange-300 dark:border-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500"
                 placeholder="6145.50"
               />
             ) : (
@@ -226,7 +226,7 @@ export default function GoldRatesTab() {
       </div>
 
       {/* Rate History */}
-      <div className="bg-white dark:bg-neutral-800 rounded-xl shadow-lg p-6">
+      <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl shadow-lg p-6">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Rate History</h3>
         <div className="overflow-x-auto">
           <table className="w-full">

@@ -63,7 +63,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -71,9 +71,9 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -81,7 +81,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -99,7 +99,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
               </p>
             </div>
           </div>
-          
+
           {!isEditing ? (
             <button
               onClick={() => setIsEditing(true)}
@@ -132,7 +132,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
           <div className="mb-8 flex flex-col items-center">
             <div className="relative mb-4">
               <div className="h-24 w-24 rounded-full bg-gradient-to-br from-[#3D3066] to-[#8B7FA8] p-1">
-                <div className="flex h-full w-full items-center justify-center rounded-full bg-white dark:bg-neutral-800">
+                <div className="flex h-full w-full items-center justify-center rounded-full bg-gray-50 dark:bg-neutral-800">
                   <User className="h-12 w-12 text-[#3D3066] dark:text-[#8B7FA8]" />
                 </div>
               </div>
@@ -161,7 +161,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                   placeholder="Enter your full name"
                 />
               ) : (
@@ -183,7 +183,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                   placeholder="Enter your email"
                 />
               ) : (
@@ -205,7 +205,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                   placeholder="Enter your phone number"
                 />
               ) : (
@@ -227,7 +227,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                   name="dob"
                   value={formData.dob}
                   onChange={handleInputChange}
-                  className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                  className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                 />
               ) : (
                 <div className="rounded-lg bg-gray-50 px-4 py-3 text-gray-900 dark:bg-neutral-800 dark:text-white">
@@ -249,7 +249,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                     name="address"
                     value={formData.address}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="Street address"
                   />
                   <div className="grid grid-cols-2 gap-3">
@@ -258,7 +258,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                       name="city"
                       value={formData.city}
                       onChange={handleInputChange}
-                      className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                      className="rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       placeholder="City"
                     />
                     <input
@@ -266,7 +266,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                       name="state"
                       value={formData.state}
                       onChange={handleInputChange}
-                      className="rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                      className="rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       placeholder="State"
                     />
                   </div>
@@ -275,7 +275,7 @@ export function PersonalInfoPage({ user, onClose, isOpen }: PersonalInfoPageProp
                     name="pincode"
                     value={formData.pincode}
                     onChange={handleInputChange}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                     placeholder="Pincode"
                   />
                 </div>

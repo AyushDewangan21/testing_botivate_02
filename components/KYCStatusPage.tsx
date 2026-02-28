@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { 
-  ArrowLeft, 
-  Shield, 
-  CheckCircle, 
-  Clock, 
-  XCircle, 
+import {
+  ArrowLeft,
+  Shield,
+  CheckCircle,
+  Clock,
+  XCircle,
   AlertCircle,
   FileText,
   Upload,
@@ -37,7 +37,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
     photo: { uploaded: false, verified: false },
     addressProof: { uploaded: false, verified: false }
   });
-  
+
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -53,7 +53,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
   }, [isOpen, onClose]);
 
   const getStatusConfig = (status: KYCStatus) => {
-    switch(status) {
+    switch (status) {
       case "verified":
         return {
           icon: CheckCircle,
@@ -89,10 +89,10 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
 
   const handleUploadDocument = (docType: keyof typeof documents) => {
     if (isUploading) return;
-    
+
     setIsUploading(true);
     setUploadProgress(0);
-    
+
     // Simulate upload progress
     const interval = setInterval(() => {
       setUploadProgress(prev => {
@@ -103,15 +103,15 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
             ...prev,
             [docType]: { ...prev[docType], uploaded: true }
           }));
-          
+
           // Auto update status if all documents uploaded
-          const allUploaded = Object.values({...documents, [docType]: { uploaded: true, verified: false }})
+          const allUploaded = Object.values({ ...documents, [docType]: { uploaded: true, verified: false } })
             .every(doc => doc.uploaded);
-          
+
           if (allUploaded && status === "incomplete") {
             setStatus("pending");
           }
-          
+
           return 100;
         }
         return prev + 10;
@@ -126,7 +126,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -134,9 +134,9 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -144,7 +144,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -162,7 +162,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
               </p>
             </div>
           </div>
-          
+
           {status !== "verified" && (
             <button
               onClick={() => {
@@ -204,16 +204,15 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
               </span>
             </div>
             <div className="h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-neutral-700">
-              <div 
-                className={`h-full rounded-full transition-all duration-500 ${
-                  status === "verified" 
-                    ? "bg-green-500" 
-                    : status === "pending" 
-                    ? "bg-yellow-500" 
-                    : "bg-red-500"
-                }`}
-                style={{ 
-                  width: status === "verified" ? "100%" : status === "pending" ? "75%" : "25%" 
+              <div
+                className={`h-full rounded-full transition-all duration-500 ${status === "verified"
+                    ? "bg-green-500"
+                    : status === "pending"
+                      ? "bg-yellow-500"
+                      : "bg-red-500"
+                  }`}
+                style={{
+                  width: status === "verified" ? "100%" : status === "pending" ? "75%" : "25%"
                 }}
               />
             </div>
@@ -264,7 +263,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
                       <span className="font-medium">{uploadProgress}%</span>
                     </div>
                     <div className="h-1.5 overflow-hidden rounded-full bg-gray-200 dark:bg-neutral-700">
-                      <div 
+                      <div
                         className="h-full rounded-full bg-[#3D3066] transition-all duration-300"
                         style={{ width: `${uploadProgress}%` }}
                       />
@@ -422,7 +421,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
                   <p className="text-xs text-gray-500 dark:text-neutral-400">2 days ago</p>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-3 rounded-lg border border-gray-200 p-3 dark:border-neutral-700">
                 <div className="rounded-full bg-blue-100 p-2 dark:bg-blue-900/30">
                   <UserCheck className="h-4 w-4 text-blue-600 dark:text-blue-400" />
@@ -451,7 +450,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
               </div>
               <ChevronRight className="h-5 w-5 text-gray-400 dark:text-neutral-500" />
             </button>
-            
+
             <button className="flex w-full items-center justify-between rounded-lg border border-gray-200 p-4 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:hover:bg-neutral-800">
               <div className="flex items-center gap-3">
                 <Download className="h-5 w-5 text-gray-600 dark:text-neutral-400" />
@@ -464,7 +463,7 @@ export function KYCStatusPage({ user, onClose, isOpen, currentStatus }: KYCStatu
           {/* Help Text */}
           <div className="mt-6 rounded-lg bg-gray-50 p-4 dark:bg-neutral-800">
             <p className="text-xs text-gray-600 dark:text-neutral-400">
-              Need help with KYC? Contact our support team at support@atplus.com or call 1800-XXX-XXXX. 
+              Need help with KYC? Contact our support team at support@atplus.com or call 1800-XXX-XXXX.
               Documents are processed within 24-48 hours.
             </p>
           </div>

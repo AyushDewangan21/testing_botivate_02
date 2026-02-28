@@ -42,7 +42,7 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
           Verify your identity to unlock all features
         </p>
 
-        <div className="bg-white rounded-xl p-6 w-full max-w-md mb-8 space-y-4">
+        <div className="bg-gray-50 rounded-xl p-6 w-full max-w-md mb-8 space-y-4">
           <div className="flex items-start gap-3">
             <CheckCircle className="w-5 h-5 text-green-600 mt-0.5" />
             <div>
@@ -87,7 +87,7 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 p-4">
+      <div className="bg-gray-50 border-b border-gray-200 p-4">
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between mb-4">
             <h2 className='text-black text-xl font-semibold'>KYC Verification</h2>
@@ -103,9 +103,8 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
             {Array.from({ length: totalSteps }).map((_, i) => (
               <div
                 key={i}
-                className={`h-2 flex-1 rounded-full ${
-                  i < getStepNumber() ? 'bg-[#3D3066]' : 'bg-gray-200'
-                }`}
+                className={`h-2 flex-1 rounded-full ${i < getStepNumber() ? 'bg-[#3D3066]' : 'bg-gray-200'
+                  }`}
               />
             ))}
           </div>
@@ -118,7 +117,7 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
       {/* Content */}
       <div className="max-w-2xl mx-auto p-6">
         {step === 'pan' && (
-          <div className="bg-white rounded-xl p-6">
+          <div className="bg-gray-50 rounded-xl p-6">
             <div className="bg-[#F3F1F7] rounded-full p-4 w-16 h-16 flex items-center justify-center mb-4">
               <Upload className="w-8 h-8 text-[#3D3066]" />
             </div>
@@ -149,7 +148,7 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
               </div>
               <div>
                 <label className="block text-gray-700 mb-2">Upload PAN Card</label>
-                <div 
+                <div
                   className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#8B7FA8] cursor-pointer relative"
                   onClick={() => document.getElementById('panUpload')?.click()}
                 >
@@ -188,7 +187,7 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
         )}
 
         {step === 'aadhaar' && (
-          <div className="bg-white rounded-xl p-6">
+          <div className="bg-gray-50 rounded-xl p-6">
             <div className="bg-[#F3F1F7] rounded-full p-4 w-16 h-16 flex items-center justify-center mb-4">
               <Upload className="w-8 h-8 text-[#3D3066]" />
             </div>
@@ -210,7 +209,7 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
 
               <div>
                 <label className="block text-gray-700 mb-2">Upload Aadhaar Card</label>
-                <div 
+                <div
                   className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-[#8B7FA8] cursor-pointer relative"
                   onClick={() => document.getElementById('aadhaarUpload')?.click()}
                 >
@@ -249,7 +248,7 @@ export function KYCFlow({ onComplete, onSkip }: KYCFlowProps) {
         )}
 
         {step === 'complete' && (
-          <div className="bg-white rounded-xl p-8 text-center">
+          <div className="bg-gray-50 rounded-xl p-8 text-center">
             <div className="bg-green-100 rounded-full p-6 w-24 h-24 flex items-center justify-center mx-auto mb-6">
               <CheckCircle className="w-12 h-12 text-green-600" />
             </div>

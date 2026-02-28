@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -54,7 +54,6 @@ const coinGallery: Record<number, any[]> = {
     10: [img10, box10],
 };
 
-
 const coinDetails: any = {
     1: {
         weight: 1,
@@ -82,8 +81,6 @@ const coinDetails: any = {
     }
 };
 
-
-
 export default function ProductDetailPage() {
     useEffect(() => {
         document.documentElement.classList.add("hide-scrollbar");
@@ -103,40 +100,237 @@ export default function ProductDetailPage() {
     const [qty, setQty] = useState(1);
     const [activeTab, setActiveTab] = useState("description");
     const [isWishlisted, setIsWishlisted] = useState(false);
-    const [selectedImage, setSelectedImage] = useState<any>(null);
+    const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-    // Reset selected image when weight changes
-    if (selectedImage && !coinGallery[weight]?.includes(selectedImage)) {
-        setSelectedImage(null);
-    }
+    // Refs for swipe functionality
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
+    const imageContainerRef = useRef<HTMLDivElement>(null);
 
     const currentImages = coinGallery[weight] || [];
-    const displayImage = selectedImage || currentImages[0];
+    const displayImage = currentImages[activeImageIndex];
 
-    // Directly inject styles for this page content primarily
+    // Swipe handlers
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        const swipeThreshold = 50; // minimum distance for swipe
+        const swipeDistance = touchEndX.current - touchStartX.current;
+
+        if (Math.abs(swipeDistance) > swipeThreshold) {
+            if (swipeDistance > 0) {
+                // Swipe right - previous image
+                setActiveImageIndex(prev =>
+                    prev === 0 ? currentImages.length - 1 : prev - 1
+                );
+            } else {
+                // Swipe left - next image
+                setActiveImageIndex(prev =>
+                    prev === currentImages.length - 1 ? 0 : prev + 1
+                );
+            }
+        }
+
+        // Reset touch positions
+        touchStartX.current = 0;
+        touchEndX.current = 0;
+    };
+
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'ArrowLeft') {
+                setActiveImageIndex(prev =>
+                    prev === 0 ? currentImages.length - 1 : prev - 1
+                );
+            } else if (e.key === 'ArrowRight') {
+                setActiveImageIndex(prev =>
+                    prev === currentImages.length - 1 ? 0 : prev + 1
+                );
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [currentImages.length]);
+
+    // Ultra-compact mobile styles
     const styles = `
     .main-content {
       position: relative;
       z-index: 10;
-      padding-top: 100px; /* Header override */
+      padding-top: 70px;
       max-width: 1160px;
       margin: 0 auto;   
-      padding-bottom: 60px;
-      padding-left: 20px;
-      padding-right: 20px;
+      padding-bottom: 30px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
 
+    /* Aggressive mobile scaling */
+    @media (max-width: 480px) {
+      .main-content {
+        padding-top: 60px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+      
+      .gallery-card {
+        padding: 12px !important;
+        border-radius: 16px !important;
+      }
+      
+      .product-image-container {
+        padding: 12px !important;
+        margin-bottom: 12px !important;
+      }
+      
+      .product-image {
+        width: 65% !important;
+        height: 65% !important;
+      }
+      
+      .right-panel-card {
+        padding: 16px !important;
+        border-radius: 18px !important;
+      }
+      
+      .trust-badge {
+        padding: 8px 4px !important;
+      }
+      
+      .trust-badge-icon {
+        width: 14px !important;
+        height: 14px !important;
+      }
+      
+      .action-button {
+        height: 42px !important;
+        font-size: 13px !important;
+      }
+      
+      .delivery-badge {
+        padding: 12px !important;
+      }
+      
+      .delivery-icon {
+        width: 32px !important;
+        height: 32px !important;
+      }
+      
+      .dot-navigation {
+        gap: 8px !important;
+        margin-top: 8px !important;
+      }
+      
+      .nav-dot {
+        width: 8px !important;
+        height: 8px !important;
+      }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 360px) {
+      .product-image {
+        width: 55% !important;
+        height: 55% !important;
+      }
+      
+      .right-panel-card {
+        padding: 12px !important;
+      }
+      
+      .trust-badge span {
+        font-size: 9px !important;
+      }
     }
 
     .gallery-card {
         background: white;
-        border-radius: 24px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        border: 1px solid rgba(184, 150, 12, 0.1);
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+        border: 1px solid rgba(184, 150, 12, 0.08);
     }
-    .gallery-card:hover{
-          box-shadow: 0 20px 50px rgba(184, 150, 12, 0.15);
-         
+    
+    .text-micro {
+      font-size: 0.65rem;
+      line-height: 0.9rem;
+    }
+    
+    .text-nano {
+      font-size: 0.6rem;
+      line-height: 0.8rem;
+    }
+    
+    /* Dot Navigation */
+    .dot-navigation {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #e5e7eb;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    
+    .nav-dot:hover {
+      background-color: #d1d5db;
+    }
+    
+    .nav-dot.active {
+      background-color: #B8960C;
+      transform: scale(1.2);
+      box-shadow: 0 0 0 2px rgba(184, 150, 12, 0.2);
+    }
+    
+    /* Swipe hint animation */
+    .swipe-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      opacity: 0;
+      animation: fadeInOut 2s ease-in-out;
+      pointer-events: none;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+    
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    
+    /* Image container for swipe */
+    .swipe-container {
+      cursor: grab;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    .swipe-container:active {
+      cursor: grabbing;
     }
   `;
 
@@ -144,8 +338,8 @@ export default function ProductDetailPage() {
         return (
             <div className="flex items-center justify-center min-h-screen">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold mb-4">Coin Not Found</h1>
-                    <button onClick={() => router.back()} className="text-blue-600 underline">Go Back</button>
+                    <h1 className="text-xl font-bold mb-3">Coin Not Found</h1>
+                    <button onClick={() => router.back()} className="text-[#B8960C] underline text-sm">Go Back</button>
                 </div>
             </div>
         );
@@ -160,6 +354,10 @@ export default function ProductDetailPage() {
         }));
     };
 
+    const handleDotClick = (index: number) => {
+        setActiveImageIndex(index);
+    };
+
     return (
         <>
             <style jsx>{styles}</style>
@@ -172,189 +370,215 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Main Content */}
-            <main className="main-content">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start bg-opacity-0">
+            <main className="main-content ">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-start sm:mt-15">
 
-
-
-                    {/* Left Column: Gallery */}
+                    {/* Left Column: Gallery - Smaller on mobile */}
                     <div className="gallery-section">
-                        <div className="gallery-card relative shadow-none transition-shadow duration-300 hover:shadow-[0_20px_50px_rgba(184,150,12,0.15)]">
-                            <div className="relative aspect-square rounded-2xl  flex items-center justify-center p-8 mb-6 border border-gray-100">
-                                <Image src={displayImage} alt="Gold Coin" className="w-[80%] h-[80%] object-contain transition-transform duration-200 hover:scale-125" />
-                                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1.5 rounded-full text-xs font-bold text-gray-800 flex items-center gap-1 shadow-sm border border-gray-200">
-                                    <ShieldCheck size={14} className="text-[#B8960C]" /> 24K HALLMARK
+                        <div className="gallery-card relative shadow-none ">
+                            <div
+                                ref={imageContainerRef}
+                                className="h-50 w-full sm:h-100  relative aspect-square rounded-xl flex items-center justify-center p-2 product-image-container mb-2 border border-gray-100 swipe-container"
+                                onTouchStart={handleTouchStart}
+                                onTouchMove={handleTouchMove}
+                                onTouchEnd={handleTouchEnd}
+                            >
+                                <Image
+                                    src={displayImage}
+                                    alt="Gold Coin"
+                                    className="scale-150 sm:scale-100 w-[90%] h-[90%] product-image object-contain transition-all duration-200"
+                                    draggable={false}
+                                />
+                                <div className="absolute top-2 left-2 bg-gray-50/90 backdrop-blur px-1.5 py-0.5 rounded-full text-nano font-semibold text-gray-700 flex items-center gap-0.5 shadow-xs border border-gray-200">
+                                    <ShieldCheck size={10} className="text-[#B8960C]" />
+                                    <span className="hidden xs:inline">24K</span>
+                                    <span className="xs:hidden">HALLMARK</span>
                                 </div>
+
+
                             </div>
 
-                            <div className="grid grid-cols-4 gap-3">
-                                {currentImages.map((img, i) => (
-                                    <div
-                                        key={i}
-                                        onClick={() => setSelectedImage(img)}
-                                        className={`rounded-xl border border-gray-100 p-2 cursor-pointer hover:border-[#B8960C] transition-all bg-white ${displayImage === img ? 'border-[#B8960C] ring-1 ring-[#B8960C]/20' : ''}`}
-                                    >
-                                        <Image src={img} alt="Thumbnail" className="w-full h-full object-contain" />
-                                    </div>
-                                ))}
-                            </div>
+                            {/* Circular Navigation Dots */}
+                            {currentImages.length > 1 && (
+                                <div className="dot-navigation">
+                                    {currentImages.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => handleDotClick(index)}
+                                            className={`nav-dot ${activeImageIndex === index ? 'active' : ''}`}
+                                            aria-label={`View image ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
-                        {/* Product Description Accordion */}
-                        <div className="mt-6 bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-                            <div className="border-b border-gray-100">
-                                <button className="w-full px-6 py-4 flex justify-between items-center text-left font-bold text-gray-800 hover:bg-gray-50 transition-colors" onClick={() => setActiveTab(activeTab === 'desc' ? '' : 'desc')}>
-                                    <span>Product Description</span>
-                                    <ChevronDown className={`transition-transform text-gray-400 ${activeTab === 'desc' ? 'rotate-180' : ''}`} size={18} />
-                                </button>
-                                {activeTab === 'desc' && (
-                                    <div className="px-6 pb-6 text-gray-500 text-sm leading-relaxed animate-in slide-in-from-top-2">
-                                        <p>{coin.description}</p>
-                                        <ul className="list-disc pl-5 mt-4 space-y-2 marker:text-[#B8960C]">
-                                            <li>24 Karat (999.9 Purity)</li>
-                                            <li>High Polish Finish</li>
-                                            <li>Tamper-proof Packaging</li>
-                                            <li>Certificate of Authenticity Included</li>
-                                        </ul>
-                                    </div>
-                                )}
-                            </div>
 
-                            <div>
-                                <button className="w-full px-6 py-4 flex justify-between items-center text-left font-bold text-gray-800 hover:bg-gray-50 transition-colors" onClick={() => setActiveTab(activeTab === 'specs' ? '' : 'specs')}>
-                                    <span>Specifications</span>
-                                    <ChevronDown className={`transition-transform text-gray-400 ${activeTab === 'specs' ? 'rotate-180' : ''}`} size={18} />
-                                </button>
-                                {activeTab === 'specs' && (
-                                    <div className="px-6 pb-6 animate-in slide-in-from-top-2">
-                                        <div className="grid grid-cols-2 gap-3 text-sm">
-                                            <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                                                <span className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Weight</span>
-                                                <span className="font-bold text-gray-800">{coin.weight} Grams</span>
-                                            </div>
-                                            <div className="p-3 bg-gray-50 rounded-lg border border-gray-100">
-                                                <span className="block text-xs text-gray-400 uppercase tracking-wider mb-1">Purity</span>
-                                                <span className="font-bold text-gray-800">999.9 (24K)</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
                     </div>
 
-                    {/* Right Column: Panel */}
-                    <div className="relative h-ful l relative top-0 left-0 w-full">
-                        <div className="sticky top-28 space-y-6">
-                            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-xl shadow-gray-100/50">
-                                <div className="flex justify-between items-start mb-2">
+                    {/* Right Column: Panel - Smaller on mobile */}
+                    <div className="relative">
+                        <div className="sticky top-16 space-y-3">
+                            <div className="bg-gray-50 rounded-2xl p-4 right-panel-card border border-gray-100 shadow-sm">
+                                <div className="flex justify-between items-start mb-1.5">
                                     <div>
-                                        <h1 className="text-3xl font-semibold text-gray-900 mb-1">{coin.weight} Gram</h1>
-                                        <span className="text-md font-medium text-[#B8960C]">Gold Mint Bar (24K)</span>
+                                        <h1 className="text-lg sm:text-xl font-bold text-gray-700">{coin.weight} Gram</h1>
+                                        <span className="text-nano font-medium text-[#B8960C]">Gold Mint Bar (24K)</span>
                                     </div>
                                     <button
                                         onClick={() => setIsWishlisted(!isWishlisted)}
-                                        className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-all ${isWishlisted ? 'bg-red-50 border-red-100' : 'bg-white border-gray-100 hover:bg-gray-50'}`}
+                                        className={`w-8 h-8 rounded-lg border flex items-center justify-center transition-all ${isWishlisted ? 'bg-red-50 border-red-100' : 'bg-white border-gray-200'}`}
                                     >
-                                        <Heart className={isWishlisted ? "fill-red-500 text-red-500" : "text-gray-300"} size={22} />
+                                        <Heart className={isWishlisted ? "fill-red-500 text-red-500" : "text-gray-300"} size={16} />
                                     </button>
                                 </div>
 
-                                <div className="flex gap-2 mb-6">
+                                <div className="flex items-center gap-1 mb-2">
                                     <div className="flex text-yellow-400">
-                                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={16} className="fill-current" />)}
+                                        {[1, 2, 3, 4, 5].map(s => <Star key={s} size={12} className="fill-current" />)}
                                     </div>
-                                    <span className="text-sm text-gray-400 font-medium">(120 Reviews)</span>
+                                    <span className="text-nano text-gray-400">(120)</span>
                                 </div>
 
-                                <div className="pb-6 mb-6 border-b border-gray-100">
-                                    <div className="text-3xl font-bold text-gray-800 mb-1">₹ {(coin.price * qty).toLocaleString()}</div>
-                                    <div className="text-sm text-gray-500 font-medium">Inclusive of all taxes & making charges</div>
+                                <div className="pb-3 mb-3 border-b border-gray-200">
+                                    <div className="text-xl sm:text-2xl font-bold text-gray-700">₹ {(coin.price * qty).toLocaleString()}</div>
+                                    <div className="text-nano text-gray-500">Incl. taxes</div>
                                 </div>
 
-                                {/* Trust Badges */}
-                                <div className="grid grid-cols-3 gap-3 mb-8">
+                                {/* Trust Badges - Ultra compact */}
+                                <div className="grid grid-cols-2 gap-1 mb-4">
                                     {[
-                                        { icon: ShieldCheck, label: "100% Secure" },
-                                        { icon: Truck, label: "Free Delivery" },
-                                        { icon: RefreshCcw, label: "Easy Buyback" }
+                                        { icon: ShieldCheck, label: "Secure" },
+
+                                        { icon: RefreshCcw, label: "Buyback" }
                                     ].map((badge, idx) => (
-                                        <div key={idx} className="flex flex-col items-center justify-center p-3 rounded-xl bg-gray-50 border border-gray-100 text-center gap-2">
-                                            <badge.icon size={22} className="text-[#B8960C]" />
-                                            <span className="text-xs font-bold text-gray-700">{badge.label}</span>
+                                        <div key={idx} className="flex flex-col items-center justify-center p-1.5 trust-badge rounded-lg bg-white border border-gray-100 text-center">
+                                            <badge.icon size={14} className="text-[#B8960C] trust-badge-icon" />
+                                            <span className="text-nano font-medium text-gray-600">{badge.label}</span>
                                         </div>
                                     ))}
                                 </div>
 
-                                {/* Action Buttons */}
-                                <div className="flex gap-4">
-                                    <div className="flex items-center bg-gray-50 rounded-2xl border border-gray-200 px-2 h-14">
-                                        <button className="w-10 h-full flex items-center justify-center text-gray-400 hover:text-[#B8960C] transition-colors" onClick={() => setQty(Math.max(1, qty - 1))}><Minus size={18} /></button>
-                                        <div className="w-10 text-center font-bold text-lg text-gray-800">{qty}</div>
-                                        <button className="w-10 h-full flex items-center justify-center text-gray-400 hover:text-[#B8960C] transition-colors" onClick={() => setQty(qty + 1)}><Plus size={18} /></button>
+                                {/* Action Buttons - Compact */}
+                                <div className="flex gap-2">
+                                    <div className="flex items-center bg-white rounded-lg border border-gray-200 h-10">
+                                        <button className="w-7 h-full flex items-center justify-center text-gray-400 hover:text-[#B8960C]" onClick={() => setQty(Math.max(1, qty - 1))}>
+                                            <Minus size={12} />
+                                        </button>
+                                        <div className="w-7 text-center font-semibold text-gray-700 text-sm">{qty}</div>
+                                        <button className="w-7 h-full flex items-center justify-center text-gray-400 hover:text-[#B8960C]" onClick={() => setQty(qty + 1)}>
+                                            <Plus size={12} />
+                                        </button>
                                     </div>
 
                                     <button
-                                        className="flex-1 h-14 bg-[#B8960C] font-bold text-white font-bold rounded-2xl shadow-lg hover:shadow-gray-400/50 transition-all flex items-center justify-center gap-3 text-lg"
+                                        className="flex-1 h-10 bg-[#B8960C] text-xs font-bold text-white rounded-lg shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-1.5 action-button"
                                         onClick={handleAddToCart}
                                     >
-                                        Add to Cart <ShoppingCart size={20} />
+                                        Add <ShoppingCart size={14} />
                                     </button>
                                 </div>
                             </div>
 
-                            <div className="bg-gradient-to-br from-[#fdfcf5] to-white rounded-2xl p-5 border border-[#faeeb1] flex gap-4 items-center">
-                                <div className="w-12 h-12 rounded-full bg-[#faeeb1] flex items-center justify-center text-[#B8960C] shrink-0">
-                                    <Truck size={24} />
+                            {/* Delivery Badge - Ultra compact */}
+                            <div className="bg-gradient-to-br from-[#fdfcf5] to-white rounded-xl p-3 delivery-badge border border-[#faeeb1] flex gap-2 items-center">
+                                <div className="w-8 h-8 delivery-icon rounded-full bg-[#faeeb1] flex items-center justify-center text-[#B8960C] shrink-0">
+                                    <Truck size={16} />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-gray-800">Fast & Insured Delivery</h4>
-                                    <p className="text-xs text-gray-500 mt-1">Order now and get it delivered by <span className="font-bold text-[#B8960C]">2 Days</span> via secure logistics.</p>
+                                    <h4 className="font-semibold text-gray-700 text-xs sm:text-sm">Fast & Insured</h4>
+                                    <p className=" text-xs sm:text-sm text-gray-500">Delivered in <span className="font-medium text-[#B8960C]">2 Days</span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {/* Product Description Accordion - Smaller on mobile */}
+                    <div className="mt-3 bg-gray-50 rounded-xl border border-gray-100 overflow-hidden shadow-xs">
+                        <div className="border-b border-gray-100">
+                            <button className="w-full px-3 py-2.5 flex justify-between items-center text-left font-semibold text-gray-700 text-xs sm:text-sm hover:bg-gray-50" onClick={() => setActiveTab(activeTab === 'desc' ? '' : 'desc')}>
+                                <span>Description</span>
+                                <ChevronDown className={`transition-transform text-gray-400 ${activeTab === 'desc' ? 'rotate-180' : ''}`} size={14} />
+                            </button>
+                            {activeTab === 'desc' && (
+                                <div className="px-3 pb-3 text-gray-500 text-nano leading-relaxed">
+                                    <p className="mb-1.5 text-xs text-gray-800 sm:text-sm ">{coin.description}</p>
+                                    <ul className="list-disc pl-3 space-y-0.5 marker:text-[#B8960C] text-xs">
+                                        <li>24K (999 Purity)</li>
+                                        <li>High Polish Finish</li>
+                                        <li>Tamper-proof Packaging</li>
+                                        <li>Certificate Included</li>
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
 
+                        <div>
+                            <button className="w-full px-3 py-2.5 flex justify-between items-center text-left font-semibold text-gray-700 text-xs sm:text-sm  hover:bg-gray-50" onClick={() => setActiveTab(activeTab === 'specs' ? '' : 'specs')}>
+                                <span>Specs</span>
+                                <ChevronDown className={`transition-transform text-gray-400 ${activeTab === 'specs' ? 'rotate-180' : ''}`} size={14} />
+                            </button>
+                            {activeTab === 'specs' && (
+                                <div className="px-3 pb-3">
+                                    <div className="grid grid-cols-2 gap-1.5">
+                                        <div className="p-1.5 bg-white rounded-lg border border-gray-100">
+                                            <span className="block text-nano text-gray-400 uppercase tracking-wider">Weight</span>
+                                            <span className="font-semibold text-gray-800 text-xs">{coin.weight}g</span>
+                                        </div>
+                                        <div className="p-1.5 bg-white rounded-lg border border-gray-100">
+                                            <span className="block text-nano text-gray-400 uppercase tracking-wider">Purity</span>
+                                            <span className="font-semibold text-gray-800 text-xs">999</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
                 </div>
             </main>
 
-            {/* Footer */}
-            <footer className="border-t border-gray-200 bg-white py-12 mt-12 relative z-10 opacity-85">
-                <div className="max-w-[1160px] mx-auto px-5 grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <div>
-                        <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 rounded-lg bg-[#B8960C] flex items-center justify-center text-white font-bold">Z</div>
-                            <span className="font-bold text-xl text-[#B8960C]">ZOLD GOLD</span>
+            {/* Footer - Ultra compact */}
+            <footer className="border-t border-gray-200 bg-gray-50 py-6 mt-6 relative z-10">
+                <div className="max-w-[1160px] mx-auto px-3 grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="col-span-2 md:col-span-1">
+                        <div className="flex items-center gap-1 mb-2">
+                            <div className="w-6 h-6 sm:h-8 sm:w-8 relative overflow-hidden rounded-md  p-[2px]">
+                                <Image
+                                    src="/02.png"
+                                    alt="ZOLD"
+                                    fill
+                                    sizes="20px"
+                                    className="object-contain"
+                                />
+                            </div>
+                            <div className="text-gray-700 font-semibold text-sm">ZOLD</div>
                         </div>
-                        <p className="text-sm text-gray-500 leading-relaxed">
-                            Premium digital gold platform offering certified 24K gold with secure storage and instant liquidity.
-                        </p>
+
                     </div>
                     <div>
-                        <h4 className="font-bold mb-4 text-gray-900">Navigation</h4>
-                        <ul className="space-y-2 text-sm text-gray-500">
-                            <li><a href="#" className="hover:text-[#B8960C]">Buy Coins</a></li>
-                            <li><a href="#" className="hover:text-[#B8960C]">Sell Gold</a></li>
+                        <h4 className="font-semibold mb-2 text-gray-800 text-sm">Nav</h4>
+                        <ul className="space-y-1 text-xs text-gray-500">
+                            <li><a href="#" className="hover:text-[#B8960C]">Buy</a></li>
+                            <li><a href="#" className="hover:text-[#B8960C]">Sell</a></li>
                         </ul>
                     </div>
                     <div>
-                        <h4 className="font-bold mb-4 text-gray-900">Support</h4>
-                        <ul className="space-y-2 text-sm text-gray-500">
+                        <h4 className="font-semibold mb-2 text-gray-800 text-sm">Support</h4>
+                        <ul className="space-y-1 text-xs text-gray-500">
                             <li><a href="#" className="hover:text-[#B8960C]">FAQ</a></li>
-                            <li><a href="#" className="hover:text-[#B8960C]">Contact Us</a></li>
+                            <li><a href="#" className="hover:text-[#B8960C]">Contact</a></li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 className="font-bold mb-4 text-gray-900">Follow Us</h4>
-                        <div className="flex gap-4">
-                            <button className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#B8960C] hover:text-white transition-colors">
-                                <Facebook size={18} />
+                    <div className="col-span-2 md:col-span-1">
+                        <h4 className="font-semibold mb-2 text-gray-800 text-sm">Follow</h4>
+                        <div className="flex gap-1.5">
+                            <button className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#B8960C] hover:text-white">
+                                <Facebook size={12} />
                             </button>
-                            <button className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#B8960C] hover:text-white transition-colors">
-                                <Twitter size={18} />
+                            <button className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#B8960C] hover:text-white">
+                                <Twitter size={12} />
                             </button>
-                            <button className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#B8960C] hover:text-white transition-colors">
-                                <Instagram size={18} />
+                            <button className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-[#B8960C] hover:text-white">
+                                <Instagram size={12} />
                             </button>
                         </div>
                     </div>

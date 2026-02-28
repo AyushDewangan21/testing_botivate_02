@@ -39,7 +39,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   // Real data from database
   const [twoFactorEnabled, setTwoFactorEnabled] = useState(false);
   const [dataSharing, setDataSharing] = useState(false);
@@ -150,20 +150,20 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
     setPasswordStrength(strength);
   }, [newPassword]);
 
-  const handleSave = async () => {    
+  const handleSave = async () => {
     // Handle password change if provided
     if (newPassword && currentPassword) {
       if (newPassword !== confirmPassword) {
         alert('Passwords do not match');
         return;
       }
-      
+
       if (passwordStrength < 75) {
         if (!confirm('Your password strength is ' + getPasswordStrengthText() + '. Continue anyway?')) {
           return;
         }
       }
-      
+
       try {
         const token = getAuthToken();
         if (!token) {
@@ -184,7 +184,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
         });
 
         const data = await response.json();
-        
+
         if (data.success) {
           alert('Password changed successfully!');
           setCurrentPassword("");
@@ -222,7 +222,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
         });
 
         const data = await response.json();
-        
+
         if (data.success) {
           alert('Settings saved successfully!');
           setIsEditing(false);
@@ -303,7 +303,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
           onClick={onClose}
           aria-hidden="true"
@@ -311,9 +311,9 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
       )}
 
       {/* Side Panel */}
-      <div 
+      <div
         className={`
-          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl
+          fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl
           transition-all duration-300 ease-in-out dark:bg-neutral-900
           ${isOpen ? "translate-x-0" : "translate-x-full"}
         `}
@@ -321,7 +321,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -339,7 +339,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
               </p>
             </div>
           </div>
-          
+
           {!isEditing ? (
             <button
               onClick={() => setIsEditing(true)}
@@ -352,7 +352,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
             <div className="flex gap-2">
               <button
                 onClick={handleCancel}
-                className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
+                className="rounded-lg border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300 dark:hover:bg-neutral-700"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -395,7 +395,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                       type={showCurrentPassword ? "text" : "password"}
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
+                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
                       placeholder="Enter current password"
                     />
                     <button
@@ -423,7 +423,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                       type={showNewPassword ? "text" : "password"}
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
+                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
                       placeholder="Enter new password"
                     />
                     <button
@@ -438,7 +438,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                       )}
                     </button>
                   </div>
-                  
+
                   {/* Password Strength Meter */}
                   {newPassword && (
                     <div className="mt-2">
@@ -446,11 +446,10 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                         <span className="text-gray-600 dark:text-neutral-400">
                           Password strength:
                         </span>
-                        <span className={`font-medium ${
-                          passwordStrength < 50 ? "text-red-600" :
-                          passwordStrength < 75 ? "text-yellow-600" :
-                          "text-green-600"
-                        }`}>
+                        <span className={`font-medium ${passwordStrength < 50 ? "text-red-600" :
+                            passwordStrength < 75 ? "text-yellow-600" :
+                              "text-green-600"
+                          }`}>
                           {getPasswordStrengthText()}
                         </span>
                       </div>
@@ -488,7 +487,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                       type={showConfirmPassword ? "text" : "password"}
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
+                      className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 pr-10 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
                       placeholder="Confirm new password"
                     />
                     <button
@@ -536,29 +535,26 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
               {isEditing ? (
                 <button
                   onClick={() => setTwoFactorEnabled(!twoFactorEnabled)}
-                  className={`relative h-6 w-12 rounded-full transition-colors ${
-                    twoFactorEnabled
+                  className={`relative h-6 w-12 rounded-full transition-colors ${twoFactorEnabled
                       ? "bg-green-500 dark:bg-green-600"
                       : "bg-gray-300 dark:bg-neutral-600"
-                  }`}
+                    }`}
                 >
                   <div
-                    className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
-                      twoFactorEnabled ? "left-1 translate-x-7" : "left-1"
-                    }`}
+                    className={`absolute top-1 h-4 w-4 rounded-full bg-gray-50 transition-transform ${twoFactorEnabled ? "left-1 translate-x-7" : "left-1"
+                      }`}
                   />
                 </button>
               ) : (
-                <span className={`rounded-full px-3 py-1 text-sm ${
-                  twoFactorEnabled
+                <span className={`rounded-full px-3 py-1 text-sm ${twoFactorEnabled
                     ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
                     : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
-                }`}>
+                  }`}>
                   {twoFactorEnabled ? "Enabled" : "Disabled"}
                 </span>
               )}
             </div>
-            
+
             <div className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800">
               <div className="flex items-start gap-3">
                 <div className="rounded-full bg-blue-100 p-2 dark:bg-blue-900/30">
@@ -586,7 +582,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
             <h3 className="mb-4 text-lg font-semibold text-gray-900 dark:text-white">
               Privacy Settings
             </h3>
-            
+
             <div className="space-y-4 rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800">
               {/* Profile Visibility */}
               <div className="space-y-2">
@@ -597,20 +593,20 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                 {isEditing ? (
                   <select
                     value={privacySettings.showProfile}
-                    onChange={(e) => setPrivacySettings(prev => ({ 
-                      ...prev, 
-                      showProfile: e.target.value 
+                    onChange={(e) => setPrivacySettings(prev => ({
+                      ...prev,
+                      showProfile: e.target.value
                     }))}
-                    className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
+                    className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white"
                   >
                     <option value="public">Everyone</option>
                     <option value="contacts">My Contacts Only</option>
                     <option value="none">Nobody</option>
                   </select>
                 ) : (
-                  <div className="rounded-lg bg-white px-4 py-3 text-gray-900 dark:bg-neutral-700 dark:text-white">
+                  <div className="rounded-lg bg-gray-50 px-4 py-3 text-gray-900 dark:bg-neutral-700 dark:text-white">
                     {privacySettings.showProfile === "public" ? "Everyone" :
-                     privacySettings.showProfile === "contacts" ? "My Contacts Only" : "Nobody"}
+                      privacySettings.showProfile === "contacts" ? "My Contacts Only" : "Nobody"}
                   </div>
                 )}
               </div>
@@ -625,28 +621,25 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                 </div>
                 {isEditing ? (
                   <button
-                    onClick={() => setPrivacySettings(prev => ({ 
-                      ...prev, 
-                      readReceipts: !prev.readReceipts 
+                    onClick={() => setPrivacySettings(prev => ({
+                      ...prev,
+                      readReceipts: !prev.readReceipts
                     }))}
-                    className={`relative h-6 w-12 rounded-full transition-colors ${
-                      privacySettings.readReceipts
+                    className={`relative h-6 w-12 rounded-full transition-colors ${privacySettings.readReceipts
                         ? "bg-[#3D3066] dark:bg-[#4D3F7F]"
                         : "bg-gray-300 dark:bg-neutral-600"
-                    }`}
+                      }`}
                   >
                     <div
-                      className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
-                        privacySettings.readReceipts ? "left-1 translate-x-7" : "left-1"
-                      }`}
+                      className={`absolute top-1 h-4 w-4 rounded-full bg-gray-50 transition-transform ${privacySettings.readReceipts ? "left-1 translate-x-7" : "left-1"
+                        }`}
                     />
                   </button>
                 ) : (
-                  <span className={`rounded-full px-3 py-1 text-sm ${
-                    privacySettings.readReceipts
+                  <span className={`rounded-full px-3 py-1 text-sm ${privacySettings.readReceipts
                       ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300"
                       : "bg-gray-100 text-gray-700 dark:bg-neutral-700 dark:text-neutral-300"
-                  }`}>
+                    }`}>
                     {privacySettings.readReceipts ? "On" : "Off"}
                   </span>
                 )}
@@ -663,24 +656,21 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                 {isEditing ? (
                   <button
                     onClick={() => setDataSharing(!dataSharing)}
-                    className={`relative h-6 w-12 rounded-full transition-colors ${
-                      dataSharing
+                    className={`relative h-6 w-12 rounded-full transition-colors ${dataSharing
                         ? "bg-[#3D3066] dark:bg-[#4D3F7F]"
                         : "bg-gray-300 dark:bg-neutral-600"
-                    }`}
+                      }`}
                   >
                     <div
-                      className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
-                        dataSharing ? "left-1 translate-x-7" : "left-1"
-                      }`}
+                      className={`absolute top-1 h-4 w-4 rounded-full bg-gray-50 transition-transform ${dataSharing ? "left-1 translate-x-7" : "left-1"
+                        }`}
                     />
                   </button>
                 ) : (
-                  <span className={`rounded-full px-3 py-1 text-sm ${
-                    dataSharing
+                  <span className={`rounded-full px-3 py-1 text-sm ${dataSharing
                       ? "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300"
                       : "bg-gray-100 text-gray-700 dark:bg-neutral-700 dark:text-neutral-300"
-                  }`}>
+                    }`}>
                     {dataSharing ? "Enabled" : "Disabled"}
                   </span>
                 )}
@@ -710,16 +700,14 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                   className="flex items-center justify-between rounded-lg border border-gray-200 p-4 dark:border-neutral-700"
                 >
                   <div className="flex items-center gap-3">
-                    <div className={`rounded-full p-2 ${
-                      activity.status === "active" 
-                        ? "bg-green-100 dark:bg-green-900/30" 
+                    <div className={`rounded-full p-2 ${activity.status === "active"
+                        ? "bg-green-100 dark:bg-green-900/30"
                         : "bg-gray-100 dark:bg-neutral-800"
-                    }`}>
-                      <Smartphone className={`h-4 w-4 ${
-                        activity.status === "active"
+                      }`}>
+                      <Smartphone className={`h-4 w-4 ${activity.status === "active"
                           ? "text-green-600 dark:text-green-400"
                           : "text-gray-600 dark:text-neutral-400"
-                      }`} />
+                        }`} />
                     </div>
                     <div>
                       <p className="font-medium text-gray-900 dark:text-white">
@@ -781,7 +769,7 @@ export function SecurityPrivacyPage({ user, onClose, isOpen }: SecurityPrivacyPa
                 <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                 <div>
                   <p className="text-sm text-yellow-800 dark:text-yellow-300">
-                    <strong>Important:</strong> Changing security settings may log you out from some devices. 
+                    <strong>Important:</strong> Changing security settings may log you out from some devices.
                     Make sure you have access to your recovery email and phone number.
                   </p>
                 </div>

@@ -315,8 +315,8 @@ export default function CartDrawer() {
                             onClick={handleCheckout}
                             disabled={sessionExpired || timeLeft === 0}
                             className={`w-full font-bold py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 ${sessionExpired || timeLeft === 0
-                                    ? "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
-                                    : "bg-gradient-to-r from-[#B8960C] to-[#D4AF37] text-white hover:shadow-yellow-500/30 hover:scale-[1.01]"
+                                ? "bg-gray-200 text-gray-400 cursor-not-allowed shadow-none"
+                                : "bg-gradient-to-r from-[#B8960C] to-[#D4AF37] text-white hover:shadow-yellow-500/30 hover:scale-[1.01]"
                                 }`}
                         >
                             {sessionExpired || timeLeft === 0 ? (

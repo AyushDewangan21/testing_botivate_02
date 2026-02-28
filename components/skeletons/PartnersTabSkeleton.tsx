@@ -19,7 +19,7 @@ export function PartnersTabSkeleton() {
 
             <div className="mt-4 px-6 space-y-4">
                 {[1, 2, 3].map((i) => (
-                    <div key={i} className="rounded-xl border border-gray-200 bg-white p-4 dark:border-neutral-700 dark:bg-neutral-800">
+                    <div key={i} className="rounded-xl border border-gray-200 bg-gray-50 p-4 dark:border-neutral-700 dark:bg-neutral-800">
                         <div className="mb-3 flex items-start justify-between">
                             <div className="flex-1">
                                 <Skeleton className="mb-2 h-5 w-48 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />

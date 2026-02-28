@@ -32,12 +32,12 @@ export function SIPCalculator({ onClose }: SIPCalculatorProps) {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/50 dark:bg-black/70">
       <style>{`.zold-hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .zold-hide-scrollbar::-webkit-scrollbar{ display:none; }`}</style>
-      <div className="zold-hide-scrollbar max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-white dark:bg-neutral-800">
+      <div className="zold-hide-scrollbar max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-gray-50 dark:bg-neutral-800">
         {/* Header */}
         <div className="sticky top-0 rounded-t-3xl bg-gradient-to-r from-[#3D3066] to-[#5C4E7F] px-6 py-5 dark:from-[#4D3F7F] dark:to-[#5C4E9F]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="rounded-full bg-white/20 p-2 backdrop-blur-sm">
+              <div className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm">
                 <Calculator className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -49,7 +49,7 @@ export function SIPCalculator({ onClose }: SIPCalculatorProps) {
             </div>
             <button
               onClick={onClose}
-              className="rounded-full bg-white/20 p-2 backdrop-blur-sm transition-colors hover:bg-white/30"
+              className="rounded-full bg-gray-50/20 p-2 backdrop-blur-sm transition-colors hover:bg-gray-50/30"
             >
               <X className="h-5 w-5 text-white" />
             </button>
@@ -151,7 +151,7 @@ export function SIPCalculator({ onClose }: SIPCalculatorProps) {
                   +₹{Math.round(estimatedReturns).toLocaleString()}
                 </span>
               </div>
-              <div className="h-px bg-white/20"></div>
+              <div className="h-px bg-gray-50/20"></div>
               <div className="flex items-center justify-between">
                 <span className="text-white">Total Value</span>
                 <span className="text-white">
@@ -229,7 +229,7 @@ export function SIPCalculator({ onClose }: SIPCalculatorProps) {
                   setMonthlyInvestment(2000);
                   setDuration(12);
                 }}
-                className="rounded-lg border border-gray-200 bg-white p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
+                className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
               >
                 <p className="text-sm text-gray-900 dark:text-white">
                   Starter Plan
@@ -243,7 +243,7 @@ export function SIPCalculator({ onClose }: SIPCalculatorProps) {
                   setMonthlyInvestment(5000);
                   setDuration(24);
                 }}
-                className="rounded-lg border border-gray-200 bg-white p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
+                className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
               >
                 <p className="text-sm text-gray-900 dark:text-white">
                   Growth Plan
@@ -257,7 +257,7 @@ export function SIPCalculator({ onClose }: SIPCalculatorProps) {
                   setMonthlyInvestment(10000);
                   setDuration(36);
                 }}
-                className="rounded-lg border border-gray-200 bg-white p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
+                className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
               >
                 <p className="text-sm text-gray-900 dark:text-white">
                   Premium Plan
@@ -271,7 +271,7 @@ export function SIPCalculator({ onClose }: SIPCalculatorProps) {
                   setMonthlyInvestment(20000);
                   setDuration(60);
                 }}
-                className="rounded-lg border border-gray-200 bg-white p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
+                className="rounded-lg border border-gray-200 bg-gray-50 p-3 text-left transition-colors hover:border-[#3D3066] dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-[#8B7FA8]"
               >
                 <p className="text-sm text-gray-900 dark:text-white">
                   Elite Plan

@@ -8,7 +8,7 @@ export function LoansTabSkeleton() {
                 <Skeleton className="mb-4 h-8 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
 
                 {/* Hero Banner */}
-                <div className="rounded-2xl bg-white p-6 dark:bg-neutral-700">
+                <div className="rounded-2xl bg-gray-50 p-6 dark:bg-neutral-700">
                     <div className="mb-4 flex items-start justify-between">
                         <div>
                             <Skeleton className="mb-2 h-4 w-48 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
@@ -31,7 +31,7 @@ export function LoansTabSkeleton() {
                         <Skeleton className="mb-4 h-6 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
                         <div className="space-y-3">
                             {[1, 2].map((i) => (
-                                <div key={i} className="rounded-xl border border-gray-200 bg-white p-5 dark:border-neutral-700 dark:bg-neutral-800">
+                                <div key={i} className="rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-neutral-700 dark:bg-neutral-800">
                                     <div className="mb-4 flex items-start justify-between">
                                         <div className="flex-1">
                                             <div className="mb-2 flex items-center gap-2">
@@ -52,7 +52,7 @@ export function LoansTabSkeleton() {
                     </div>
 
                     {/* Calculator Skeleton */}
-                    <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-neutral-700 dark:bg-neutral-800">
+                    <div className="rounded-xl border border-gray-200 bg-gray-50 p-5 dark:border-neutral-700 dark:bg-neutral-800">
                         <Skeleton className="mb-4 h-6 w-32 bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />
                         <div className="space-y-4">
                             <Skeleton className="h-16 w-full rounded-lg bg-gradient-to-r from-[#F3F1F7] via-[#E2DFEB] to-[#F3F1F7]" />

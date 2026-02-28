@@ -461,12 +461,12 @@ export function PaymentMethodsPage({
 
       {/* Side Panel */}
       <div
-        className={`fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-white shadow-2xl transition-all duration-300 ease-in-out dark:bg-neutral-900 ${isOpen ? "translate-x-0" : "translate-x-full"} `}
+        className={`fixed inset-y-0 right-0 z-50 w-full max-w-md transform overflow-y-auto bg-gray-50 shadow-2xl transition-all duration-300 ease-in-out dark:bg-neutral-900 ${isOpen ? "translate-x-0" : "translate-x-full"} `}
         role="dialog"
         aria-modal="true"
       >
         {/* Header */}
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-200 bg-gray-50 px-6 py-4 dark:border-neutral-800 dark:bg-neutral-900">
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
@@ -552,27 +552,24 @@ export function PaymentMethodsPage({
                     <button
                       type="button"
                       onClick={() => setPaymentType("card")}
-                      className={`flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-colors ${
-                        paymentType === "card"
+                      className={`flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-colors ${paymentType === "card"
                           ? "border-[#3D3066] bg-[#3D3066]/10 dark:border-[#8B7FA8] dark:bg-[#3D3066]/20"
-                          : "border-gray-300 bg-white hover:border-gray-400 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
-                      }`}
+                          : "border-gray-300 bg-gray-50 hover:border-gray-400 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
+                        }`}
                     >
                       <div
-                        className={`rounded-full p-2 ${
-                          paymentType === "card"
+                        className={`rounded-full p-2 ${paymentType === "card"
                             ? "bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
                             : "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400"
-                        }`}
+                          }`}
                       >
                         <CreditCard className="h-5 w-5" />
                       </div>
                       <span
-                        className={`text-xs font-medium ${
-                          paymentType === "card"
+                        className={`text-xs font-medium ${paymentType === "card"
                             ? "text-[#3D3066] dark:text-[#8B7FA8]"
                             : "text-gray-700 dark:text-neutral-300"
-                        }`}
+                          }`}
                       >
                         Card
                       </span>
@@ -581,27 +578,24 @@ export function PaymentMethodsPage({
                     <button
                       type="button"
                       onClick={() => setPaymentType("netbanking")}
-                      className={`flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-colors ${
-                        paymentType === "netbanking"
+                      className={`flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-colors ${paymentType === "netbanking"
                           ? "border-[#3D3066] bg-[#3D3066]/10 dark:border-[#8B7FA8] dark:bg-[#3D3066]/20"
-                          : "border-gray-300 bg-white hover:border-gray-400 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
-                      }`}
+                          : "border-gray-300 bg-gray-50 hover:border-gray-400 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
+                        }`}
                     >
                       <div
-                        className={`rounded-full p-2 ${
-                          paymentType === "netbanking"
+                        className={`rounded-full p-2 ${paymentType === "netbanking"
                             ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
                             : "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400"
-                        }`}
+                          }`}
                       >
                         <Building className="h-5 w-5" />
                       </div>
                       <span
-                        className={`text-xs font-medium ${
-                          paymentType === "netbanking"
+                        className={`text-xs font-medium ${paymentType === "netbanking"
                             ? "text-[#3D3066] dark:text-[#8B7FA8]"
                             : "text-gray-700 dark:text-neutral-300"
-                        }`}
+                          }`}
                       >
                         Net Banking
                       </span>
@@ -610,27 +604,24 @@ export function PaymentMethodsPage({
                     <button
                       type="button"
                       onClick={() => setPaymentType("wallet")}
-                      className={`flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-colors ${
-                        paymentType === "wallet"
+                      className={`flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-colors ${paymentType === "wallet"
                           ? "border-[#3D3066] bg-[#3D3066]/10 dark:border-[#8B7FA8] dark:bg-[#3D3066]/20"
-                          : "border-gray-300 bg-white hover:border-gray-400 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
-                      }`}
+                          : "border-gray-300 bg-gray-50 hover:border-gray-400 dark:border-neutral-700 dark:bg-neutral-800 dark:hover:border-neutral-600"
+                        }`}
                     >
                       <div
-                        className={`rounded-full p-2 ${
-                          paymentType === "wallet"
+                        className={`rounded-full p-2 ${paymentType === "wallet"
                             ? "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400"
                             : "bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400"
-                        }`}
+                          }`}
                       >
                         <Wallet className="h-5 w-5" />
                       </div>
                       <span
-                        className={`text-xs font-medium ${
-                          paymentType === "wallet"
+                        className={`text-xs font-medium ${paymentType === "wallet"
                             ? "text-[#3D3066] dark:text-[#8B7FA8]"
                             : "text-gray-700 dark:text-neutral-300"
-                        }`}
+                          }`}
                       >
                         Wallet
                       </span>
@@ -654,7 +645,7 @@ export function PaymentMethodsPage({
                         onChange={handleInputChange}
                         maxLength={19}
                         placeholder="1234 5678 9012 3456"
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       />
                     </div>
 
@@ -670,7 +661,7 @@ export function PaymentMethodsPage({
                           onChange={handleInputChange}
                           maxLength={2}
                           placeholder="MM"
-                          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                          className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                         />
                       </div>
                       <div>
@@ -684,7 +675,7 @@ export function PaymentMethodsPage({
                           onChange={handleInputChange}
                           maxLength={4}
                           placeholder="YYYY"
-                          className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                          className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                         />
                       </div>
                     </div>
@@ -700,7 +691,7 @@ export function PaymentMethodsPage({
                         onChange={handleInputChange}
                         maxLength={4}
                         placeholder="***"
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       />
                     </div>
 
@@ -714,7 +705,7 @@ export function PaymentMethodsPage({
                         value={formData.cardholderName}
                         onChange={handleInputChange}
                         placeholder="Name on card"
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       />
                     </div>
 
@@ -728,7 +719,7 @@ export function PaymentMethodsPage({
                         value={formData.name}
                         onChange={handleInputChange}
                         placeholder="e.g., My Primary Card"
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
+                        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 placeholder-gray-500 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:placeholder-neutral-500 dark:focus:border-[#8B7FA8]"
                       />
                     </div>
                   </>
@@ -744,7 +735,7 @@ export function PaymentMethodsPage({
                         name="bankName"
                         value={formData.bankName}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
+                        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
                       >
                         <option value="">Select a bank</option>
                         {banks.map((bank) => (
@@ -767,7 +758,7 @@ export function PaymentMethodsPage({
                         name="walletName"
                         value={formData.walletName}
                         onChange={handleInputChange}
-                        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
+                        className="w-full rounded-lg border border-gray-300 bg-gray-50 px-4 py-3 text-gray-900 focus:border-[#3D3066] focus:ring-2 focus:ring-[#3D3066]/20 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:focus:border-[#8B7FA8]"
                       >
                         <option value="">Select a wallet</option>
                         {wallets.map((wallet) => (
@@ -823,11 +814,10 @@ export function PaymentMethodsPage({
               paymentMethods.map((method) => (
                 <div
                   key={method.id}
-                  className={`rounded-xl border p-4 transition-all ${
-                    method.isDefault
+                  className={`rounded-xl border p-4 transition-all ${method.isDefault
                       ? "border-[#3D3066] bg-[#3D3066]/5 dark:border-[#8B7FA8] dark:bg-[#3D3066]/10"
-                      : "border-gray-200 bg-white dark:border-neutral-800 dark:bg-neutral-800/50"
-                  }`}
+                      : "border-gray-200 bg-gray-50 dark:border-neutral-800 dark:bg-neutral-800/50"
+                    }`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">

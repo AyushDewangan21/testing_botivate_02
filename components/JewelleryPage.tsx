@@ -235,7 +235,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
     shadow-[0_10px_20px_rgba(0,0,0,0.20)]
   "
       >
-        <div className="w-full h-[10vh] max-w-7xl mx-auto px-4 py-3">
+        <div className="w-full sm:h-[10vh] h-[18vh] sm:h-[10vh] max-w-7xl mx-auto px-4 py-3">
 
           {/* Top Row */}
           <div className="flex items-center justify-between">
@@ -244,12 +244,12 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             <div className="flex items-center gap-3">
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+                className="p-2 hover:bg-gray-50/10 rounded-full transition-colors"
               >
-                <X className="w-5 h-5 text-white" />
+                <X className="h-4 w-4 sm:w-5 sm:h-5 text-white" />
               </button>
 
-              <h2 className="text-white text-lg md:text-xl font-semibold whitespace-nowrap">
+              <h2 className="text-white text-sm sm:text-lg md:text-xl font-semibold whitespace-nowrap">
                 Gold Jewellery
               </h2>
             </div>
@@ -258,13 +258,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             {step === "browse" && (
               <div className="hidden md:flex justify-center flex-1 px-6">
                 <div className="relative w-full max-w-xl">
-                  <Image
-                    src="/icons/search.svg"
-                    alt="search"
-                    width={18}
-                    height={18}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 opacity-90"
-                  />
+
 
                   <input
                     type="text"
@@ -274,7 +268,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                     className="
                 w-full pl-10 pr-3 py-2.5
                 rounded-xl
-                bg-white/15
+                bg-gray-50/15
                 border border-white/20
                 backdrop-blur-lg
                 text-white text-sm
@@ -289,7 +283,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
 
             {/* Right Step Indicator */}
             {step !== "browse" && (
-              <div className="bg-white/20 rounded-full px-3 py-1">
+              <div className="bg-gray-50/20 rounded-full px-3 py-1">
                 <span className="text-white text-xs">
                   Step {step === "product" ? 1 : step === "customize" ? 2 : step === "delivery" ? 3 : 4} of 4
                 </span>
@@ -317,7 +311,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                   className="
               w-full pl-10 pr-3 py-2.5
               rounded-xl
-              bg-white/15
+              bg-gray-50/15
               border border-white/20
               backdrop-blur-lg
               text-white text-sm
@@ -338,17 +332,17 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
 
 
 
-      <div className="max-w-4xl mx-auto p-6 pb-24">
+      <div className="max-w-4xl mx-auto p-2 pb-24">
         {step === 'browse' && (
           <div>
             {/* Categories */}
             <div className="mb-10">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="text-gray-900 dark:text-white text-lg font-semibold tracking-wide">
+                <h3 className="text-gray-900 dark:text-white text-sm sm:text-lg font-semibold tracking-wide">
                   Categories
                 </h3>
 
-                <button className="flex items-center gap-2 text-sm text-[#3D3066] dark:text-[#8B7FA8] bg-white dark:bg-neutral-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-neutral-700 shadow-sm">
+                <button className="flex items-center gap-2 text-sm text-[#3D3066] dark:text-[#8B7FA8] bg-gray-50 dark:bg-neutral-800 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-neutral-700 shadow-sm">
                   <Filter className="w-4 h-4" />
                   Filter
                 </button>
@@ -363,9 +357,10 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id as Category)}
                       className={`
+                        h-20 sm:h-30 sm:w-full
     relative
     flex flex-col items-center justify-center
-    p-7 rounded-xl
+    p-1 sm:p-7 rounded-xl
     border
     backdrop-blur-xl
     transform transition-all duration-300 ease-out
@@ -378,16 +373,16 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
         to-[#6E5FA3]
         text-white
         border-white/10
-        shadow-[0_8px_8px_rgba(61,48,102,0.2)]
+        
         ring-1 ring-white/20
       `
                           : `
         scale-100
-        bg-white/70 dark:bg-neutral-800/70
+        bg-gray-50/70 dark:bg-neutral-800/70
         border-gray-200/60 dark:border-neutral-700/60
         text-gray-700 dark:text-neutral-300
-        shadow-[0_6px_12px_rgba(0,0,0,0.1)]
-        hover:scale-[1.02]
+        shadow-md
+        hover:scale-[1.05]
       `
                         }
   `}
@@ -398,7 +393,8 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
 
                       <Icon
                         className={`
-      w-7 h-7 mb-3
+                          h-3 w-3
+      sm:w-7 sm:h-7 mb-3
       transition-colors duration-300
       ${isSelected ? "text-white" : "text-[#3D3066] dark:text-[#8B7FA8]"}
     `}
@@ -406,23 +402,20 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
 
                       <span
                         className={`
-      text-xs font-semibold tracking-wide
+      text-xs font-semibold tracking-wide 
       ${isSelected ? "text-white" : "text-gray-800 dark:text-neutral-200"}
     `}
                       >
                         {category.name}
                       </span>
                     </button>
-
-
-
                   );
                 })}
               </div>
             </div>
 
             {/* Products Grid */}
-            <div className="pt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 bg-transparent">
+            <div className="pt-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 bg-transparent">
 
               {searchedProducts.map((product) => (
                 <button
@@ -431,7 +424,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                     setSelectedProduct(product);
                     setStep('product');
                   }}
-                  className="relative rounded-3xl overflow-hidden text-left bg-white shadow-[0_6px_10px_rgba(0,0,0,0.10)] transition-all duration-300 hover:shadow-[0_12px_15px_rgba(0,0,0,0.20)] hover:-translate-y-1"
+                  className="relative rounded-3xl overflow-hidden text-left bg-gray-50 shadow-[0_6px_10px_rgba(0,0,0,0.10)] transition-all duration-300 hover:shadow-[0_12px_15px_rgba(0,0,0,0.20)] hover:-translate-y-1"
                 >
 
                   {/* Product Image */}
@@ -450,7 +443,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
 
 
                   {/* Product Details */}
-                  <div className="pl-5 pr-5 pb-5 rounded-t-[50px] bg-white">
+                  <div className="pl-5 pr-5 pb-5 rounded-t-[50px] bg-gray-50">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs text-yellow-700 capitalize tracking-wide font-medium">
                         {product.category}
@@ -509,7 +502,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             {/* Back Button */}
             <button
               onClick={() => setStep('browse')}
-              className="flex items-center gap-2 text-white mb-6 bg-[#3D3066] px-6 py-2 rounded-full transition-colors duration-200"
+              className=" text-sm flex items-center gap-2 text-white mb-6 bg-[#3D3066] px-4 py-2 rounded-full transition-colors duration-200"
 
             >
               <ChevronRight className="w-4 h-4 rotate-180" />
@@ -517,7 +510,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             </button>
 
             {/* Product Details */}
-            <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 mb-6 shadow-lg dark:shadow-neutral-900/50">
+            <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl p-2 sm:p-6 mb-6 shadow-lg dark:shadow-neutral-900/50">
               <div className="flex flex-col lg:flex-row gap-6">
 
                 {/* Product Image */}
@@ -530,6 +523,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
       aspect-square
       rounded-xl
       shadow-md
+      bg-white
     "
                   >
                     <Image
@@ -537,13 +531,13 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                       alt={selectedProduct.name}
                       fill
                       sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-contain p-10"
+                      className="object-contain p-6"
                       priority
                     />
                   </div>
 
                   {/* Product Badges */}
-                  <div className="flex gap-2 mt-4">
+                  <div className="flex gap-2 ">
                     ...
                   </div>
                 </div>
@@ -554,7 +548,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                   className="
           lg:w-1/2
           rounded-2xl
-          p-6
+          p-4
           text-white
           bg-gradient-to-br from-[#3D3066] to-[#5C4E7F]
                         transition-all duration-300
@@ -562,8 +556,8 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
           hover:scale-101
         "
                 >
-                  <h2 className="text-2xl font-semibold mb-3">{selectedProduct.name}</h2>
-                  <p className="text-white/80 mb-4">{selectedProduct.description}</p>
+                  <h2 className="text-lg sm:text-2xl font-semibold mb-3">{selectedProduct.name}</h2>
+                  <p className="text-sm text-white/80 mb-4">{selectedProduct.description}</p>
 
                   {/* Rating */}
                   <div className="flex items-center gap-2 mb-4">
@@ -588,7 +582,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                   </div>
 
                   {/* Gold Details */}
-                  <div className="space-y-4 mb-6">
+                  <div className="space-y-4 mb-6 text-sm sm:text-base">
                     <div className="flex justify-between border-b border-white/20 pb-2">
                       <span className="text-white/70">Gold Weight</span>
                       <span>{selectedProduct.goldWeight} grams</span>
@@ -627,26 +621,26 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
                           </span>
                         </>
                       ) : (
-                        <span className="text-3xl font-bold">
+                        <span className="text-xl sm:text-3xl font-bold">
                           ₹{selectedProduct.price.toLocaleString()}
                         </span>
                       )}
                     </div>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white/70 text-xs">
                       Save more by using your gold from vault
                     </p>
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-3">
-                    <button className="flex-1 bg-white/10 border border-white/20 py-3 rounded-lg font-medium hover:bg-white/20 transition">
+                  <div className="flex gap-3 text-sm">
+                    <button className="flex-1 bg-gray-50/10 border border-white/20 py-3 rounded-lg font-semibold  hover:bg-gray-50/20 transition">
                       <Heart className="w-5 h-5 inline mr-2" />
                       Wishlist
                     </button>
 
                     <button
                       onClick={() => setStep("customize")}
-                      className="flex-1 bg-white text-[#3D3066] py-3 rounded-lg font-semibold hover:opacity-90 transition"
+                      className="flex-1 bg-gray-50 text-[#3D3066] py-3 rounded-lg font-semibold hover:opacity-90 transition"
                     >
                       Customize & Buy
                     </button>
@@ -663,25 +657,25 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
             {/* Back Button */}
             <button
               onClick={() => setStep('product')}
-              className="flex items-center gap-2 text-white mb-6 bg-[#3D3066] px-6 py-2 rounded-full transition-colors duration-200"
+              className="flex items-center gap-2 text-sm text-white mb-6 bg-[#3D3066] px-4 py-2 rounded-full transition-colors duration-200"
 
             >
               <ChevronRight className="w-4 h-4 rotate-180" />
               Back to Product
             </button>
 
-            <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 mb-6 shadow-lg dark:shadow-neutral-900/50">
-              <h2 className="text-gray-900 dark:text-white mb-6">Customize Your Jewellery</h2>
+            <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl p-4 mb-6 shadow-lg dark:shadow-neutral-900/50">
+              <h2 className="text-md sm:text-lg text-gray-900 dark:text-white mb-6">Customize Your Jewellery</h2>
 
               {/* Size Selection */}
               <div className="mb-8">
-                <h4 className="text-gray-900 dark:text-white mb-4">Select Size</h4>
+                <h4 className="text-sm sm:text-md text-gray-900 dark:text-white mb-4">Select Size</h4>
                 <div className="grid grid-cols-5 gap-2">
                   {['16', '17', '18', '19', '20'].map((size) => (
                     <button
                       key={size}
                       onClick={() => setSelectedSize(size)}
-                      className={`py-3 rounded-lg border-2 transition-colors ${selectedSize === size
+                      className={`text-sm sm:text-md py-1 sm:py-3 rounded-lg border-2 transition-colors ${selectedSize === size
                         ? 'border-[#3D3066] dark:border-[#8B7FA8] bg-[#F3F1F7] dark:bg-neutral-700 text-[#3D3066] dark:text-[#8B7FA8]'
                         : 'border-gray-200 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 hover:border-gray-300 dark:hover:border-neutral-600'
                         }`}
@@ -827,7 +821,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
               Back to Customization
             </button>
 
-            <div className="bg-white dark:bg-neutral-800 rounded-xl p-6 mb-6 shadow-lg dark:shadow-neutral-900/50">
+            <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl p-6 mb-6 shadow-lg dark:shadow-neutral-900/50">
               <h2 className="text-gray-900 dark:text-white mb-6">Delivery Options</h2>
 
               {/* Delivery Method */}
@@ -976,7 +970,7 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
 
         {step === 'success' && selectedProduct && (
           <div className="text-center">
-            <div className="bg-white dark:bg-neutral-800 rounded-xl p-8 mb-6 shadow-lg dark:shadow-neutral-900/50">
+            <div className="bg-gray-50 dark:bg-neutral-800 rounded-xl p-8 mb-6 shadow-lg dark:shadow-neutral-900/50">
               <div className="bg-green-100 dark:bg-green-900/30 rounded-full p-6 w-24 h-24 mx-auto mb-6 relative">
                 <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-500 absolute inset-0 m-auto" />
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -1020,10 +1014,10 @@ export function JewelleryFlow({ onClose }: JewelleryFlowProps) {
               >
                 View Order Details
               </button>
-              <button className="w-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 py-4 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors">
+              <button className="w-full bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 py-4 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors">
                 Track Order
               </button>
-              <button className="w-full bg-white dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 py-4 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors">
+              <button className="w-full bg-gray-50 dark:bg-neutral-800 border border-gray-300 dark:border-neutral-700 text-gray-700 dark:text-neutral-300 py-4 rounded-lg hover:bg-gray-50 dark:hover:bg-neutral-700 transition-colors">
                 Continue Shopping
               </button>
             </div>

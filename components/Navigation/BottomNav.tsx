@@ -29,7 +29,7 @@ export function BottomNav() {
                     onClick={() => setShowQuickMenu(false)}
                 >
                     <div
-                        className="absolute right-6 bottom-24 w-64 rounded-2xl bg-white p-2 shadow-2xl dark:bg-neutral-800 dark:shadow-neutral-900/50"
+                        className="absolute right-6 bottom-24 w-64 rounded-2xl bg-gray-50 p-2 shadow-2xl dark:bg-neutral-800 dark:shadow-neutral-900/50"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <Link
@@ -97,13 +97,14 @@ export function BottomNav() {
             <button
                 onClick={() => router.push("/buy-sell?metal=gold&action=buy")}
                 className="
-fixed left-1/2 bottom-8 z-50 -translate-x-1/2
-h-18 w-18 rounded-full 
+fixed left-1/2 bottom-8 z-2 -translate-x-1/2
+h-13 w-13 rounded-[20px]
 flex flex-col items-center justify-center
- bg-purple-950 border border-gray-700/70
-text-[12px] font-bold tracking-wide text-white
-border-3 border-[#8B4513]/30 
-lg:hidden
+  bg-gradient-to-b from-white via-[#faf3d6] to-[#f7eac8] border border-[#ead69c] shadow-sm
+text-[11px] font-medium tracking-wide text-[#8B4513]/60 
+border-2 border-[#8B4513]/10 
+lg:hidden shadow-2xl
+sm:h-20 sm:w-24 sm:text-medium
 "
             >
                 <span>BUY</span>
@@ -111,8 +112,8 @@ lg:hidden
             </button>
 
             {/* ================= BOTTOM NAV ================= */}
-            <div className="fixed right-0 bottom-0 left-0 z-40 border-t border-gray-200 bg-white dark:border-neutral-700 dark:bg-neutral-800 lg:hidden">
-                <div className="w-full px-2 py-2">
+            <div className="fixed right-0 bottom-0 left-0 z-1 border-t border-gray-200 bg-gray-50 dark:border-neutral-700 dark:bg-neutral-800 lg:hidden">
+                <div className="w-full px-2 py-1">
                     <div className="flex items-center justify-around">
                         {[
                             { path: "/home", icon: Home, label: "Home" },
@@ -130,7 +131,7 @@ lg:hidden
                                         : "text-gray-600 hover:bg-gray-50 dark:text-neutral-400 dark:hover:bg-neutral-700/50"
                                     }`}
                             >
-                                <item.icon className="h-6 w-6" />
+                                <item.icon className="h-4 w-4" />
                                 <span className="text-xs">{item.label}</span>
                             </Link>
                         ))}
