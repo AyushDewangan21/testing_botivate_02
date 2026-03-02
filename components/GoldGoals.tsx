@@ -961,10 +961,10 @@ export function GoldGoals({
     return (
       <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/50 pt-2 dark:bg-black/70">
         <style>{`.zold-hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } .zold-hide-scrollbar::-webkit-scrollbar{ display:none; }`}</style>
-        <div className="zold-hide-scrollbar max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-gray-50 dark:bg-neutral-800">
+        <div className="zold-hide-scrollbar  w-full max-w-lg h-full overflow-y-auto rounded-t-3xl bg-gray-50 dark:bg-neutral-800">
           {/* Header */}
           <div
-            className={`sticky top-0 bg-gradient-to-r ${selectedGoal.color} rounded-t-3xl px-6 py-5`}
+            className={`z-10 sticky top-0 bg-gradient-to-r ${selectedGoal.color} rounded-3xl px-6 py-5`}
           >
             <div className="mb-4 flex items-center justify-between">
               <button
@@ -1005,7 +1005,7 @@ export function GoldGoals({
                 <p className="text-gray-700 dark:text-neutral-300">Progress</p>
                 <p className={`${milestone.color}`}>{milestone.text}</p>
               </div>
-              <div className="relative mb-2 h-4 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-neutral-700">
+              <div className="relative mb-2 h-4 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-neutral-700 z-0">
                 <div
                   className={`absolute top-0 left-0 h-full bg-gradient-to-r ${selectedGoal.color} transition-all duration-500`}
                   style={{ width: `${Math.min(progress, 100)}%` }}

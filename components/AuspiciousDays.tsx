@@ -285,8 +285,8 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
 
   if (selectedDay) {
     return (
-      <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-end justify-center z-50">
-        <div className="bg-gray-50 dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[90vh] overflow-y-auto">
+      <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-end justify-center z-50 scrollbar-hide">
+        <div className="bg-gray-50 dark:bg-neutral-800 w-full max-w-lg rounded-3xl max-h-full overflow-y-auto overflow-y-scroll scrollbar-hide">
           {/* Header */}
           <div className={`sticky top-0 bg-gradient-to-r ${selectedDay.color} px-6 py-5 rounded-t-3xl`}>
             <div className="flex items-center justify-between">
@@ -458,8 +458,8 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-end justify-center z-50">
-      <div className="bg-gray-50 dark:bg-neutral-800 w-full max-w-lg rounded-t-3xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-start justify-center z-50 overflow-y-scroll scrollbar-hide">
+      <div className="bg-gray-50 dark:bg-neutral-800 w-full max-w-lg rounded-3xl h-[98vh] overflow-y-auto overflow-y-scroll scrollbar-hide overflow-y-scroll scrollbar-hide">
         {/* Header */}
         <div className="sticky top-0 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] px-6 py-5 rounded-t-3xl z-1">
           <div className="flex items-center justify-between">
@@ -506,6 +506,7 @@ export function AuspiciousDays({ onClose }: AuspiciousDaysProps) {
             >
               Monthly Auspicious Days
             </button>
+
             <button
               onClick={() => setActiveTab('festivals')}
               className={`py-2 px-4 rounded-lg text-sm transition-all ${activeTab === 'festivals'

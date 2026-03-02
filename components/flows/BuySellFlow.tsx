@@ -1199,8 +1199,6 @@ function SellPanel({
                             Important Notes
                         </p>
                         <ul className="space-y-0.5 text-orange-800 sm:space-y-1 dark:text-orange-400">
-                            <li>• GST @{gstRate}% will be deducted from the proceeds</li>
-
                             <li>• Amount will be credited within 24 hours</li>
                         </ul>
                     </div>

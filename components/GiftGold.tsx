@@ -46,6 +46,10 @@ export function GiftGold({ onClose }: GiftGoldProps) {
   // Metal type selection (gold or silver)
   const [metalType, setMetalType] = useState<"gold" | "silver">("gold");
 
+  // 
+  const [inputMode, setInputMode] = useState<"weight" | "amount">("weight");
+
+
   // Form type selection (raw or bar)
   const [formType, setFormType] = useState<"raw" | "bar">("raw");
 
@@ -93,10 +97,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
   // set amount from preset
   const setFromAmount = (amount: number) => {
     const currentPrice = metalType === "gold" ? goldPrice : silverPrice;
+
     const grams = amount / currentPrice;
+
+    setInputMode("amount");        // 🔥 amount is source of truth
+    setSelectedAmount(amount);
+    setValueInput(amount.toFixed(2));   // keep exact
     setGramsAmount(Number(grams.toFixed(4)));
     setWeightInput(grams.toFixed(4));
-    setSelectedAmount(amount);
   };
 
   const [currentUserName, setCurrentUserName] = useState("User");
@@ -143,12 +151,23 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
   // Update value when weight changes
   useEffect(() => {
-    if (giftType === "grams") {
-      const currentPrice = metalType === "gold" ? goldPrice : silverPrice;
+    if (giftType !== "grams") return;
+
+    const currentPrice = metalType === "gold" ? goldPrice : silverPrice;
+
+    if (inputMode === "weight") {
       const value = gramsAmount * currentPrice;
       setValueInput(value.toFixed(2));
     }
-  }, [gramsAmount, goldPrice, silverPrice, metalType, giftType]);
+
+    if (inputMode === "amount") {
+      const grams = parseFloat(valueInput) / currentPrice;
+      if (!isNaN(grams)) {
+        setGramsAmount(Number(grams.toFixed(4)));
+        setWeightInput(grams.toFixed(4));
+      }
+    }
+  }, [gramsAmount, valueInput, goldPrice, silverPrice, metalType, giftType, inputMode]);
 
   // Calculate display values based on gift type
   const getDisplayValues = () => {
@@ -156,13 +175,13 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
     if (giftType === "grams") {
       const amount = gramsAmount * currentPrice;
-      return { amount: amount.toFixed(2), grams: gramsAmount.toFixed(4) };
+      return { amount: amount.toFixed(2), grams: gramsAmount.toFixed(2) };
     } else {
       const totalGrams = selectedCoin * coinQuantity;
       const amount = totalGrams * currentPrice;
       return {
         amount: amount.toFixed(2),
-        grams: totalGrams.toFixed(4),
+        grams: totalGrams.toFixed(2),
         coins: `${coinQuantity}x ${selectedCoin}g`,
       };
     }
@@ -172,6 +191,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
   // Handle weight input change
   const handleWeightChange = (weight: string) => {
+    setInputMode("weight");
     setWeightInput(weight);
     const parsedWeight = parseFloat(weight);
     if (!isNaN(parsedWeight) && parsedWeight > 0) {
@@ -181,13 +201,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
   // Handle value input change
   const handleValueChange = (value: string) => {
+    setInputMode("amount");
     setValueInput(value);
     const parsedValue = parseFloat(value);
     if (!isNaN(parsedValue) && parsedValue > 0) {
       const currentPrice = metalType === "gold" ? goldPrice : silverPrice;
       const calculatedWeight = parsedValue / currentPrice;
       setGramsAmount(calculatedWeight);
-      setWeightInput(calculatedWeight.toFixed(4));
+      setWeightInput(calculatedWeight.toFixed(2));
     }
   };
 
@@ -378,8 +399,8 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
                 <div
                   className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-xs sm:text-sm ${step === "metal"
-                      ? "bg-black text-white"
-                      : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
+                    ? "bg-black text-white"
+                    : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
                     }`}
                 >
                   1
@@ -397,8 +418,8 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
                 <div
                   className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-xs sm:text-sm ${step === "form"
-                      ? "bg-black text-white"
-                      : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
+                    ? "bg-black text-white"
+                    : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
                     }`}
                 >
                   2
@@ -416,8 +437,8 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
                 <div
                   className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-xs sm:text-sm ${step === "amount"
-                      ? "bg-black text-white"
-                      : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
+                    ? "bg-black text-white"
+                    : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
                     }`}
                 >
                   3
@@ -435,8 +456,8 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
                 <div
                   className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-xs sm:text-sm ${step === "recipient"
-                      ? "bg-black text-white"
-                      : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
+                    ? "bg-black text-white"
+                    : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
                     }`}
                 >
                   4
@@ -454,8 +475,8 @@ export function GiftGold({ onClose }: GiftGoldProps) {
               <div className="flex flex-col items-center gap-1 sm:flex-row sm:gap-2">
                 <div
                   className={`flex h-7 w-7 sm:h-8 sm:w-8 items-center justify-center rounded-full text-xs sm:text-sm ${step === "message" || step === "confirm"
-                      ? "bg-black text-white"
-                      : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
+                    ? "bg-black text-white"
+                    : "bg-gray-200 dark:bg-neutral-700 text-gray-600 dark:text-gray-400"
                     }`}
                 >
                   5
@@ -730,7 +751,7 @@ export function GiftGold({ onClose }: GiftGoldProps) {
 
                         {/* Swap Button */}
                         <button
-                          onClick={handleSwap}
+
                           className="mt-6 flex h-10 w-10 items-center justify-center rounded-full bg-gray-50/20 hover:bg-gray-50/30 transition-colors"
                         >
                           <ArrowLeftRight className="h-5 w-5 text-white" />
@@ -761,9 +782,14 @@ export function GiftGold({ onClose }: GiftGoldProps) {
                         <button
                           key={g}
                           onClick={() => {
+                            const currentPrice = metalType === "gold" ? goldPrice : silverPrice;
+                            const value = g * currentPrice;
+
+                            setInputMode("weight");     // 🔥 weight is source
+                            setSelectedAmount(null);
                             setGramsAmount(g);
                             setWeightInput(g.toString());
-                            setSelectedAmount(null);
+                            setValueInput(value.toFixed(2));
                           }}
                           className={`rounded-lg border-2 py-3 text-xs sm:text-sm transition-all ${gramsAmount === g
                             ? `${metalColors.border} ${metalColors.bg} ${metalColors.text} dark:bg-neutral-700 dark:${metalColors.textDark}`
